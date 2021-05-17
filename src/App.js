@@ -1,38 +1,36 @@
+import React, { useState } from 'react';
 import axios from 'axios';
-import React, {useState} from 'react';
-// import './App.css';
 
 function App() {
-  const [inputName, setName] = useState(null);
-
+  const [hotelName, setHotelName] = useState(null);
+  
   const handleSearch = (e) => {
-    setName(e.value);
+    // console.log("!");
+    setHotelName(e.value);
+    // console.log("a");
+    fetchHotelName();
+  };
 
-    fetchName();
-  }
-
-  const fetchName = async() => {
-    const response = await axios('http://localhost:3001/text', {
-      name: inputName
+  const fetchHotelName = async() => {
+    const response = await axios('http://localhost:3000/text', {
+      name: hotelName
     });
+    console.log(response);
     console.log(response.data);
+    // data속에 담겨져 나온다.
   }
-
   return (
     <div>
-      <h1>친구 검색</h1>
-      <select id="friend-select" onclick={handleSearch}>
-        <option value="하대겸" selected>
-          하대겸
+      <h1>호텔 검색</h1>
+      <select id="hotels-select" onClick={handleSearch}>
+        <option value="호텔1">
+          호텔1
         </option>
-        <option value="하선우">
-          하선우
-        </option>
-        <option value="하동욱">하동욱</option>
+        <option value="호텔2">호텔2</option>
+        <option value="호텔3">호텔3</option>
       </select>
-      <button id="search">검색</button>
+      <button id="hotels-search">검색</button>
     </div>
   );
-}
-
+  }
 export default App;
