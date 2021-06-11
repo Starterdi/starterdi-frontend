@@ -1,3 +1,44 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap');
+*{
+    font-family: 'Noto Sans KR', sans-serif;
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #333;
+}
+
+ul,li{list-style: none;}
+a{text-decoration: none;color: inherit;}
+html,body{min-height: 100%;display: flex;}
+header{
+    width: 350px;
+    min-height: 100%;
+    padding: 4em 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid #ddd;
+}
+
+#logo{display: inline-block; width: 249px;margin: 2em;}
+nav{
+    margin-top: 1em;
+    width: 70%;
+}
+
+nav > ul > li{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    cursor: pointer;
+    margin: 2.5em 0;
+}
+
+nav > ul > li *{transition: 0.2s all;}
+nav > ul > li:hover > svg > path{fill: #E8A2A8;}
+nav > ul > li:hover > svg > g > path{stroke: #E8A2A8;}
+nav > ul > li:hover > a{color: #E8A2A8;}
+
+nav > ul > li > a{
+    font-size: 1.3em;
+    font-weight: bold;
 }
