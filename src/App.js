@@ -6,7 +6,7 @@ function App() {
   const Logo = ()=>{
     return(
       <svg xmlns="http://www.w3.org/2000/svg" width="249" height="48" viewBox="0 0 249 48">
-        <text id="STARTERDY" transform="translate(0 36)" fontSize="40" fontFamily="AppleSDGothicNeoH00" letterSpacing="0.07em"><tspan x="0" y="0">STARTERDY</tspan></text>
+        <text id="STARTERDY" transform="translate(0 36)" fontSize="40" fontWeight="Bold" fontFamily="AppleSDGothicNeoH00" letterSpacing="0.07em"><tspan x="0" y="0">STARTERDY</tspan></text>
       </svg>
     );
   }
@@ -26,12 +26,21 @@ function App() {
   }
 
   const NavItem = (props)=>{
-    return(
-      <li>
-        <NavIcon name={props.name} />
-        <a href="#!">{props.name}</a>
-      </li>
-    );
+    if(props.name === "홈"){
+      return(
+        <li className="select">
+          <NavIcon name={props.name} />
+          <a href="#!">{props.name}</a>
+        </li>
+      );
+    }else{
+      return(
+        <li>
+          <NavIcon name={props.name} />
+          <a href="#!">{props.name}</a>
+        </li>
+      );
+    }
   }
   
   return (

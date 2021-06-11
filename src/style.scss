@@ -31,14 +31,29 @@ nav > ul > li{
     grid-template-columns: 1fr 2fr;
     cursor: pointer;
     margin: 2.5em 0;
+    position: relative;
 }
 
 nav > ul > li *{transition: 0.2s all;}
 nav > ul > li:hover > svg > path{fill: #E8A2A8;}
 nav > ul > li:hover > svg > g > path{stroke: #E8A2A8;}
 nav > ul > li:hover > a{color: #E8A2A8;}
-
 nav > ul > li > a{
     font-size: 1.3em;
     font-weight: bold;
 }
+
+nav > ul > li.select::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 100%;
+    top: 0;
+    left: -29%;
+    background-color: #E8A2A8;
+    border-radius: 20px;
+}
+
+nav > ul > li.select > a{color: #E8A2A8;}
+nav > ul > li.select > svg > path{fill: #E8A2A8;}
+nav > ul > li.select > svg > g > path{stroke: #E8A2A8;}
