@@ -58,6 +58,11 @@ function App() {
     if(status === "light") document.querySelector("html").setAttribute('color-theme','dark');
     else document.querySelector("html").setAttribute('color-theme','light');
   }
+
+  const SearchOpen = ()=>{
+    document.querySelector("#search").classList.toggle("on");
+    console.log("!");
+  }
   
   return (
     <header>
@@ -78,7 +83,7 @@ function App() {
 
       <div id="content_header">
         <div id="content_header_nav">
-          <ContentHeaderNav name="검색" />
+          <div id="search_wrap"><div id="search" onClick={SearchOpen}><input type="text" id="search_input" /><ContentHeaderNav name="검색"/></div></div>
           <ContentHeaderNav name="설정" />
           <ContentHeaderNav name="메세지" />
           <ContentHeaderNav name="알림" />
