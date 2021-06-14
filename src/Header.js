@@ -6,7 +6,7 @@ function App() {
   const Logo = ()=>{
     return(
       <svg xmlns="http://www.w3.org/2000/svg" width="250" height="35" viewBox="0 0 249 48">
-        <text id="STARTERDY" transform="translate(0 36)" fontSize="40" fontWeight="Bold" fontFamily="AppleSDGothicNeoH00" letterSpacing="0.07em"><tspan x="0" y="0">STARTERDY</tspan></text>
+        <text id="STARTERDY" transform="translate(0 36)" fontSize="40" fontWeight="Bold" fontFamily="AppleSDGothicNeoH00" letterSpacing="0.07em" ><tspan x="0" y="0" >STARTERDY</tspan></text>
       </svg>
     );
   }
@@ -48,7 +48,15 @@ function App() {
   }
 
   const ContentHeaderNav = (props)=>{
-    return(<a href="#!"><NavIcon name={props.name}/></a>);
+    if(props.name ==="토글") {
+      return(<div id="toggle" onClick={DarkModeOn}><div id="toggle_icon"></div></div>);
+    }else return(<a href="#!"><NavIcon name={props.name}/></a>);
+  }
+
+  const DarkModeOn = ()=>{
+    let status = document.querySelector("html").getAttribute('color-theme');
+    if(status === "light") document.querySelector("html").setAttribute('color-theme','dark');
+    else document.querySelector("html").setAttribute('color-theme','light');
   }
   
   return (
@@ -74,6 +82,7 @@ function App() {
           <ContentHeaderNav name="설정" />
           <ContentHeaderNav name="메세지" />
           <ContentHeaderNav name="알림" />
+          <ContentHeaderNav name="토글" mode="light"/>
         </div>
         <div id="header_user">
           <div id="header_user_img"></div>
