@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import Header from './Header';
-import Visual from './Visual';
+import Header from './component/Header';
+import Visual from './component/Visual';
 import reportWebVitals from './reportWebVitals';
 import './style.scss'
 

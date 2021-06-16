@@ -2,6 +2,12 @@ import React from 'react';
 //import axios from 'axios';
 
 function App() {
+  const studyList = [
+    {title : "Study 1", subTitle : "Study 1 - sub Title "},
+    {title : "Study 2", subTitle : "Study 2 - sub Title "},
+    {title : "Study 3", subTitle : "Study 3 - sub Title "}
+  ];
+
   const StudyItem = (props) => {
     return(
       <div className="study_item">
@@ -9,7 +15,6 @@ function App() {
         <div className="study_info">
           <h5 className="study_title">{props.title}</h5>
           <p className="study_subTitle">{props.subTitle}</p>
-          <div className="study_mainHash">{props.mainHash}</div>
         </div>
       </div>
     );
@@ -25,10 +30,7 @@ function App() {
           </svg>
         </div>
         <div className="content_body">
-          <StudyItem title="집에가고싶은 스터디" mainHash="학교" subTitle="이제 마지막 교시.." />
-          <StudyItem title="집에가고싶은 스터디" mainHash="학교" subTitle="이제 마지막 교시.." />
-          <StudyItem title="집에가고싶은 스터디" mainHash="학교" subTitle="이제 마지막 교시.." />
-
+          <StudyItem title={studyList[0].title} subTitle={studyList[0].subTitle} />
         </div>
       </section>
     );
