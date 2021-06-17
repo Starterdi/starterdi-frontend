@@ -8,39 +8,37 @@
     outline: none;
 }
 
-:root[color-theme='light']{
-    --main-background-color:#ffffff;
-    --background-color:#f5f5f5;
-    --background2-color:#f5f5f5;
-    --bar-color:#E8A2A8;
-    --color: #333333;
-    --fill: #000;
-    --stroke: #000;
-    --border-color:#333333;
-    --border2-color:#E8A2A8;
-    --nav-color:#888;
-    --nav-color2:#555;
-    --box-shadow : rgba(0,0,0,0.2);
-}
+$main-background-color:#ffffff;
+$background-color:#f5f5f5;
+$background2-color:#f5f5f5;
+$bar-color:#E8A2A8;
+$color: #333333;
+$fill: #000;
+$stroke: #000;
+$border-color:#333333;
+$border2-color:#E8A2A8;
+$nav-color:#888;
+$nav-color2:#555;
+$box-shadow : rgba(0,0,0,0.2);
 
-:root[color-theme='dark']{
-    --main-background-color:#1E1E1E;
-    --background-color:#1E1E1E;
-    --background2-color:#A7A7A7;
-    --bar-color:#f5f5f5;
-    --color: #f5f5f5;
-    --fill: #f5f5f5;
-    --stroke: #f5f5f5;
-    --border-color:#f5f5f5;
-    --border2-color:#3C4042;
-    --nav-color:#aaa;
-    --nav-color2:#ddd;
-    --box-shadow : rgba(255,255,255,0);
-}
+// :root[color-theme='dark']{
+//     $main-background-color:#1E1E1E !global;
+//     $background-color:#1E1E1E !global;
+//     $background2-color:#A7A7A7 !global;
+//     $bar-color:#f5f5f5 !global;
+//     $color: #f5f5f5 !global;
+//     $fill: #f5f5f5 !global;
+//     $stroke: #f5f5f5 !global;
+//     $border-color:#f5f5f5 !global;
+//     $border2-color:#3C4042 !global;
+//     $nav-color:#aaa !global;
+//     $nav-color2:#ddd !global;
+//     $box-shadow : rgba(255,255,255,0) !global;
+// }
 
 ul,li{list-style: none;}
 a{text-decoration: none;color: inherit;}
-html,body{min-height: 100%;display: flex;width: 100%;background-color: var(--main-background-color) !important;color: var(--color) !important;transition: 0.3s;}
+html,body{min-height: 100%;display: flex;width: 100%;background-color: $main-background-color !important;color: $color !important;transition: 0.3s;}
 #root{display: flex;justify-content: flex-end;width: 100%;flex-wrap: wrap;}
 header{
     position: fixed;
@@ -56,12 +54,6 @@ header{
     z-index: 10;
 }
 
-#logo{
-    display: inline-block; width: 249px;margin: 2em;
-
-    svg{fill:var(--fill);transition: 0.3s;}
-}
-
 nav{
     margin-top: 1em;
     width: 70%;
@@ -75,40 +67,40 @@ nav{
             position: relative;
     
             *{transition: 0.3s all;}
-            > a{font-size: 1.3em;font-weight: bold;color: var(--color);}
+            > a{font-size: 1.3em;font-weight: bold;color: $color;}
             svg {
-                > path{fill: var(--fill);}
-                > g > path{stroke: var(--stroke);}
-            }
-        }
-
-        > li.select{
-            ::after {
-                content: '';
-                position: absolute;
-                width: 10px;
-                height: 100%;
-                top: 0;
-                left:-60px;
-                background-color: var(--bar-color);
-                border-radius: 20px;
-                transition: 0.3s all;
-                background-color: #E8A2A8;
+                > path{fill: $fill;}
+                > g > path{stroke: $stroke;}
             }
 
-            > a{color: #E8A2A8;}
-            > svg{
-                > path{fill: #E8A2A8;}
-                > g > path{stroke: #E8A2A8;}
+            &.select{
+                &::after {
+                    content: '';
+                    position: absolute;
+                    width: 10px;
+                    height: 100%;
+                    top: 0;
+                    left:-60px;
+                    background-color: $bar-color;
+                    border-radius: 20px;
+                    transition: 0.3s all;
+                    background-color: #E8A2A8;
+                }
+    
+                > a{color: #E8A2A8;}
+                > svg{
+                    > path{fill: #E8A2A8;}
+                    > g > path{stroke: #E8A2A8;}
+                }
             }
-        }
 
-        > li:hover{
-            ::after{background-color: #ff98a1;}
-            > a{color: #ff98a1;}
-            > svg{
-                > path{fill: #ff98a1;}
-                > g > path{stroke: #ff98a1;}
+            &:hover{
+                &::after{background-color: #ff98a1 !important;}
+                > a{color: #ff98a1 !important;}
+                > svg{
+                    > path{fill: #ff98a1 !important;}
+                    > g > path{stroke: #ff98a1 !important;}
+                }
             }
         }
     }
@@ -126,17 +118,18 @@ nav{
     padding: 0 3em;
     border-bottom: rgba(0, 0, 0, 0);
     background-color: rgba(0, 0, 0, 0);
+
+    &.scroll{
+        background-color: $main-background-color;
+        border-color: $border-color;
+    }
 }
 
-#content_header.scroll{
-    background-color: var(--main-background-color);
-    border-color: var(--border-color);
-}
 
 #header_user{
     width: 70px;
     height: 70px;
-    border: 3px solid var(--border-color);
+    border: 3px solid $border-color;
     border-radius: 100%;
     display: flex;
     justify-content: center;
@@ -144,7 +137,7 @@ nav{
     position: relative;
     transition: 0.3s all;
 
-    ::after{
+    &::after{
         content: '';
         position: absolute;
         width: 20px;
@@ -153,7 +146,7 @@ nav{
         background-color: #3EBF4C;
         bottom: -3px;
         right: -3px;
-        border: 2px solid var(--border-color);
+        border: 2px solid $border-color;
         transition: 0.3s all;
     }
 }
@@ -175,7 +168,7 @@ nav{
     a{
         display: flex;align-items: center;justify-content: center;
         
-        > svg > path{fill:var(--fill);transition: 0.3s;}
+        > svg > path{transition: 0.3s;}
     }
 }
 
@@ -202,18 +195,18 @@ nav{
         font-size: 1.1em;
         font-weight: bold;
     }
-}
 
-#search.on{
-    background-color: var(--main-background-color);
-    box-shadow: inset 0 0 10px var(--box-shadow);
-    > input{display: block;}
+    &.on{
+        background-color: $main-background-color;
+        box-shadow: inset 0 0 10px $box-shadow;
+        > input{display: block;}
+    }
 }
 
 #toggle{
     width: 60px;
     height: 30px;
-    border: 3px solid var(--border-color);
+    border: 3px solid $border-color;
     border-radius: 20px;
     margin-left: 0.5em;
     transition: 0.3s all;
@@ -228,7 +221,7 @@ nav{
     width: 20px;
     height: 20px;
     border-radius: 100%;
-    background-color: var(--border-color);
+    background-color: $border-color;
     transition: 0.3s;
     position: absolute;
     top: 2px;
@@ -246,7 +239,7 @@ nav{
 #visual{
     width: calc(100% - 300px);
     height: 800px;
-    box-shadow: 10px 0 20px var(--box-shadow);
+    box-shadow: 10px 0 20px $box-shadow;
     transition: 0.3s all;
 }
 
@@ -254,7 +247,7 @@ nav{
     width: 100%;
     height: 700px;
     position: relative;
-    background-color: var(--background2-color);
+    background-color: $background2-color;
     overflow: hidden;
     transition: 0.3s;
 }
@@ -289,11 +282,11 @@ nav{
     transition: 0.3s all;
     z-index: 5;
 
-    svg{fill:var(--fill);transition: 0.3s all;}
-    :last-child{right: 0.5em;left: auto;}
+    svg{fill:$fill;transition: 0.3s all;}
+    &:last-child{right: 0.5em;left: auto;}
+    &:hover{opacity: 0.5;}
 }
 
-.visual_nav_btn:hover{opacity: 0.5;}
 .visual_nav_item{
     width: calc(100% / 3);
     height: 100%;
@@ -304,22 +297,20 @@ nav{
     transition: 0.3s;
     border-bottom: 5px solid rgba(0, 0, 0, 0);
     border-top: 5px solid rgba(0, 0, 0, 0);
-}
-
-
-.visual_nav_item:hover{opacity: 0.5;}
-.visual_nav_item.select{
-    border-top: 5px solid #ff98a1;
-
-    .visual_nav_item_img{border-color: var(--border-color);}
-    h5{color: var(--color);}
-    p{color: var(--nav-color2);}
+    &:hover{opacity: 0.5;}
+    &.select{
+        border-top: 5px solid #ff98a1;
+    
+        .visual_nav_item_img{border-color: $border-color;}
+        h5{color: $color;}
+        p{color: $nav-color2;}
+    }
 }
 
 .visual_nav_item_img{
     width: 60px;
     height: 60px;
-    border:2px solid var(--nav-color);
+    border:2px solid $nav-color;
     border-radius: 100%;
     margin-right: 1.5em;
     transition: 0.3s all;
@@ -329,13 +320,13 @@ nav{
 .visual_nav_item_title{
     font-weight: bold;
     font-size: 1.2em;
-    color: var(--nav-color);
+    color: $nav-color;
     transition: 0.3s all;
 }
 
 .visual_nav_item_subTitle{
     font-size: 0.9em;
-    color: var(--nav-color);
+    color: $nav-color;
     transition: 0.3s all;
 }
 
@@ -355,7 +346,7 @@ nav{
             cursor: pointer;
         }
 
-        svg > path{fill:var(--fill) !important;}
+        svg > path{fill:$fill !important;}
     }
 
     .content_body{
@@ -373,7 +364,7 @@ nav{
     height: 250px;
     border-radius: 20px;
     border: 1px solid #ddd;
-    background-color: var(--main-background-color);
+    background-color: $main-background-color;
     margin-right: 1em;
     overflow: hidden;
     cursor: pointer;
@@ -397,5 +388,5 @@ nav{
         margin: 1.3em 0 0.1em 0;
     }
 
-    .study_subTitle{font-size: 0.9em;color: var(--nav-color);}
+    .study_subTitle{font-size: 0.9em;color: $nav-color;}
 }
