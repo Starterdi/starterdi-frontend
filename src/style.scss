@@ -206,7 +206,6 @@ nav{
 #toggle{
     width: 60px;
     height: 30px;
-    border: 3px solid $border-color;
     border-radius: 20px;
     margin-left: 0.5em;
     transition: 0.3s all;
@@ -221,7 +220,6 @@ nav{
     width: 20px;
     height: 20px;
     border-radius: 100%;
-    background-color: $border-color;
     transition: 0.3s;
     position: absolute;
     top: 2px;
@@ -233,8 +231,6 @@ nav{
         right: -40px;
     }
 }
-
-:root[color-theme="dark"] #toggle_icon{right:32.5px}
 
 #visual{
     width: calc(100% - 300px);

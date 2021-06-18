@@ -58,6 +58,14 @@ const NavLi = styled.li`
     }
 `;
 
+const Toggle = styled.div`
+  border : 3px solid ${(props)=>(props.mod === "light" ? "#333333" : "#ffffff")};
+  #toggle_icon {
+    background-color : ${(props)=>(props.mod === "light" ? "#333333" : "#ffffff")};
+    right : ${(props)=>(props.mod === "light" ? "2.5px" : "32.5px")};
+  }
+`;
+
 const NavIcon = (props) =>{
   switch(props.name){
     case "홈" : return(<HomeIcon/>);
@@ -91,9 +99,8 @@ const ContentHeaderNavItem = styled.a`
 
 const ContentHeaderNav = (props)=>{
   const changeMod = () =>{props.changeMod();}
-  if(props.name ==="토글") {
-    return(<div id="toggle" onClick={changeMod}><div id="toggle_icon"></div></div>);
-  }else return(<ContentHeaderNavItem mod={props.mod} href="#!"><NavIcon name={props.name}/></ContentHeaderNavItem>);
+  if(props.name === "토글") return(<Toggle mod={props.mod} id="toggle" onClick={changeMod}><div id="toggle_icon"></div></Toggle>);
+  else return(<ContentHeaderNavItem mod={props.mod} href="#!"><NavIcon name={props.name}/></ContentHeaderNavItem>);
 }
 
 // const SearchOpen = ()=>{
