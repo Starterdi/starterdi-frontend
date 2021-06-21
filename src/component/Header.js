@@ -10,7 +10,7 @@ import BookMarkIcon from '../svg/BookMarkIcon';
 import CalendarIcon from '../svg/CalendarIcon';
 import GoodIcon from '../svg/GoodIcon';
 import MessageIcon from '../svg/MessageIcon';
-import SettingIcon from '../svg/SearchIcon';
+import SettingIcon from '../svg/SettingIcon';
 import StudyRoomIcon from '../svg/StudyRoomIcon';
 import SearchIcon from '../svg/SearchIcon';
 
@@ -66,28 +66,10 @@ const Toggle = styled.div`
   }
 `;
 
-const NavIcon = (props) =>{
-  switch(props.name){
-    case "홈" : return(<HomeIcon/>);
-    case "채팅" : return(<ChatIcon/>);
-    case "커뮤니티" : return(<CommunityIcon/>);
-    case "친구" : return(<FriendIcon/>);
-    case "스터디방" : return(<StudyRoomIcon/>);
-    case "북마크" : return(<BookMarkIcon/>);
-    case "좋아요" : return(<GoodIcon/>);
-    case "일정" : return(<CalendarIcon/>);
-    case "검색" : return(<SearchIcon/>);
-    case "설정" : return(<SettingIcon/>);
-    case "메세지" : return(<MessageIcon/>);
-    case "알림" : return(<AlertIcon/>);
-    default : return(false);
-  }
-}
-
 const NavItem = (props)=>{
   return(
     <NavLi mod={props.mod} className={props.select}>
-      <NavIcon name={props.name} />
+      {props.icon}
       <a href="#!">{props.name}</a>
     </NavLi>
   );
@@ -100,15 +82,12 @@ const ContentHeaderNavItem = styled.a`
 const ContentHeaderNav = (props)=>{
   const changeMod = () =>{props.changeMod();}
   if(props.name === "토글") return(<Toggle mod={props.mod} id="toggle" onClick={changeMod}><div id="toggle_icon"></div></Toggle>);
-  else return(<ContentHeaderNavItem mod={props.mod} href="#!"><NavIcon name={props.name}/></ContentHeaderNavItem>);
+  else return(<ContentHeaderNavItem mod={props.mod} href="#!">{props.icon}</ContentHeaderNavItem>);
 }
-
-// const SearchOpen = ()=>{
-//   document.querySelector("#search").classList.toggle("on");
-// }
 
 const Header = (props) =>{
   const changeMod = () =>{props.changeMod();}
+  const NavItemList = [{key : "홈",select : "select",icon : <HomeIcon/>},{key : "채팅",select : "",icon : <ChatIcon/>},{key : "커뮤니티",select : "",icon : <CommunityIcon />},{key : "친구",select : "",icon : <FriendIcon />},{key : "스터디방",select : "",icon : <StudyRoomIcon />},{key : "북마크",select : "",icon : <BookMarkIcon />},{key : "좋아요",select : "",icon : <GoodIcon />},{key : "일정",select : "",icon : <CalendarIcon />}];
   const mod = props.mod;
 
   return (
@@ -117,24 +96,22 @@ const Header = (props) =>{
 
       <nav>
         <ul>
-          <NavItem mod={mod} select="select" name="홈"/>
-          <NavItem mod={mod} name="채팅"/>
-          <NavItem mod={mod} name="커뮤니티"/>
-          <NavItem mod={mod} name="친구"/>
-          <NavItem mod={mod} name="스터디방"/>
-          <NavItem mod={mod} name="북마크"/>
-          <NavItem mod={mod} name="좋아요"/>
-          <NavItem mod={mod} name="일정"/>
+          {NavItemList.map(navItems=>(<NavItem key={navItems.key} mod={mod} select={navItems.select} name={navItems.key} icon={navItems.icon} />))}
         </ul>
       </nav>
 
       <div id="content_header">
         <div id="content_header_nav">
-          <div id="search_wrap"><div id="search"><input type="text" id="search_input" /><ContentHeaderNav name="검색"/></div></div>
-          <ContentHeaderNav mod={mod} name="설정" />
-          <ContentHeaderNav mod={mod} name="메세지" />
-          <ContentHeaderNav mod={mod} name="알림" />
-          <ContentHeaderNav mod={mod} changeMod={changeMod} name="토글" mode="light"/>
+          <div id="search_wrap">
+            <div id="search">
+              <input type="text" id="search_input" />
+              <ContentHeaderNav icon={<SearchIcon/>} mod={mod} name="검색"/>
+            </div>
+          </div>
+          <ContentHeaderNav icon={<SettingIcon/>} mod={mod} name="설정" />
+          <ContentHeaderNav icon={<MessageIcon/>} mod={mod} name="메세지" />
+          <ContentHeaderNav icon={<AlertIcon/>} mod={mod} name="알림" />
+          <ContentHeaderNav icon="" mod={mod} changeMod={changeMod} name="토글" mode="light"/>
         </div>
         <div id="header_user">
           <div id="header_user_img"></div>
