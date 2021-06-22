@@ -35,25 +35,10 @@ const NavLi = styled.li`
         > path{fill: ${(props)=>(props.mod === "light" ? "#000" : "#f5f5f5")};}
         > g > path{stroke: ${(props)=>(props.mod === "light" ? "#000" : "#f5f5f5")};}
     }
-
-    &.select{
+    
+    &${(props)=>(props.select !== "select")}{
         &::after {
-            content: '';
-            position: absolute;
-            width: 10px;
-            height: 100%;
-            top: 0;
-            left:-60px;
-            background-color: ${(props)=>(props.mod === "light" ? "#E8A2A8" : "#f5f5f5")};
-            border-radius: 20px;
-            transition: 0.3s all;
-            background-color: #E8A2A8;
-        }
-
-        > a{color: #E8A2A8;}
-        > svg{
-            > path{fill: #E8A2A8;}
-            > g > path{stroke: #E8A2A8;}
+          background-color: ${(props)=>(props.mod === "light" ? "#E8A2A8" : "#f5f5f5")};
         }
     }
 `;
@@ -66,9 +51,16 @@ const Toggle = styled.div`
   }
 `;
 
+const HeaderUserImg = styled.div`
+  border : 3px solid ${(props)=>(props.mod === "light" ? "#333333" : "#f5f5f5")};
+  &::after{
+    border : 2px solid ${(props)=>(props.mod === "light" ? "#333333" : "#f5f5f5")};
+  }
+`;
+
 const NavItem = (props)=>{
   return(
-    <NavLi mod={props.mod} className={props.select}>
+    <NavLi mod={props.mod} select={props.select}>
       {props.icon}
       <a href="#!">{props.name}</a>
     </NavLi>
@@ -82,12 +74,13 @@ const ContentHeaderNavItem = styled.a`
 const ContentHeaderNav = (props)=>{
   const changeMod = () =>{props.changeMod();}
   if(props.name === "토글") return(<Toggle mod={props.mod} id="toggle" onClick={changeMod}><div id="toggle_icon"></div></Toggle>);
+  else if(props.name === "검색") return(<div id="search_wrap"><div id="search"><input type="text" id="search_input" /><ContentHeaderNavItem mod={props.mod} href="#!">{props.icon}</ContentHeaderNavItem></div></div>);
   else return(<ContentHeaderNavItem mod={props.mod} href="#!">{props.icon}</ContentHeaderNavItem>);
 }
 
 const Header = (props) =>{
   const changeMod = () =>{props.changeMod();}
-  const NavItemList = [{key : "홈",select : "select",icon : <HomeIcon/>},{key : "채팅",select : "",icon : <ChatIcon/>},{key : "커뮤니티",select : "",icon : <CommunityIcon />},{key : "친구",select : "",icon : <FriendIcon />},{key : "스터디방",select : "",icon : <StudyRoomIcon />},{key : "북마크",select : "",icon : <BookMarkIcon />},{key : "좋아요",select : "",icon : <GoodIcon />},{key : "일정",select : "",icon : <CalendarIcon />}];
+  const NavItemList = [{key : "홈",link : "/",icon : <HomeIcon/>},{key : "채팅",link : "/chat",icon : <ChatIcon/>},{key : "커뮤니티",link : "/community",icon : <CommunityIcon />},{key : "친구",link : "/friend",icon : <FriendIcon />},{key : "스터디방",link : "/studyroom",icon : <StudyRoomIcon />},{key : "북마크",link : "/bookmark",icon : <BookMarkIcon />},{key : "좋아요",link : "/good",icon : <GoodIcon />},{key : "일정",link : "/calendar",icon : <CalendarIcon />}];
   const mod = props.mod;
 
   return (
@@ -96,26 +89,21 @@ const Header = (props) =>{
 
       <nav>
         <ul>
-          {NavItemList.map(navItems=>(<NavItem key={navItems.key} mod={mod} select={navItems.select} name={navItems.key} icon={navItems.icon} />))}
+          {NavItemList.map(navItems=>(<NavItem key={navItems.key} mod={mod} select={navItems.link === "/" ? "select" : ""} name={navItems.key} icon={navItems.icon} />))}
         </ul>
       </nav>
 
       <div id="content_header">
-        <div id="content_header_nav">
-          <div id="search_wrap">
-            <div id="search">
-              <input type="text" id="search_input" />
-              <ContentHeaderNav icon={<SearchIcon/>} mod={mod} name="검색"/>
-            </div>
-          </div>
+          <div id="content_header_nav">
+          <ContentHeaderNav icon={<SearchIcon/>} mod={mod} name="검색" />          
           <ContentHeaderNav icon={<SettingIcon/>} mod={mod} name="설정" />
           <ContentHeaderNav icon={<MessageIcon/>} mod={mod} name="메세지" />
           <ContentHeaderNav icon={<AlertIcon/>} mod={mod} name="알림" />
           <ContentHeaderNav icon="" mod={mod} changeMod={changeMod} name="토글" mode="light"/>
         </div>
-        <div id="header_user">
+        <HeaderUserImg id="header_user" mod={mod} >
           <div id="header_user_img"></div>
-        </div>
+        </HeaderUserImg>
       </div>
     </Head>
   );
