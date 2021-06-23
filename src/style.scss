@@ -158,10 +158,10 @@ nav{
 #content_header_nav{
     margin-right: 3em;
     display: grid;
-    grid-template-columns: auto 50px 50px 50px 100px;
+    grid-template-columns: auto 50px 50px 50px 100px 20px;
     width: calc(100% - 6em - 70px);
 
-    a{
+    > a{
         display: flex;align-items: center;justify-content: center;
         
         > svg > path{transition: 0.3s;}

@@ -13,6 +13,8 @@ import MessageIcon from '../svg/MessageIcon';
 import SettingIcon from '../svg/SettingIcon';
 import StudyRoomIcon from '../svg/StudyRoomIcon';
 import SearchIcon from '../svg/SearchIcon';
+import SunIcon from '../svg/SunIcon';
+import MoonIcon from '../svg/MoonIcon';
 
 const Head = styled.header`
   background-color:${(props)=>(props.mod === "light" ? "#ffffff" : "#1E1E1E")};
@@ -36,12 +38,14 @@ const NavLi = styled.li`
         > g > path{stroke: ${(props)=>(props.mod === "light" ? "#000" : "#f5f5f5")};}
     }
     
-    &${(props)=>(props.select !== "select")}{
+    &.select{
         &::after {
           background-color: ${(props)=>(props.mod === "light" ? "#E8A2A8" : "#f5f5f5")};
         }
     }
 `;
+
+const ContentHeader = styled.div`background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0));`;
 
 const Toggle = styled.div`
   border : 3px solid ${(props)=>(props.mod === "light" ? "#333333" : "#ffffff")};
@@ -60,15 +64,32 @@ const HeaderUserImg = styled.div`
 
 const NavItem = (props)=>{
   return(
-    <NavLi mod={props.mod} select={props.select}>
+    <NavLi mod={props.mod} className={props.select}>
       {props.icon}
       <a href="#!">{props.name}</a>
     </NavLi>
   );
 }
 
-const ContentHeaderNavItem = styled.a`
-  > svg > path{fill:${(props)=>(props.mod === "light" ? "#333333" : "#ffffff")};}
+const ContentHeaderNavItem = styled.a`> svg > path{fill:${(props)=>(props.mod === "light" ? "#333333" : "#ffffff")};}`;
+const ToggleIcon = styled.div`
+  width : 20px;
+  height : 20px;
+  position : relative;
+  overflow : hidden;
+  margin : auto 0;
+  > svg{
+    position : absolute;
+    top : 0;
+    left : 0;
+    width : 20px;
+    height : 20px;
+    transition:0.3s all;
+  }
+
+  >svg:first-child{top:${(props)=>(props.mod === "light" ? "0" : "-20px")}};}
+  >svg:last-child{top:${(props)=>(props.mod === "light" ? "20px" : "0")}};}
+
 `;
 
 const ContentHeaderNav = (props)=>{
@@ -93,18 +114,22 @@ const Header = (props) =>{
         </ul>
       </nav>
 
-      <div id="content_header">
-          <div id="content_header_nav">
+      <ContentHeader id="content_header" mod={mod}>
+        <div id="content_header_nav">
           <ContentHeaderNav icon={<SearchIcon/>} mod={mod} name="검색" />          
           <ContentHeaderNav icon={<SettingIcon/>} mod={mod} name="설정" />
           <ContentHeaderNav icon={<MessageIcon/>} mod={mod} name="메세지" />
           <ContentHeaderNav icon={<AlertIcon/>} mod={mod} name="알림" />
           <ContentHeaderNav icon="" mod={mod} changeMod={changeMod} name="토글" mode="light"/>
+          <ToggleIcon mod={mod}>
+            <SunIcon/>
+            <MoonIcon/>
+          </ToggleIcon>
         </div>
         <HeaderUserImg id="header_user" mod={mod} >
           <div id="header_user_img"></div>
         </HeaderUserImg>
-      </div>
+      </ContentHeader>
     </Head>
   );
 }
