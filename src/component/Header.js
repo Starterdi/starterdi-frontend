@@ -45,7 +45,10 @@ const NavLi = styled.li`
     }
 `;
 
-const ContentHeader = styled.div`background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0));`;
+const ContentHeader = styled.div`
+  background-color:${(props)=>(props.mod === "light" ? "#ffffff" : "#1E1E1E")};
+  transition : 0.3s;
+`;
 
 const Toggle = styled.div`
   border : 3px solid ${(props)=>(props.mod === "light" ? "#333333" : "#ffffff")};
@@ -57,9 +60,19 @@ const Toggle = styled.div`
 
 const HeaderUserImg = styled.div`
   border : 3px solid ${(props)=>(props.mod === "light" ? "#333333" : "#f5f5f5")};
+  > #header_user_img {
+    overflow : hidden;
+    img{
+      width :100%;
+      height : 100% ;
+    }
+  }
+
   &::after{
     border : 2px solid ${(props)=>(props.mod === "light" ? "#333333" : "#f5f5f5")};
   }
+
+  
 `;
 
 const NavItem = (props)=>{
@@ -127,7 +140,8 @@ const Header = (props) =>{
           </ToggleIcon>
         </div>
         <HeaderUserImg id="header_user" mod={mod} >
-          <div id="header_user_img"></div>
+          <div id="header_user_img">
+          </div>
         </HeaderUserImg>
       </ContentHeader>
     </Head>
