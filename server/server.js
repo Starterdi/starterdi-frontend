@@ -1,8 +1,7 @@
 const express =  require('express');
 const app = express();
 // const bodyParser = require('body-parser');
-// console.log
-const port = 3001;
+const port = 2020;
 const cors = require('cors');
 // const route = require('./routes/index');
 
@@ -18,4 +17,4 @@ app.post('/text', (req, res)=> {
 
 app.listen(port, ()=> {
     console.log(`express is running on ${port}`);
-})
+});

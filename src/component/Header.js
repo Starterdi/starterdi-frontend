@@ -40,7 +40,7 @@ const NavLi = styled.li`
     
     &.select{
         &::after {
-          background-color: ${(props)=>(props.mod === "light" ? "#E8A2A8" : "#f5f5f5")};
+          background-color: #E8A2A8
         }
     }
 `;
@@ -100,9 +100,8 @@ const ToggleIcon = styled.div`
     transition:0.3s all;
   }
 
-  >svg:first-child{top:${(props)=>(props.mod === "light" ? "0" : "-20px")}};}
-  >svg:last-child{top:${(props)=>(props.mod === "light" ? "20px" : "0")}};}
-
+  > svg:first-child{top:${(props)=>(props.mod === "light" ? "0" : "-20px")}};}
+  > svg:last-child{top:${(props)=>(props.mod === "light" ? "20px" : "0")}};}
 `;
 
 const ContentHeaderNav = (props)=>{
