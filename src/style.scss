@@ -59,7 +59,7 @@ nav{
     width: 70%;
 
     > ul{
-        > li{
+         li{
             display: grid;
             grid-template-columns: 1fr 2fr;
             cursor: pointer;
@@ -67,7 +67,7 @@ nav{
             position: relative;
     
             *{transition: 0.3s all;}
-            > a{font-size: 1.3em;font-weight: bold;color: $color;}
+            > span{font-size: 1.3em;font-weight: bold;color: $color;}
             svg {
                 > path{fill: $fill;}
                 > g > path{stroke: $stroke;}
@@ -85,7 +85,7 @@ nav{
                     transition: 0.3s all;
                 }
     
-                > a{color: #E8A2A8;}
+                > span{color: #E8A2A8;}
                 > svg{
                     > path{fill: #E8A2A8;}
                     > g > path{stroke: #E8A2A8;}
@@ -94,7 +94,7 @@ nav{
 
             &:hover{
                 &::after{background-color: #ff98a1 !important;}
-                > a{color: #ff98a1 !important;}
+                > span{color: #ff98a1 !important;}
                 > svg{
                     > path{fill: #ff98a1 !important;}
                     > g > path{stroke: #ff98a1 !important;}

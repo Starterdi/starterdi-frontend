@@ -15,16 +15,18 @@ import StudyRoomIcon from '../svg/StudyRoomIcon';
 import SearchIcon from '../svg/SearchIcon';
 import SunIcon from '../svg/SunIcon';
 import MoonIcon from '../svg/MoonIcon';
+import { Link } from 'react-router-dom';
 
 const Head = styled.header`
   background-color:${(props)=>(props.mod === "light" ? "#ffffff" : "#1E1E1E")};
   transition : 0.3s all;
 `;
 
-const Logo = styled.a`
+const Logo = styled.div`
     display : inline-block;
     width : 250px;
     margin : 2em;
+    cursor : pointer;
     svg{
       fill : ${(props)=>(props.mod === "light" ? "#000" : "#f5f5f5")};
       transition : 0.3s;
@@ -32,7 +34,7 @@ const Logo = styled.a`
 `;
 
 const NavLi = styled.li`
-    > a{font-size: 1.3em;font-weight: bold;color:${(props)=>(props.mod === "light" ? "#333333" : "#f5f5f5")};}
+    > span{font-size: 1.3em;font-weight: bold;color:${(props)=>(props.mod === "light" ? "#333333" : "#f5f5f5")};}
     svg {
         > path{fill: ${(props)=>(props.mod === "light" ? "#000" : "#f5f5f5")};}
         > g > path{stroke: ${(props)=>(props.mod === "light" ? "#000" : "#f5f5f5")};}
@@ -48,6 +50,9 @@ const NavLi = styled.li`
 const ContentHeader = styled.div`
   background-color:${(props)=>(props.mod === "light" ? "#ffffff" : "#1E1E1E")};
   transition : 0.3s;
+  * {
+    transition : 0.3s;
+  }
 `;
 
 const Toggle = styled.div`
@@ -77,10 +82,12 @@ const HeaderUserImg = styled.div`
 
 const NavItem = (props)=>{
   return(
-    <NavLi mod={props.mod} className={props.select}>
-      {props.icon}
-      <a href="#!">{props.name}</a>
-    </NavLi>
+    <Link to={props.link}>
+      <NavLi mod={props.mod} className={props.select}>
+        {props.icon}
+        <span>{props.name}</span>
+      </NavLi>
+    </Link>
   );
 }
 
@@ -113,16 +120,16 @@ const ContentHeaderNav = (props)=>{
 
 const Header = (props) =>{
   const changeMod = () =>{props.changeMod();}
-  const NavItemList = [{key : "홈",link : "/",icon : <HomeIcon/>},{key : "채팅",link : "/chat",icon : <ChatIcon/>},{key : "커뮤니티",link : "/community",icon : <CommunityIcon />},{key : "친구",link : "/friend",icon : <FriendIcon />},{key : "스터디방",link : "/studyroom",icon : <StudyRoomIcon />},{key : "북마크",link : "/bookmark",icon : <BookMarkIcon />},{key : "좋아요",link : "/good",icon : <GoodIcon />},{key : "일정",link : "/calendar",icon : <CalendarIcon />}];
+  const NavItemList = [{key : "홈",link : "/main",icon : <HomeIcon/>},{key : "채팅",link : "/chat",icon : <ChatIcon/>},{key : "커뮤니티",link : "/community",icon : <CommunityIcon />},{key : "친구",link : "/friend",icon : <FriendIcon />},{key : "스터디방",link : "/studyroom",icon : <StudyRoomIcon />},{key : "북마크",link : "/bookmark",icon : <BookMarkIcon />},{key : "좋아요",link : "/good",icon : <GoodIcon />},{key : "일정",link : "/calendar",icon : <CalendarIcon />}];
   const mod = props.mod;
 
   return (
     <Head mod={mod}>
-      <Logo href="#!" id="logo" mod={mod}><LogoSvg/></Logo>
+      <Logo id="logo" mod={mod}><Link to="/main"><LogoSvg/></Link></Logo>
 
       <nav>
         <ul>
-          {NavItemList.map(navItems=>(<NavItem key={navItems.key} mod={mod} select={navItems.link === "/" ? "select" : ""} name={navItems.key} icon={navItems.icon} />))}
+          {NavItemList.map(navItems=>(<NavItem key={navItems.key} mod={mod} link={navItems.link} select={navItems.link === "/main" ? "select" : ""} name={navItems.key} icon={navItems.icon} />))}
         </ul>
       </nav>
 
