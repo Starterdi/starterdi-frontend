@@ -257,7 +257,6 @@ nav{
     display: flex;
     align-items: center;
     position: relative;
-    border-bottom: 1px solid #fff;
 }
 
 .visual_nav_btn{
@@ -290,10 +289,6 @@ nav{
     &:hover{opacity: 0.5;}
     &.select{
         border-top: 5px solid #ff98a1;
-    
-        .visual_nav_item_img{border-color: $border-color;}
-        h5{color: $color;}
-        p{color: $nav-color2;}
     }
 }
 
@@ -338,7 +333,6 @@ nav{
     height: 250px;
     border-radius: 20px;
     border: 1px solid #ddd;
-    background-color: $main-background-color;
     margin-right: 1em;
     overflow: hidden;
     cursor: pointer;
@@ -361,6 +355,4 @@ nav{
         font-size: 1.2em;
         margin: 1.3em 0 0.1em 0;
     }
-
-    .study_subTitle{font-size: 0.9em;color: $nav-color;}
 }

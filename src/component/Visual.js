@@ -7,6 +7,7 @@ import ListIcon from '../svg/ListIcon';
 const VisualNavStyle = styled.div`
   background-color : ${(props)=>(props.mod === "light" ? "#fff" : "#1E1E1E")};
   box-shadow : 10px 0 20px ${(props)=>(props.mod === "light" ? "rgba(0,0,0,0.2)" : "rgba(0,0,0,0)")};
+  border-bottom : 1px solid ${(props)=>(props.mod === "light" ? "#fff" : "rgba(232,162,168,0.38)")};
   transition : 0.3s;
 `;
 

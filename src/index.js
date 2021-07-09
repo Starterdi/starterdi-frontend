@@ -7,11 +7,10 @@ import reportWebVitals from './reportWebVitals';
 import './style.scss';
 
 ReactDOM.render(
-  // basepath="5/"
-  <BrowserRouter>
+  <BrowserRouter basepath="main">
     <Switch>
-      <Route path='/main' component={Home} />
-      <Route path='/chat' component={Chat} />
+      <Route path='/' exact component={Home} />
+      <Route path='/chat' component={Chat}/>
     </Switch>
   </BrowserRouter>,
   document.getElementById('root')
