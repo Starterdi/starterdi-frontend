@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import HomeContentArrowIcon from '../svg/HomeContentArrowIcon';
 
 const HomeContentStyled = styled.div`
- background-color : ${(props)=>(props.mod === "light" ? "#ffffff" : "#303030")}};
+ background-color : ${(props)=>(props.mod === "light" ? "#ffffff" : "#1E1E1E")}};
  transition : 0.3s;
  color : ${(props)=>(props.mod === "light" ? "#333" : "#f5f5f5")};
  svg > path {
@@ -13,7 +13,7 @@ const HomeContentStyled = styled.div`
 `;
 
 const StudyItemStyled = styled.div`
- background-color : ${(props)=>(props.mod === "light" ? "#ffffff" : "#303030")};
+ background-color : ${(props)=>(props.mod === "light" ? "#ffffff" : "#1E1E1E")};
  transition : 0.3s background-color;
 `;
 
