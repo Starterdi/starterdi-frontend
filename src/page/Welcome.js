@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useEffect,useState} from 'react';
 import styled , { keyframes } from 'styled-components';
+import { Link } from 'react-router-dom';
 import mainCharacter from '../image/mainCharacter.png';
 import mainCharacter2 from '../image/mainCharacter2.png';
 import welcomeAlphabetA from '../image/welcomeAlphabetA.png';
@@ -35,7 +36,6 @@ const WelcomePage = styled.div`
     align-items:center;
     overflow:hidden;
 `;
-
 
 const WelcomeBtn = styled.button`
     margin-top : 5em;
@@ -78,6 +78,9 @@ const WelcomeImg = styled.div`
     > img{
         transform : rotate(${(props)=>props.rotate ? props.rotate : "0"});
     }
+
+    transition : opacity 0.3s;
+    opacity : ${(props)=>(props.hover ? 0.1 : 1)};
 `;
 
 const WelcomeImgBox = styled.div`
@@ -87,7 +90,7 @@ const WelcomeImgBox = styled.div`
 
 const WelcomeImgs = (props)=>{
     return(
-        <WelcomeImg rotate={props.rotate} position={props.position} left={props.left} top={props.top} animation={props.animation} delay={props.delay}><img src={props.imgSrc} alt={props.imgAlt} /></WelcomeImg>
+        <WelcomeImg hover={props.hover} rotate={props.rotate} position={props.position} left={props.left} top={props.top} animation={props.animation} delay={props.delay}><img src={props.imgSrc} alt={props.imgAlt} /></WelcomeImg>
     );
 }
 
@@ -302,12 +305,21 @@ const Welcome = () =>{
         },
     ]
 
+    const [hover,setHover] = useState(0);
+    const HoverEffect = () =>{
+        setHover(hover ? false : true);
+    }
+
+    useEffect(()=>{
+
+    });
+
     return(
         <WelcomePage>
             <WelcomeImgBox>
-                {WelcomeImgList.map(Img=>(<WelcomeImgs rotate={Img.rotate} delay={Img.delay} position={Img.position} top={Img.top} left={Img.left} animation={Img.animation} imgSrc={Img.key} alt={Img.key}/>))}
+                {WelcomeImgList.map(Img=>(<WelcomeImgs rotate={Img.rotate} delay={Img.delay} position={Img.position} top={Img.top} left={Img.left} animation={Img.animation} imgSrc={Img.key} alt={Img.key} hover={hover} />))}
             </WelcomeImgBox>
-            <WelcomeBtn>시작하기</WelcomeBtn>
+            <Link to="/login"><WelcomeBtn onMouseOver={HoverEffect} onMouseOut={HoverEffect}>시작하기</WelcomeBtn></Link>
         </WelcomePage>
     )
 }
