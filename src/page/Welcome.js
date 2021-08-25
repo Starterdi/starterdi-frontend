@@ -92,33 +92,220 @@ const WelcomeImgs = (props)=>{
 }
 
 const Welcome = () =>{
+    const WelcomeImgList = [
+        {
+            key:mainCharacter,
+            delay:"0s",
+            position:"relative",
+            top:"0",
+            left:"0",
+            rotate:"0deg",
+            animation:""
+        },
+        {
+            key:mainCharacter2,
+            delay:"-0.5s",
+            position:"relative",
+            top:"0",
+            left:"0",
+            rotate:"0deg",
+            animation:""
+        },
+        {
+            key:welcomeAlphabetA,
+            delay:"0s",
+            position:"absolute",
+            top:"50%",
+            left:"110%",
+            rotate:"30deg",
+            animation:WelcomeImgAnimate2
+        },
+        {
+            key:welcomeAlphabetR,
+            delay:"0s",
+            position:"absolute",
+            top:"-70%",
+            left:"120%",
+            rotate:"-40deg",
+            animation:WelcomeImgAnimate2
+        },
+        {
+            key:welcomeAlphabetS,
+            delay:"0s",
+            position:"absolute",
+            top:"-60%",
+            left:"-70%",
+            rotate:"10deg",
+            animation:WelcomeImgAnimate2
+        },
+        {
+            key:welcomeAlphabetE,
+            delay:"0s",
+            position:"absolute",
+            top:"70%",
+            left:"-40%",
+            rotate:"-20deg",
+            animation:WelcomeImgAnimate2
+        },
+        {
+            key:welcomeBorderBlueCircle,
+            delay:"0s",
+            position:"absolute",
+            top:"-10%",
+            left:"118%",
+            rotate:"0deg",
+            animation:WelcomeImgAnimate
+        },
+        {
+            key:welcomeBorderGreenCircle,
+            delay:"0s",
+            position:"absolute",
+            top:"60%",
+            left:"-20%",
+            rotate:"0deg",
+            animation:WelcomeImgAnimate
+        },
+        {
+            key:welcomeBorderPinkCircle,
+            delay:"0s",
+            position:"absolute",
+            top:"160%",
+            left:"110%",
+            rotate:"0deg",
+            animation:WelcomeImgAnimate
+        },
+        {
+            key:welcomeLargeRectangleBlue,
+            delay:"0s",
+            position:"absolute",
+            top:"170%",
+            left:"-50%",
+            rotate:"0deg",
+            animation:WelcomeImgAnimate
+        },
+        {
+            key:welcomeLargeRectanglePink,
+            delay:"0s",
+            position:"absolute",
+            top:"100%",
+            left:"-70%",
+            rotate:"0deg",
+            animation:WelcomeImgAnimate
+        },
+        {
+            key:welcomeLargeRectangleYellow,
+            delay:"0s",
+            position:"absolute",
+            top:"-40%",
+            left:"170%",
+            rotate:"0deg",
+            animation:WelcomeImgAnimate
+        },
+        {
+            key:welcomeLargeWhiteCircle,
+            delay:"0s",
+            position:"absolute",
+            top:"40%",
+            left:"150%",
+            rotate:"0deg",
+            animation:WelcomeImgAnimate
+        },
+        {
+            key:welcomeLargeYellowCircle,
+            delay:"0s",
+            position:"absolute",
+            top:"-60%",
+            left:"-70%",
+            rotate:"0deg",
+            animation:WelcomeImgAnimate
+        },
+        {
+            key:welcomeMiddleGreenCircle,
+            delay:"0s",
+            position:"absolute",
+            top:"180%",
+            left:"70%",
+            rotate:"0deg",
+            animation:WelcomeImgAnimate
+        },
+        {
+            key:welcomeMiddlePinkCircle,
+            delay:"0s",
+            position:"absolute",
+            top:"130%",
+            left:"160%",
+            rotate:"0deg",
+            animation:WelcomeImgAnimate
+        },
+        {
+            key:welcomeMiddlePurpleCircle,
+            delay:"0s",
+            position:"absolute",
+            top:"-55%",
+            left:"140%",
+            rotate:"0deg",
+            animation:WelcomeImgAnimate
+        },
+        {
+            key:welcomeMiddleWhiteCircle,
+            delay:"0s",
+            position:"absolute",
+            top:"-25%",
+            left:"30%",
+            rotate:"0deg",
+            animation:WelcomeImgAnimate
+        },
+        {
+            key:welcomeSmallBlueCircle,
+            delay:"0s",
+            position:"absolute",
+            top:"160%",
+            left:"-70%",
+            rotate:"0deg",
+            animation:WelcomeImgAnimate
+        },
+        {
+            key:welcomeSmallDarkCircle,
+            delay:"0s",
+            position:"absolute",
+            top:"180%",
+            left:"0%",
+            rotate:"0deg",
+            animation:WelcomeImgAnimate
+        },
+        {
+            key:welcomeSmallPurpleCircle,
+            delay:"0s",
+            position:"absolute",
+            top:"-30%",
+            left:"50%",
+            rotate:"0deg",
+            animation:WelcomeImgAnimate
+        },
+        {
+            key:welcomeSmallWhiteCircle,
+            delay:"0s",
+            position:"absolute",
+            top:"120%",
+            left:"190%",
+            rotate:"0deg",
+            animation:WelcomeImgAnimate
+        },
+        {
+            key:welcomeSmallYellowCircle,
+            delay:"0s",
+            position:"absolute",
+            top:"100%",
+            left:"50%",
+            rotate:"0deg",
+            animation:WelcomeImgAnimate
+        },
+    ]
 
     return(
         <WelcomePage>
             <WelcomeImgBox>
-                <WelcomeImgs imgSrc={mainCharacter} alt="mainCharacter" />
-                <WelcomeImgs delay="-0.5s" imgSrc={mainCharacter2} alt="mainCharacter2" />
-                <WelcomeImgs rotate="10deg" position="absolute" top="-60%" left="-70%" animation={WelcomeImgAnimate2} imgSrc={welcomeAlphabetS} alt="welcomeAlphabetS" />
-                <WelcomeImgs rotate="-20deg" position="absolute" top="70%" left="-40%" animation={WelcomeImgAnimate2} imgSrc={welcomeAlphabetE} alt="welcomeAlphabetE" />
-                <WelcomeImgs rotate="-40deg" position="absolute" top="-70%" left="120%" animation={WelcomeImgAnimate2} imgSrc={welcomeAlphabetR} alt="welcomeAlphabetR" />
-                <WelcomeImgs rotate="30deg" position="absolute" top="50%" left="110%" animation={WelcomeImgAnimate2} imgSrc={welcomeAlphabetA} alt="welcomeAlphabetA" />
-                <WelcomeImgs position="absolute" top="-10%" left="118%" imgSrc={welcomeBorderBlueCircle} alt="welcomeBorderBlueCircle" />
-                <WelcomeImgs position="absolute" top="60%" left="-20%" imgSrc={welcomeBorderGreenCircle} alt="welcomeBorderGreenCircle" />
-                <WelcomeImgs position="absolute" top="160%" left="110%" imgSrc={welcomeBorderPinkCircle} alt="welcomeBorderPinkCircle" />
-                <WelcomeImgs position="absolute" top="170%" left="-50%" imgSrc={welcomeLargeRectangleBlue} alt="welcomeLargeRectangleBlue" />
-                <WelcomeImgs position="absolute" top="100%" left="-70%" imgSrc={welcomeLargeRectanglePink} alt="welcomeLargeRectanglePink" />
-                <WelcomeImgs position="absolute" top="-40%" left="170%" imgSrc={welcomeLargeRectangleYellow} alt="welcomeLargeRectangleYellow" />
-                <WelcomeImgs position="absolute" top="40%" left="150%" imgSrc={welcomeLargeWhiteCircle} alt="welcomeLargeWhiteCircle" />
-                <WelcomeImgs position="absolute" top="-60%" left="-70%" imgSrc={welcomeLargeYellowCircle} alt="welcomeLargeYellowCircle" />
-                <WelcomeImgs position="absolute" top="180%" left="70%" imgSrc={welcomeMiddleGreenCircle} alt="welcomeMiddleGreenCircle" />
-                <WelcomeImgs position="absolute" top="130%" left="160%" imgSrc={welcomeMiddlePinkCircle} alt="welcomeMiddlePinkCircle" />
-                <WelcomeImgs position="absolute" top="-55%" left="140%" imgSrc={welcomeMiddlePurpleCircle} alt="welcomeMiddlePurpleCircle" />
-                <WelcomeImgs position="absolute" top="-25%" left="30%" imgSrc={welcomeMiddleWhiteCircle} alt="welcomeMiddleWhiteCircle" />
-                <WelcomeImgs position="absolute" top="160%" left="-70%" imgSrc={welcomeSmallBlueCircle} alt="welcomeSmallBlueCircle" />
-                <WelcomeImgs position="absolute" top="180%" left="0%" imgSrc={welcomeSmallDarkCircle} alt="welcomeSmallDarkCircle" />
-                <WelcomeImgs position="absolute" top="-30%" left="50%" imgSrc={welcomeSmallPurpleCircle} alt="welcomeSmallPurpleCircle" />
-                <WelcomeImgs position="absolute" top="120%" left="190%" imgSrc={welcomeSmallWhiteCircle} alt="welcomeSmallWhiteCircle" />
-                <WelcomeImgs position="absolute" top="100%" left="50%" imgSrc={welcomeSmallYellowCircle} alt="welcomeSmallYellowCircle" />
+                {WelcomeImgList.map(Img=>(<WelcomeImgs rotate={Img.rotate} delay={Img.delay} position={Img.position} top={Img.top} left={Img.left} animation={Img.animation} imgSrc={Img.key} alt={Img.key}/>))}
             </WelcomeImgBox>
             <WelcomeBtn>시작하기</WelcomeBtn>
         </WelcomePage>
