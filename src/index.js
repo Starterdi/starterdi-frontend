@@ -11,7 +11,7 @@ import './style.scss';
 ReactDOM.render(
   <BrowserRouter basepath="welcome">
     <Switch>
-      <Route path='/welcome' component={Welcome} />
+      <Route path='/' exact component={Welcome} />
       <Route path='/main' component={Home} />
       <Route path='/chat' component={Chat}/>
       <Route path='/login' component={Login}/>
