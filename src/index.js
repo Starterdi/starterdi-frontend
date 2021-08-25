@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter,Switch,Route } from 'react-router-dom';
 import Home from './page/Home';
 import Chat from './page/Chat';
+import Welcome from './page/Welcome';
 import reportWebVitals from './reportWebVitals';
 import './style.scss';
 
 ReactDOM.render(
-  <BrowserRouter basepath="main">
+  <BrowserRouter basepath="welcome">
     <Switch>
-      <Route path='/' exact component={Home} />
+      <Route path='/welcome' component={Welcome} />
+      <Route path='/main' component={Home} />
       <Route path='/chat' component={Chat}/>
     </Switch>
   </BrowserRouter>,
