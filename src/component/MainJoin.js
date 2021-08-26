@@ -16,6 +16,7 @@ const JoinBox = styled.div`
 const JoinTitle = styled.h1`
     line-height:1.5em;
     font-size :3em;
+    margin-bottom : 1em;
 `;
 
 const JoinForm = styled.form`
@@ -83,7 +84,7 @@ const MainJoin = (props) =>{
 
     return(
         <JoinBox>
-            <JoinTitle>스타터디 회원이<br/>되시겠습니까?</JoinTitle>
+            <JoinTitle>회원가입</JoinTitle>
             <JoinForm>
                 <JoinFormBox>
                     <HumanIcon/>

@@ -107,16 +107,12 @@ const JoinStep = styled.div`
     display : flex;
     align-items : center;
     justify-content : space-between;
-    :hover > p {
-        color : #E8A2A8;
-    }
 `;
 
 const JoinStepTitle = styled.p`
     font-size : 1.3em;
     transition : 0.3s;
     color : ${(props)=>(props.path ? "#E8A2A8" : "#333")};
-    cursor : pointer;
 `;
 
 const JoinStepCircle = styled.div`
