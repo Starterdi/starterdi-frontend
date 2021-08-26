@@ -1,11 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
+import Wave from 'react-wavify';
+import { BrowserRouter,Switch,Route } from 'react-router-dom';
 import loginMainCharacter from '../image/loginMainCharacter.png';
 import loginAlphabetD from '../image/loginAlphabetD.png';
-import loginDownWave from '../image/loginDownWave.png';
-import loginUpWave from '../image/loginUpWave.png';
-import HumanIcon from '../svg/HumanIcon';
-import LockIcon from '../svg/LockIcon';
+import MainLogin from '../component/MainLogin';
+import OtherLogin from '../component/OtherLogin';
+
 
 const LoginPage = styled.div`
     position:relative;
@@ -13,6 +14,50 @@ const LoginPage = styled.div`
     height:100%;
     background-color:#FFFFFF;
     overflow:hidden;
+
+    .loginWave{
+        position:absolute;
+        transform :rotate(145deg);
+        height:400px;
+        width:200px;
+        left : -20%;
+        top:-33%;
+        opacity : 0.2;
+
+        &.second{
+            opacity:0.3;
+            left:-20%;
+            top:-40%;
+        }
+
+        &.third{
+            opacity : 0.8;
+            left:-30%;
+            top:-25%;
+            transform :rotate(155deg);
+        }
+
+        &.down{
+            transform:rotate(-30deg);
+            top:auto;
+            bottom:-10%;
+            left : auto;
+            right : -30%;
+
+            &.second{
+                opacity:0.3;
+                right:-20%;
+                bottom:-25%;
+            }
+    
+            &.third{
+                opacity : 0.8;
+                right:-30%;
+                bottom:-15%;
+                transform :rotate(-25deg);
+            }
+        }
+    }
 `;
 
 const LoginImg = styled.div`
@@ -24,67 +69,101 @@ const LoginImg = styled.div`
     > img{
         width : ${(props)=>(props.imgSize ? props.imgSize : "auto")};
     }
+
+    animation-name : ${(props)=>(props.animation ? props.animation : "")};
+    animation-duration : 2s;
+    animation-iteration-count: infinite;
+    animation-delay : ${(props)=>(props.delay ? props.delay : "0s")};
 `;
 
-const LoginBox = styled.div`
-    width:40%;
-    height:60%;
-    position:absolute;
-    top:20%;
-    left:10%;
-    padding:3em 5em;
+const WelcomeImgAnimate = keyframes`
+  0% {transform:translateY(0%);}
+  50% {transform:translateY(-2%);}
+  100% {transform:translateY(0%);}
 `;
 
-const LoginTitle = styled.h1`
-    line-height:1.8em;
-    font-size:3em;
-    font-weight:bold;
-    margin-bottom : 1em;
-`;
-
-const LoginInput = styled.input`
-    border:none;
-    background-color:rgba(0,0,0,0);
-    margin-left : 1em;
-    width : 90%;
-    font-size : 1.1em;
-    font-weight : bold;
-`;
-
-const LoginArea = styled.div`
-    background-color:#EEEEEE;
-    width : 70%;
-    padding : 1em;
-    border-radius : 10px;
-    display : flex;
-    align-items:center;
-    margin-bottom:1em;
-    > svg{
-        width :25px;
-    }
-`;
+const MakeWave = (props) =>{
+    return(
+        <Wave className={props.name} fill={props.color} paused={false} options={{
+            height:props.height,
+            amplitude:props.amplitude,
+            speed:props.speed,
+            points:props.points,
+        }} />
+    );
+}
 
 const Login = ()=>{
+    const MainLoginWaveList = [
+        {
+            key:1,
+            name:"loginWave",
+            color:"#E8A2A8",
+            height:90,
+            amplitude:30,
+            speed:0.7,
+            points:5
+        },
+        {
+            key:2,
+            name:"loginWave second",
+            color:"#E8A2A8",
+            height:50,
+            amplitude:50,
+            speed:0.4,
+            points:5
+        },
+        {
+            key:3,
+            name:"loginWave third",
+            color:"#E8A2A8",
+            height:50,
+            amplitude:50,
+            speed:0.3,
+            points:5
+        },
+        {
+            key:4,
+            name:"down loginWave",
+            color:"#E8A2A8",
+            height:90,
+            amplitude:30,
+            speed:0.7,
+            points:5
+        },
+        {
+            key:5,
+            name:"down loginWave second",
+            color:"#E8A2A8",
+            height:50,
+            amplitude:50,
+            speed:0.4,
+            points:5
+        },
+        {
+            key:6,
+            name:"down loginWave third",
+            color:"#E8A2A8",
+            height:50,
+            amplitude:50,
+            speed:0.3,
+            points:5
+        },
+    ];
+
     return(
         <LoginPage>
-            <LoginImg top="25%" left="100px" imgSize="250px"><img src={loginAlphabetD} alt="loginAlphabetD" /></LoginImg>
-            <LoginImg top="15%" right="100px" imgSize="800px"><img src={loginMainCharacter} alt="loginMainCharacter"/></LoginImg>
-            <LoginImg top="-15%" left="-21%"><img src={loginUpWave} alt="loginUpWave" /></LoginImg>
-            <LoginImg bottom="-18%" right="-11%"><img src={loginDownWave} alt="loginDownWave" /></LoginImg>
+            <LoginImg delay="-0.3s" animation={WelcomeImgAnimate} top="30%" left="100px" imgSize="250px"><img src={loginAlphabetD} alt="loginAlphabetD" /></LoginImg>
+            <LoginImg animation={WelcomeImgAnimate} top="15%" right="200px" imgSize="800px"><img src={loginMainCharacter} alt="loginMainCharacter"/></LoginImg>
 
-            <LoginBox>
-                <LoginTitle>스타터디에 오신것을<br/>환영합니다!</LoginTitle>
-                <form>
-                    <LoginArea>
-                        <HumanIcon/>
-                        <LoginInput type="text" placeholder="아이디" />
-                    </LoginArea>
-                    <LoginArea>
-                        <LockIcon/>
-                        <LoginInput type="password" placeholder="비밀번호" />
-                    </LoginArea>
-                </form>
-            </LoginBox>            
+            <BrowserRouter>
+                <Switch>
+                    <Route path='/login' exact component={MainLogin} />
+                    <Route path='/login/other' exact component={OtherLogin} />
+                </Switch>
+            </BrowserRouter>
+
+            {MainLoginWaveList.map(Options=>(<MakeWave name={Options.name} color={Options.color} height={Options.height} amplitude={Options.amplitude} speed={Options.speed} points={Options.points} />))}
         </LoginPage>
     );
 }
