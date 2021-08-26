@@ -1,8 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, {useState} from 'react';
+import styled, {keyframes} from 'styled-components';
 import Wave from 'react-wavify';
-import { BrowserRouter,Switch,Route } from 'react-router-dom';
+import { Route} from 'react-router-dom';
 import MainJoin from '../component/MainJoin';
+import InfoJoin from '../component/InfoJoin';
+import ProfileJoin from '../component/ProfileJoin';
+import loginMainCharacter from '../image/loginMainCharacter.png';
 
 const JoinPage = styled.div`
     position:relative;
@@ -43,17 +46,87 @@ const JoinPage = styled.div`
             &.second{
                 opacity:0.3;
                 right:-20%;
-                bottom:-25%;
+                bottom:-30%;
             }
     
             &.third{
                 opacity : 0.8;
                 right:-30%;
-                bottom:-15%;
+                bottom:-25%;
                 transform :rotate(-25deg);
             }
         }
     }
+`;
+
+const LoginImg = styled.div`
+    position : absolute;
+    top : ${(props)=>(props.top ? props.top : "auto")};
+    right : ${(props)=>(props.right ? props.right : "auto")};
+    left : ${(props)=>(props.left ? props.left : "auto")};
+    bottom : ${(props)=>(props.bottom ? props.bottom : "auto")};
+    > img{
+        width : ${(props)=>(props.imgSize ? props.imgSize : "auto")};
+    }
+
+    animation-name : ${(props)=>(props.animation ? props.animation : "")};
+    animation-duration : 2s;
+    animation-iteration-count: infinite;
+    animation-delay : ${(props)=>(props.delay ? props.delay : "0s")};
+`;
+
+const WelcomeImgAnimate = keyframes`
+  0% {transform:translateY(0%);}
+  50% {transform:translateY(-2%);}
+  100% {transform:translateY(0%);}
+`;
+
+const JoinStepBox = styled.div`
+    position : absolute;
+    width : 250px;
+    top : 10%;
+    right : 50px;
+    :before {
+        content : '';
+        position : absolute;
+        height : 350px;
+        width : 5px;
+        background-color : #E8A2A8;
+        top : 0;
+        right : 23px;
+        z-index : 1;
+    }
+`;
+
+const JoinStep = styled.div`
+    position : relative;
+    z-index : 4;
+    margin : 2em 0;
+    height : 70px;
+    width : 100%;
+    display : flex;
+    align-items : center;
+    justify-content : space-between;
+    :hover > p {
+        color : #E8A2A8;
+    }
+`;
+
+const JoinStepTitle = styled.p`
+    font-size : 1.3em;
+    transition : 0.3s;
+    color : ${(props)=>(props.path ? "#E8A2A8" : "#333")};
+    cursor : pointer;
+`;
+
+const JoinStepCircle = styled.div`
+    width : 50px;
+    height : 50px;
+    border-radius : 100%;
+    border : ${(props)=>(props.path ? "8px" : "3px")} solid #E8A2A8;
+    background-color : #FFF;
+    margin-left : 1em;
+    transition : 0.3s;
 `;
 
 const MakeWave = (props) =>{
@@ -67,11 +140,11 @@ const MakeWave = (props) =>{
     );
 }
 
-const Join = () =>{
+const Join = (props) =>{
     const WaveList = [
         {
             key:1,
-            name:"loginWave",
+            name:"joinWave",
             color:"#E8A2A8",
             height:90,
             amplitude:30,
@@ -80,7 +153,7 @@ const Join = () =>{
         },
         {
             key:2,
-            name:"loginWave second",
+            name:"joinWave second",
             color:"#E8A2A8",
             height:50,
             amplitude:50,
@@ -89,7 +162,7 @@ const Join = () =>{
         },
         {
             key:3,
-            name:"loginWave third",
+            name:"joinWave third",
             color:"#E8A2A8",
             height:50,
             amplitude:50,
@@ -98,7 +171,7 @@ const Join = () =>{
         },
         {
             key:4,
-            name:"down loginWave",
+            name:"down joinWave",
             color:"#E8A2A8",
             height:90,
             amplitude:30,
@@ -107,7 +180,7 @@ const Join = () =>{
         },
         {
             key:5,
-            name:"down loginWave second",
+            name:"down joinWave second",
             color:"#E8A2A8",
             height:50,
             amplitude:50,
@@ -116,7 +189,7 @@ const Join = () =>{
         },
         {
             key:6,
-            name:"down loginWave third",
+            name:"down joinWave third",
             color:"#E8A2A8",
             height:50,
             amplitude:50,
@@ -125,14 +198,32 @@ const Join = () =>{
         },
     ];
 
+    const [path,setPath] =  useState(props.location.pathname);
+    const changePath = (link)=>{
+        setPath(link);
+    }
+
     return(
         <JoinPage>
-            <BrowserRouter>
-                <Switch>
-                    <Route path='/join' exact component={MainJoin} />
-                </Switch>
-            </BrowserRouter>
-            {WaveList.map(Options=>(<MakeWave name={Options.name} color={Options.color} height={Options.height} amplitude={Options.amplitude} speed={Options.speed} points={Options.points} />))}
+            <LoginImg animation={WelcomeImgAnimate} top="20%" left="50px" imgSize="800px"><img src={loginMainCharacter} alt="loginMainCharacter"/></LoginImg>
+            <Route path='/join' exact render={(props)=>(<MainJoin changePath={changePath} {...props} />)} />
+            <Route path='/join/info' component={(props)=>(<InfoJoin changePath={changePath} {...props} />)}/>
+            <Route path='/join/profile' component={(props)=>(<ProfileJoin changePath={changePath} {...props} />)}/>
+            <JoinStepBox>
+                <JoinStep>
+                    <JoinStepTitle path={path === '/join' ? true : false}>Step. 1 회원가입</JoinStepTitle>
+                    <JoinStepCircle path={path === '/join' ? true : false} />
+                </JoinStep>
+                <JoinStep>
+                    <JoinStepTitle path={path === '/join/info' ? true : false}>Step. 2 회원정보</JoinStepTitle>
+                    <JoinStepCircle path={path === '/join/info' ? true : false} />
+                </JoinStep>
+                <JoinStep>
+                    <JoinStepTitle path={path === '/join/profile' ? true : false}>Step. 3 프로필</JoinStepTitle>
+                    <JoinStepCircle path={path === '/join/profile' ? true : false}/>
+                </JoinStep>
+            </JoinStepBox>
+            {WaveList.map(Options=>(<MakeWave key={Options.key} name={Options.name} color={Options.color} height={Options.height} amplitude={Options.amplitude} speed={Options.speed} points={Options.points} />))}
         </JoinPage>
     );
 }

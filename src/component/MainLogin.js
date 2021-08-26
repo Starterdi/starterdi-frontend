@@ -6,7 +6,7 @@ import LockIcon from '../svg/LockIcon';
 import RightLongArrowIcon from '../svg/RightLongArrowIcon';
 
 const LoginBox = styled.div`
-    width:600px;
+    width:620px;
     position:absolute;
     top:20%;
     left:15%;

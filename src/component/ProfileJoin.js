@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import HumanIcon from '../svg/HumanIcon';
-import LockIcon from '../svg/LockIcon';
+import CameraIcon from '../svg/CameraIcon';
 import RightLongArrowIcon from '../svg/RightLongArrowIcon';
 
 const JoinBox = styled.div`
@@ -18,26 +17,26 @@ const JoinTitle = styled.h1`
     font-size :3em;
 `;
 
-const JoinForm = styled.form`
+const JoinForm = styled.div`
     margin-top : 2em;
 `;
 
 const JoinFormBox = styled.div`
     width : 450px;
-    height : 60px;
     border-bottom : 3px solid #333;
-    padding:0 0.5em;
+    padding:1em 0.5em;
     display : flex;
     align-items : center;
+    flex-wrap : wrap;
     margin : 2em 0;
     position : relative;
 `;
 
 const JoinInput = styled.input`
-    width : 90%;
     border : none;
     background-color :rgba(0,0,0,0);
-    margin-left : 1em;
+    width : 100%;
+    margin-top : 1em;
     font-size : 1.2em;
 `;
 
@@ -65,7 +64,7 @@ const JoinOtherBox = styled.div`
 `;
 
 const JoinOtherLink = styled.p`
-    margin : 0.7em 0
+    margin : 0.7em 0;
     transition : 0.3s;
     font-size : 1.1em;
     span {font-weight : bold;}
@@ -78,40 +77,69 @@ const JoinOtherLink = styled.p`
     }
 `;
 
-const MainJoin = (props) =>{
+const JoinInputTitle = styled.p`
+    font-size : 1.3em;
+    font-weight : bold;
+    width : 100%;
+`;
+
+const JoinInputBox = styled.div`
+    width : 100%;
+    margin-top : 1em;
+`;
+
+const JoinProfileBox = styled.div`
+    width : 200px;
+    height : 200px;
+    border-radius : 100%;
+    border : 10px solid #E8A2A8;
+    position : relative;
+`;
+
+const JoinProfileAddBtn = styled.button`
+    position : absolute;
+    width :50px;
+    height : 50px;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    border : 2px solid #333;
+    border-radius : 100%;
+    background-color : #fff;
+    bottom : 0px;
+    right : 0px;
+    cursor : pointer;
+    transition : 0.3s;
+    :hover { background-color : #ddd }
+`;
+
+const ProfileJoin = (props) =>{
     const changePath = (link)=>{props.changePath(link)};
 
     return(
         <JoinBox>
             <JoinTitle>스타터디 회원이<br/>되시겠습니까?</JoinTitle>
             <JoinForm>
+                <JoinInputBox>
+                    <JoinProfileBox>
+                        <JoinProfileAddBtn>
+                            <CameraIcon/>
+                        </JoinProfileAddBtn>
+                    </JoinProfileBox>
+                </JoinInputBox>
                 <JoinFormBox>
-                    <HumanIcon/>
-                    <JoinInput type="text" placeholder="아이디" />
+                    <JoinInputTitle>한줄소개</JoinInputTitle>
+                    <JoinInput type="text" />
                     <JoinErrorMsg></JoinErrorMsg>
                 </JoinFormBox>
-                <JoinFormBox>
-                    <HumanIcon/>
-                    <JoinInput type="text" placeholder="이름" />
-                    <JoinErrorMsg></JoinErrorMsg>
-                </JoinFormBox>
-                <JoinFormBox>
-                    <LockIcon/>
-                    <JoinInput type="password" placeholder="비밀번호" />
-                    <JoinErrorMsg></JoinErrorMsg>
-                </JoinFormBox>
-                <JoinFormBox>
-                    <LockIcon/>
-                    <JoinInput type="password" placeholder="비밀번호 확인" />
-                    <JoinErrorMsg></JoinErrorMsg>
-                </JoinFormBox>
-                <Link to='/join/info'><JoinBtn type="button" onClick={changePath.bind('link','/join/info')}>다음</JoinBtn></Link>
+                <Link to='/join/success'><JoinBtn type="button">가입완료</JoinBtn></Link>
             </JoinForm>
             <JoinOtherBox>
+                <JoinOtherLink  onClick={changePath.bind('link','/join/info')} ><Link to='/join/info'><span>이전</span> 단계로 넘어가기 <RightLongArrowIcon/></Link></JoinOtherLink>                
                 <JoinOtherLink><Link to='/login'><span>로그인</span> 화면으로 넘어가기 <RightLongArrowIcon/></Link></JoinOtherLink>
             </JoinOtherBox>
         </JoinBox>
     );
 }
 
-export default MainJoin;
+export default ProfileJoin;

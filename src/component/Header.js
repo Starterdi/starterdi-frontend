@@ -120,7 +120,7 @@ const ContentHeaderNav = (props)=>{
 
 const Header = (props) =>{
   const changeMod = () =>{props.changeMod();}
-  const NavItemList = [{key : "홈",link : "/",icon : <HomeIcon/>},{key : "채팅",link : "/chat",icon : <ChatIcon/>},{key : "커뮤니티",link : "/community",icon : <CommunityIcon />},{key : "친구",link : "/friend",icon : <FriendIcon />},{key : "스터디방",link : "/studyroom",icon : <StudyRoomIcon />},{key : "북마크",link : "/bookmark",icon : <BookMarkIcon />},{key : "좋아요",link : "/good",icon : <GoodIcon />},{key : "일정",link : "/calendar",icon : <CalendarIcon />}];
+  const NavItemList = [{key : "홈",link : "/main",icon : <HomeIcon/>},{key : "채팅",link : "/chat",icon : <ChatIcon/>},{key : "커뮤니티",link : "/community",icon : <CommunityIcon />},{key : "친구",link : "/friend",icon : <FriendIcon />},{key : "스터디방",link : "/studyroom",icon : <StudyRoomIcon />},{key : "북마크",link : "/bookmark",icon : <BookMarkIcon />},{key : "좋아요",link : "/good",icon : <GoodIcon />},{key : "일정",link : "/calendar",icon : <CalendarIcon />}];
   const mod = props.mod;
   const path = props.path;
 
@@ -130,9 +130,6 @@ const Header = (props) =>{
 
       <nav>
         <ul>
-          {
-            console.log(props)
-          }
           {NavItemList.map(navItems=>(<NavItem key={navItems.key} mod={mod} link={navItems.link} select={navItems.link === path ? "select" : ""} name={navItems.key} icon={navItems.icon} />))}
         </ul>
       </nav>

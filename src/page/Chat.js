@@ -1,9 +1,9 @@
 import React, {useEffect,useState} from 'react';
 import Header from '../component/Header';
 
-const Chat = () =>{
+const Chat = (props) =>{
     const [mod,setMod] = useState(window.localStorage.getItem('theme') ? window.localStorage.getItem('theme') : 'light');
-    const [path] = useState('/chat');
+    const [path] = useState(props.location.pathname);
     const changeMod = () =>{
         setMod(mod === "light" ? "dark" : "light");
         if(mod === "dark") window.localStorage.setItem('theme', 'light');
