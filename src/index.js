@@ -5,6 +5,7 @@ import Home from './page/Home';
 import Chat from './page/Chat';
 import Welcome from './page/Welcome';
 import Login from './page/Login';
+import Join from './page/Join';
 import reportWebVitals from './reportWebVitals';
 import './style.scss';
 
@@ -15,6 +16,7 @@ ReactDOM.render(
       <Route path='/main' component={Home} />
       <Route path='/chat' component={Chat}/>
       <Route path='/login' component={Login}/>
+      <Route path='/join' component={Join}/>
     </Switch>
   </BrowserRouter>,
   document.getElementById('root')

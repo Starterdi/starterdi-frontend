@@ -1,21 +1,17 @@
 import React from 'react';
-import styled, {keyframes} from 'styled-components';
+import styled from 'styled-components';
 import Wave from 'react-wavify';
-import { Route } from 'react-router-dom';
-import loginMainCharacter from '../image/loginMainCharacter.png';
-import loginAlphabetD from '../image/loginAlphabetD.png';
-import MainLogin from '../component/MainLogin';
-import OtherLogin from '../component/OtherLogin';
+import { BrowserRouter,Switch,Route } from 'react-router-dom';
+import MainJoin from '../component/MainJoin';
 
-
-const LoginPage = styled.div`
+const JoinPage = styled.div`
     position:relative;
     width:100%;
     height:100%;
     background-color:#FFFFFF;
     overflow:hidden;
 
-    .loginWave{
+    .joinWave{
         position:absolute;
         transform :rotate(145deg);
         height:400px;
@@ -60,28 +56,6 @@ const LoginPage = styled.div`
     }
 `;
 
-const LoginImg = styled.div`
-    position : absolute;
-    top : ${(props)=>(props.top ? props.top : "auto")};
-    right : ${(props)=>(props.right ? props.right : "auto")};
-    left : ${(props)=>(props.left ? props.left : "auto")};
-    bottom : ${(props)=>(props.bottom ? props.bottom : "auto")};
-    > img{
-        width : ${(props)=>(props.imgSize ? props.imgSize : "auto")};
-    }
-
-    animation-name : ${(props)=>(props.animation ? props.animation : "")};
-    animation-duration : 2s;
-    animation-iteration-count: infinite;
-    animation-delay : ${(props)=>(props.delay ? props.delay : "0s")};
-`;
-
-const WelcomeImgAnimate = keyframes`
-  0% {transform:translateY(0%);}
-  50% {transform:translateY(-2%);}
-  100% {transform:translateY(0%);}
-`;
-
 const MakeWave = (props) =>{
     return(
         <Wave className={props.name} fill={props.color} paused={false} options={{
@@ -93,7 +67,7 @@ const MakeWave = (props) =>{
     );
 }
 
-const Login = ()=>{
+const Join = () =>{
     const WaveList = [
         {
             key:1,
@@ -152,16 +126,15 @@ const Login = ()=>{
     ];
 
     return(
-        <LoginPage>
-            <LoginImg delay="-0.3s" animation={WelcomeImgAnimate} top="30%" left="100px" imgSize="250px"><img src={loginAlphabetD} alt="loginAlphabetD" /></LoginImg>
-            <LoginImg animation={WelcomeImgAnimate} top="15%" right="200px" imgSize="800px"><img src={loginMainCharacter} alt="loginMainCharacter"/></LoginImg>
-
-            <Route path='/login' exact component={MainLogin} />
-            <Route path='/login/other' exact component={OtherLogin} />
-
+        <JoinPage>
+            <BrowserRouter>
+                <Switch>
+                    <Route path='/join' exact component={MainJoin} />
+                </Switch>
+            </BrowserRouter>
             {WaveList.map(Options=>(<MakeWave name={Options.name} color={Options.color} height={Options.height} amplitude={Options.amplitude} speed={Options.speed} points={Options.points} />))}
-        </LoginPage>
+        </JoinPage>
     );
 }
 
-export default Login;
+export default Join;
