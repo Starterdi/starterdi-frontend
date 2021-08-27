@@ -31,6 +31,14 @@ const JoinFormBox = styled.div`
     flex-wrap : wrap;
     margin : 2em 0;
     position : relative;
+    transition : 0.3s;  
+    svg > path{transition : 0.3s;}  
+    :hover{
+        border-color : #E8A2A8;
+        svg > path{
+            fill : #E8A2A8;
+        }
+    }
 `;
 
 const JoinInput = styled.input`

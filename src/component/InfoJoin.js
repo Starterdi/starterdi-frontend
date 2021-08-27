@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import HumanIcon from '../svg/HumanIcon';
@@ -32,6 +32,14 @@ const JoinFormBox = styled.div`
     flex-wrap:wrap;
     margin : 2em 0;
     position : relative;
+    transition : 0.3s;  
+    svg > path{transition : 0.3s;}  
+    :hover{
+        border-color : #E8A2A8;
+        svg > path{
+            fill : #E8A2A8;
+        }
+    }
 `;
 
 const JoinInput = styled.input`
@@ -98,18 +106,50 @@ const JoinInputBtn = styled.button`
     margin : 0 0.5em;
     font-size : 1.1em;
     cursor:pointer;
+    transition : 0.3s;
+    :hover {
+        border-color : #E8A2A8;
+        color : #E8A2A8;
+    }
 `;
+
+const InfoJoinNext = (props,info_join_form) =>{
+    
+    const changePath = (link)=>{props.changePath(link)};
+    const changeJoinInfo = (info,type)=>{props.changeJoinInfo(info,type);};
+
+    const userEmail = info_join_form.current.user_email.value;
+    const userBirth = info_join_form.current.user_birth.value;
+
+    if(userEmail === "" || userBirth === "") return alert("값을 입력해주세요.");
+
+    changeJoinInfo(userEmail,"user_email");
+    changeJoinInfo(userBirth,"user_birth");
+
+    changePath('/join/profile');
+    props.history.push("/join/profile");
+}
 
 const InfoJoin = (props) =>{
     const changePath = (link)=>{props.changePath(link)};
+    const joinInfo = props.joinInfo;
+    const info_join_form = useRef(null);
+
+    const [user_email,setUserEmail] = useState(joinInfo.user_email);
+    const [user_gender,setUserGender] = useState(joinInfo.user_gender);
+    const [user_birth,setUserBirth] = useState(joinInfo.user_birth);
+
+    const InputUserEmail = (e)=>{setUserEmail(e.target.value);};
+    const InputUserGender = (e)=>{setUserGender(e.target.value);};
+    const InputUserBirth = (e)=>{setUserBirth(e.target.value);};
 
     return(
         <JoinBox>
             <JoinTitle>회원가입</JoinTitle>
-            <JoinForm>
+            <JoinForm ref={info_join_form}>
                 <JoinFormBox>
                     <HumanIcon/>
-                    <JoinInput type="text" placeholder="이메일" />
+                    <JoinInput type="text" placeholder="이메일" name="user_email" value={user_email} onChange={InputUserEmail} />
                     <JoinErrorMsg></JoinErrorMsg>
                 </JoinFormBox>
                 <JoinFormBox>
@@ -126,11 +166,11 @@ const InfoJoin = (props) =>{
                     <HumanIcon/>
                     <JoinInputTitle>생일</JoinInputTitle>
                     <JoinInputBox>
-                        <JoinInput type="date" />
+                        <JoinInput type="date" name="user_birth" value={user_birth} onChange={InputUserBirth} />
                     </JoinInputBox>
                     <JoinErrorMsg></JoinErrorMsg>
                 </JoinFormBox>
-                <Link to="/join/profile"><JoinBtn type="button" onClick={changePath.bind('link','/join/profile')}>다음</JoinBtn></Link>
+                <JoinBtn type="button" onClick={()=>{InfoJoinNext(props,info_join_form)}}>다음</JoinBtn>
             </JoinForm>
             <JoinOtherBox>
                 <JoinOtherLink  onClick={changePath.bind('link','/join')}><Link to='/join'><span>이전</span> 단계로 돌아가기 <RightLongArrowIcon/></Link></JoinOtherLink>

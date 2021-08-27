@@ -10,9 +10,10 @@ import reportWebVitals from './reportWebVitals';
 import './style.scss';
 
 ReactDOM.render(
-  <BrowserRouter basepath="welcome">
+  <BrowserRouter >
     <Switch>
-      <Route path='/welcome' component={Welcome} />
+      {/* <Route path='/5' exact component={Welcome} /> */}
+      <Route path='/welcome' exact component={Welcome} />
       <Route path='/main' component={Home} />
       <Route path='/chat' component={Chat}/>
       <Route path='/login' component={Login}/>

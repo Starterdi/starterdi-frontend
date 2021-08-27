@@ -113,6 +113,7 @@ const JoinStepTitle = styled.p`
     font-size : 1.3em;
     transition : 0.3s;
     color : ${(props)=>(props.path ? "#E8A2A8" : "#333")};
+    margin-left : ${(props)=>(props.path ? "0" : "1em")};
 `;
 
 const JoinStepCircle = styled.div`
@@ -199,12 +200,31 @@ const Join = (props) =>{
         setPath(link);
     }
 
+    const [joinInfo,setJoinInfo] = useState({
+        user_id:"",
+        user_name:"",
+        user_password:"",
+        user_password_check:"",
+        user_email:"",
+        user_gender:"",
+        user_birth:"",
+        user_profile:"",
+        user_profile_img:""
+    });
+
+    const changeJoinInfo = (info,type)=>{
+        joinInfo[type] = info;
+        setJoinInfo(joinInfo);
+    }
+
+    console.log(path);
+
     return(
         <JoinPage>
             <LoginImg animation={WelcomeImgAnimate} top="20%" left="50px" imgSize="800px"><img src={loginMainCharacter} alt="loginMainCharacter"/></LoginImg>
-            <Route path='/join' exact render={(props)=>(<MainJoin changePath={changePath} {...props} />)} />
-            <Route path='/join/info' component={(props)=>(<InfoJoin changePath={changePath} {...props} />)}/>
-            <Route path='/join/profile' component={(props)=>(<ProfileJoin changePath={changePath} {...props} />)}/>
+            <Route path='/join' exact render={(props)=>(<MainJoin joinInfo={joinInfo} changeJoinInfo={changeJoinInfo} changePath={changePath} {...props} />)} />
+            <Route path='/join/info' component={(props)=>(<InfoJoin joinInfo={joinInfo} changeJoinInfo={changeJoinInfo} changePath={changePath} {...props} />)}/>
+            <Route path='/join/profile' component={(props)=>(<ProfileJoin joinInfo={joinInfo} changeJoinInfo={changeJoinInfo} changePath={changePath} {...props} />)}/>
             <JoinStepBox>
                 <JoinStep>
                     <JoinStepTitle path={path === '/join' ? true : false}>Step. 1 회원가입</JoinStepTitle>
