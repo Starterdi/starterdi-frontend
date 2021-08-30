@@ -154,7 +154,7 @@ const Login = ()=>{
     return(
         <LoginPage>
             <LoginImg delay="-0.3s" animation={WelcomeImgAnimate} top="30%" left="100px" imgSize="250px"><img src={loginAlphabetD} alt="loginAlphabetD" /></LoginImg>
-            <LoginImg animation={WelcomeImgAnimate} top="20%" right="200px" imgSize="800px"><img src={loginMainCharacter} alt="loginMainCharacter"/></LoginImg>
+            <LoginImg delay="-0.8s" animation={WelcomeImgAnimate} top="20%" right="200px" imgSize="800px"><img src={loginMainCharacter} alt="loginMainCharacter"/></LoginImg>
 
             <Route path='/login' exact component={MainLogin} />
             <Route path='/login/other' exact component={OtherLogin} />

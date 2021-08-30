@@ -4,6 +4,7 @@ import Wave from 'react-wavify';
 import { Route} from 'react-router-dom';
 import MainJoin from '../component/MainJoin';
 import InfoJoin from '../component/InfoJoin';
+import DetailJoin from '../component/DetailJoin';
 import ProfileJoin from '../component/ProfileJoin';
 import loginMainCharacter from '../image/loginMainCharacter.png';
 
@@ -222,17 +223,18 @@ const Join = (props) =>{
     return(
         <JoinPage>
             <LoginImg animation={WelcomeImgAnimate} top="20%" left="50px" imgSize="800px"><img src={loginMainCharacter} alt="loginMainCharacter"/></LoginImg>
-            <Route path='/join' exact render={(props)=>(<MainJoin joinInfo={joinInfo} changeJoinInfo={changeJoinInfo} changePath={changePath} {...props} />)} />
-            <Route path='/join/info' component={(props)=>(<InfoJoin joinInfo={joinInfo} changeJoinInfo={changeJoinInfo} changePath={changePath} {...props} />)}/>
+            <Route path='/join' exact component={MainJoin}  />
+            <Route path='/join/info' component={(props)=>(<InfoJoin joinInfo={joinInfo} changeJoinInfo={changeJoinInfo} changePath={changePath} {...props} />)} />
+            <Route path='/join/detail' component={(props)=>(<DetailJoin joinInfo={joinInfo} changeJoinInfo={changeJoinInfo} changePath={changePath} {...props} />)}/>
             <Route path='/join/profile' component={(props)=>(<ProfileJoin joinInfo={joinInfo} changeJoinInfo={changeJoinInfo} changePath={changePath} {...props} />)}/>
             <JoinStepBox>
                 <JoinStep>
-                    <JoinStepTitle path={path === '/join' ? true : false}>Step. 1 회원가입</JoinStepTitle>
+                    <JoinStepTitle path={path === '/join' ? true : false}>Step. 1 약관동의</JoinStepTitle>
                     <JoinStepCircle path={path === '/join' ? true : false} />
                 </JoinStep>
                 <JoinStep>
-                    <JoinStepTitle path={path === '/join/info' ? true : false}>Step. 2 회원정보</JoinStepTitle>
-                    <JoinStepCircle path={path === '/join/info' ? true : false} />
+                    <JoinStepTitle path={(path === '/join/info') || (path === '/join/detail') ? true : false}>Step. 2 회원정보</JoinStepTitle>
+                    <JoinStepCircle path={(path === '/join/info') || (path === '/join/detail') ? true : false} />
                 </JoinStep>
                 <JoinStep>
                     <JoinStepTitle path={path === '/join/profile' ? true : false}>Step. 3 프로필</JoinStepTitle>

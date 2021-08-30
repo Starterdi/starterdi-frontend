@@ -15,8 +15,8 @@ const JoinBox = styled.div`
 
 const JoinTitle = styled.h1`
     line-height:1.5em;
-    margin-bottom : 1em;
     font-size :3em;
+    margin-bottom : 1em;
 `;
 
 const JoinForm = styled.form`
@@ -25,12 +25,12 @@ const JoinForm = styled.form`
 
 const JoinFormBox = styled.div`
     width : 450px;
+    height : 60px;
     border-bottom : 3px solid #333;
-    padding:1em 0.5em;
+    padding:0 0.5em;
     display : flex;
     align-items : center;
-    flex-wrap:wrap;
-    margin : 2em 0;
+    margin : 3em 0;
     position : relative;
     transition : 0.3s;  
     svg > path{transition : 0.3s;}  
@@ -64,7 +64,7 @@ const JoinBtn = styled.button`
 `;
 
 const JoinErrorMsg = styled.p`
-    color : #E32121;
+    color : #aaa;
     position : absolute;
     bottom : -2em;
 `;
@@ -74,7 +74,7 @@ const JoinOtherBox = styled.div`
 `;
 
 const JoinOtherLink = styled.p`
-    margin : 0.7em 0;
+    margin : 0.7em 0
     transition : 0.3s;
     font-size : 1.1em;
     span {font-weight : bold;}
@@ -87,61 +87,41 @@ const JoinOtherLink = styled.p`
     }
 `;
 
-const JoinInputTitle = styled.p`
-    font-size : 1.3em;
-    font-weight : bold;
-    margin-left : 1em;
-`;
-
-const JoinInputBox = styled.div`
-    width : 100%;
-    margin-top : 2em;
-`;
-
-const JoinInputBtn = styled.button`
-    border : 2px solid #333;
-    border-radius : 30px;
-    background-color : rgba(0,0,0,0);
-    padding : 0.5em 1em;
-    margin : 0 0.5em;
-    font-size : 1.1em;
-    cursor:pointer;
-    transition : 0.3s;
-    :hover {
-        border-color : #E8A2A8;
-        color : #E8A2A8;
-    }
-`;
-
-const InfoJoinNext = (props,info_join_form) =>{
+const InfoJoinNext = (props,main_join_form) =>{
     
     const changePath = (link)=>{props.changePath(link)};
     const changeJoinInfo = (info,type)=>{props.changeJoinInfo(info,type);};
 
-    const userEmail = info_join_form.current.user_email.value;
-    const userBirth = info_join_form.current.user_birth.value;
+    const userId = main_join_form.current.user_id.value;
+    const userName = main_join_form.current.user_name.value;
+    const userPassword = main_join_form.current.user_password.value;
+    const userPasswordCheck = main_join_form.current.user_password_check.value;
+    const userPasswordReg = /[`~!@#$%^&*|\\\\\\'\\";:\\/?]/gi;
 
-    if(userEmail === "" || userBirth === "") return alert("값을 입력해주세요.");
+    if(userId === "" || userName === "" || userPassword === "" || userPasswordCheck === "") return alert("값이 비워져있습니다");
+    if(userPassword.length < 6 || !userPasswordReg.test(userPassword)) return alert("비밀번호는 6자이상, 특수문자 1개 이상을 포함해야합니다.");
+    if(userPassword !== userPasswordCheck) return alert("비밀번호와 비밀번호 확인 값이 다릅니다.");
 
-    changeJoinInfo(userEmail,"user_email");
-    changeJoinInfo(userBirth,"user_birth");
+    changeJoinInfo(userId,"user_id");
+    changeJoinInfo(userName,"user_name");
+    changeJoinInfo(userPassword,"user_password");
+    changeJoinInfo(userPasswordCheck,"user_password_check");
 
-    changePath('/join/profile');
-    props.history.push("/join/profile");
+    changePath('/join/info');
+    props.history.push("/join/info");
 }
 
 const InfoJoin = (props) =>{
-    const changePath = (link)=>{props.changePath(link)};
     const joinInfo = props.joinInfo;
     const info_join_form = useRef(null);
+    const [user_id,setUserId] = useState(joinInfo.user_id);
+    const [user_name,setUserName] = useState(joinInfo.user_name);
+    const [user_password,setUserPassword] = useState(joinInfo.user_password);
+    const InputUserId = (e) =>{setUserId(e.target.value);};
+    const InputUserName = (e)=>{setUserName(e.target.value);};
+    const InputUserPassword = (e)=>{setUserPassword(e.target.value);};
 
-    const [user_email,setUserEmail] = useState(joinInfo.user_email);
-    const [user_gender,setUserGender] = useState(joinInfo.user_gender);
-    const [user_birth,setUserBirth] = useState(joinInfo.user_birth);
-
-    const InputUserEmail = (e)=>{setUserEmail(e.target.value);};
-    const InputUserGender = (e)=>{setUserGender(e.target.value);};
-    const InputUserBirth = (e)=>{setUserBirth(e.target.value);};
+    console.log(joinInfo);
 
     return(
         <JoinBox>
@@ -149,31 +129,27 @@ const InfoJoin = (props) =>{
             <JoinForm ref={info_join_form}>
                 <JoinFormBox>
                     <HumanIcon/>
-                    <JoinInput type="text" placeholder="이메일" name="user_email" value={user_email} onChange={InputUserEmail} />
-                    <JoinErrorMsg></JoinErrorMsg>
-                </JoinFormBox>
-                <JoinFormBox>
-                    <LockIcon/>
-                    <JoinInputTitle>성별</JoinInputTitle>
-                    <JoinInputBox>
-                        <JoinInputBtn type='button'>여자</JoinInputBtn>
-                        <JoinInputBtn type='button'>남자</JoinInputBtn>
-                        <JoinInputBtn type='button'>알리고 싶지 않아요!</JoinInputBtn>
-                    </JoinInputBox>
+                    <JoinInput type="text" placeholder="아이디" name="user_id" value={user_id} onChange={InputUserId} />
                     <JoinErrorMsg></JoinErrorMsg>
                 </JoinFormBox>
                 <JoinFormBox>
                     <HumanIcon/>
-                    <JoinInputTitle>생일</JoinInputTitle>
-                    <JoinInputBox>
-                        <JoinInput type="date" name="user_birth" value={user_birth} onChange={InputUserBirth} />
-                    </JoinInputBox>
+                    <JoinInput type="text" placeholder="이름" name="user_name" value={user_name} onChange={InputUserName} />
+                    <JoinErrorMsg></JoinErrorMsg>
+                </JoinFormBox>
+                <JoinFormBox>
+                    <LockIcon/>
+                    <JoinInput type="password" placeholder="비밀번호" name="user_password" value={user_password} onChange={InputUserPassword} />
+                    <JoinErrorMsg>* 비밀번호는 6자이상, 특수문자 1개 이상을 포함해야합니다.</JoinErrorMsg>
+                </JoinFormBox>
+                <JoinFormBox>
+                    <LockIcon/>
+                    <JoinInput type="password" placeholder="비밀번호 확인" name="user_password_check" />
                     <JoinErrorMsg></JoinErrorMsg>
                 </JoinFormBox>
                 <JoinBtn type="button" onClick={()=>{InfoJoinNext(props,info_join_form)}}>다음</JoinBtn>
             </JoinForm>
             <JoinOtherBox>
-                <JoinOtherLink  onClick={changePath.bind('link','/join')}><Link to='/join'><span>이전</span> 단계로 돌아가기 <RightLongArrowIcon/></Link></JoinOtherLink>
                 <JoinOtherLink><Link to='/login'><span>로그인</span> 화면으로 넘어가기 <RightLongArrowIcon/></Link></JoinOtherLink>
             </JoinOtherBox>
         </JoinBox>
