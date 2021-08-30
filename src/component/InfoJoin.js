@@ -87,15 +87,15 @@ const JoinOtherLink = styled.p`
     }
 `;
 
-const InfoJoinNext = (props,main_join_form) =>{
+const InfoJoinNext = (props,info_join_form) =>{
     
     const changePath = (link)=>{props.changePath(link)};
     const changeJoinInfo = (info,type)=>{props.changeJoinInfo(info,type);};
 
-    const userId = main_join_form.current.user_id.value;
-    const userName = main_join_form.current.user_name.value;
-    const userPassword = main_join_form.current.user_password.value;
-    const userPasswordCheck = main_join_form.current.user_password_check.value;
+    const userId = info_join_form.current.user_id.value;
+    const userName = info_join_form.current.user_name.value;
+    const userPassword = info_join_form.current.user_password.value;
+    const userPasswordCheck = info_join_form.current.user_password_check.value;
     const userPasswordReg = /[`~!@#$%^&*|\\\\\\'\\";:\\/?]/gi;
 
     if(userId === "" || userName === "" || userPassword === "" || userPasswordCheck === "") return alert("값이 비워져있습니다");
@@ -108,7 +108,7 @@ const InfoJoinNext = (props,main_join_form) =>{
     changeJoinInfo(userPasswordCheck,"user_password_check");
 
     changePath('/join/info');
-    props.history.push("/join/info");
+    props.history.push("/join/detail");
 }
 
 const InfoJoin = (props) =>{
@@ -120,8 +120,6 @@ const InfoJoin = (props) =>{
     const InputUserId = (e) =>{setUserId(e.target.value);};
     const InputUserName = (e)=>{setUserName(e.target.value);};
     const InputUserPassword = (e)=>{setUserPassword(e.target.value);};
-
-    console.log(joinInfo);
 
     return(
         <JoinBox>

@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import CameraIcon from '../svg/CameraIcon';
+import basicProfile from '../image/mainCharacter.png';
+import LeftLongArrowIcon from '../svg/LeftLongArrowIcon';
 import RightLongArrowIcon from '../svg/RightLongArrowIcon';
 
 const JoinBox = styled.div`
@@ -82,7 +84,7 @@ const JoinOtherLink = styled.p`
     }
 
     svg {
-        margin-left : 1em;
+        ${(props)=>(props.arrow === "left" ? "margin-right : 1em;" : "margin-left : 1em;")}
     }
 `;
 
@@ -103,6 +105,13 @@ const JoinProfileBox = styled.div`
     border-radius : 100%;
     border : 10px solid #E8A2A8;
     position : relative;
+    display:flex;
+    justify-content : center;
+    align-items : center;
+
+    img {
+        width : 80%;
+    }
 `;
 
 const JoinProfileAddBtn = styled.button`
@@ -131,6 +140,7 @@ const ProfileJoin = (props) =>{
             <JoinForm>
                 <JoinInputBox>
                     <JoinProfileBox>
+                        <img src={basicProfile} />
                         <JoinProfileAddBtn>
                             <CameraIcon/>
                         </JoinProfileAddBtn>
@@ -144,8 +154,8 @@ const ProfileJoin = (props) =>{
                 <Link to='/join/success'><JoinBtn type="button">가입완료</JoinBtn></Link>
             </JoinForm>
             <JoinOtherBox>
-                <JoinOtherLink  onClick={changePath.bind('link','/join/info')} ><Link to='/join/info'><span>이전</span> 단계로 넘어가기 <RightLongArrowIcon/></Link></JoinOtherLink>                
-                <JoinOtherLink><Link to='/login'><span>로그인</span> 화면으로 넘어가기 <RightLongArrowIcon/></Link></JoinOtherLink>
+                <JoinOtherLink  onClick={changePath.bind('link','/join/detail')} arrow="left" ><LeftLongArrowIcon /><Link to='/join/detail'><span>이전</span> 단계로 넘어가기</Link></JoinOtherLink>                
+                <JoinOtherLink arrow="right"><Link to='/login'><span>로그인</span> 화면으로 넘어가기 <RightLongArrowIcon/></Link></JoinOtherLink>
             </JoinOtherBox>
         </JoinBox>
     );

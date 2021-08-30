@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import HumanIcon from '../svg/HumanIcon';
 import LockIcon from '../svg/LockIcon';
+import LeftLongArrowIcon from '../svg/LeftLongArrowIcon';
 import RightLongArrowIcon from '../svg/RightLongArrowIcon';
 
 const JoinBox = styled.div`
@@ -83,7 +84,7 @@ const JoinOtherLink = styled.p`
     }
 
     svg {
-        margin-left : 1em;
+        ${(props)=>(props.arrow === "left" ? "margin-right : 1em;" : "margin-left : 1em;")}
     }
 `;
 
@@ -107,6 +108,7 @@ const JoinInputBtn = styled.button`
     font-size : 1.1em;
     cursor:pointer;
     transition : 0.3s;
+    ${(props)=>(props.flag ? "border-color : #E8A2A8; color : #E8A2A8;" : "")}
     :hover {
         border-color : #E8A2A8;
         color : #E8A2A8;
@@ -117,16 +119,20 @@ const DetailJoinNext = (props,info_join_form) =>{
     
     const changePath = (link)=>{props.changePath(link)};
     const changeJoinInfo = (info,type)=>{props.changeJoinInfo(info,type);};
-    const joinInfo = props.joinInfo;
 
     const userEmail = info_join_form.current.user_email.value;
     const userBirth = info_join_form.current.user_birth.value;
+    const userGender = info_join_form.current.user_gender.value;
+    const userEmailReg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    const date = new Date();
 
-    if(userEmail === "" || userBirth === "") return alert("값을 입력해주세요.");
-    console.log(joinInfo.user_gender);
+    if(userEmail === "" || userBirth === "" || userGender === "") return alert("값을 입력해주세요.");
+    if(!userEmailReg.test(userEmail)) return alert("올바른 이메일을 입력해주세요.");
+    if(date < new Date(userBirth)) return alert("올바른 생일을 입력해주세요.");
 
     changeJoinInfo(userEmail,"user_email");
     changeJoinInfo(userBirth,"user_birth");
+    changeJoinInfo(userGender,"user_gender");
 
     changePath('/join/profile');
     props.history.push("/join/profile");
@@ -158,9 +164,10 @@ const DetailJoin = (props) =>{
                     <LockIcon/>
                     <JoinInputTitle>성별</JoinInputTitle>
                     <JoinInputBox>
-                        <JoinInputBtn onClick={InputUserGender} value="여자" type='button'>여자</JoinInputBtn>
-                        <JoinInputBtn onClick={InputUserGender} value="남자" type='button'>남자</JoinInputBtn>
-                        <JoinInputBtn onClick={InputUserGender} value="알리고 싶지 않아요!" type='button'>알리고 싶지 않아요!</JoinInputBtn>
+                        <JoinInputBtn onClick={InputUserGender} flag={user_gender === "여자" ? true : false} value="여자" type='button'>여자</JoinInputBtn>
+                        <JoinInputBtn onClick={InputUserGender} flag={user_gender === "남자" ? true : false} value="남자" type='button'>남자</JoinInputBtn>
+                        <JoinInputBtn onClick={InputUserGender} flag={user_gender === "알리고 싶지 않아요!" ? true : false} value="알리고 싶지 않아요!" type='button'>알리고 싶지 않아요!</JoinInputBtn>
+                        <input type="text" name="user_gender" hidden value={user_gender} onChange={InputUserGender} />
                     </JoinInputBox>
                     <JoinErrorMsg></JoinErrorMsg>
                 </JoinFormBox>
@@ -175,8 +182,8 @@ const DetailJoin = (props) =>{
                 <JoinBtn type="button" onClick={()=>{DetailJoinNext(props,detail_join_form)}}>다음</JoinBtn>
             </JoinForm>
             <JoinOtherBox>
-                <JoinOtherLink  onClick={changePath.bind('link','/join')}><Link to='/join'><span>이전</span> 단계로 돌아가기 <RightLongArrowIcon/></Link></JoinOtherLink>
-                <JoinOtherLink><Link to='/login'><span>로그인</span> 화면으로 넘어가기 <RightLongArrowIcon/></Link></JoinOtherLink>
+                <JoinOtherLink  onClick={changePath.bind('link','/join/info')} arrow="left" ><Link to='/join/info'><LeftLongArrowIcon /> <span>이전</span> 단계로 돌아가기</Link></JoinOtherLink>
+                <JoinOtherLink arrow="right"><Link to='/login'><span>로그인</span> 화면으로 넘어가기 <RightLongArrowIcon /></Link></JoinOtherLink>
             </JoinOtherBox>
         </JoinBox>
     );
