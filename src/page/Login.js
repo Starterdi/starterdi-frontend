@@ -156,8 +156,8 @@ const Login = ()=>{
             <LoginImg delay="-0.3s" animation={WelcomeImgAnimate} top="30%" left="100px" imgSize="250px"><img src={loginAlphabetD} alt="loginAlphabetD" /></LoginImg>
             <LoginImg delay="-0.8s" animation={WelcomeImgAnimate} top="20%" right="200px" imgSize="800px"><img src={loginMainCharacter} alt="loginMainCharacter"/></LoginImg>
 
-            <Route path='/login' exact component={MainLogin} />
-            <Route path='/login/other' exact component={OtherLogin} />
+            <Route path='/5/login' exact component={MainLogin} />
+            <Route path='/5/login/other' exact component={OtherLogin} />
 
             {WaveList.map(Options=>(<MakeWave name={Options.name} color={Options.color} height={Options.height} amplitude={Options.amplitude} speed={Options.speed} points={Options.points} />))}
         </LoginPage>

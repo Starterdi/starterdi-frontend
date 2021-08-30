@@ -134,8 +134,8 @@ const DetailJoinNext = (props,info_join_form) =>{
     changeJoinInfo(userBirth,"user_birth");
     changeJoinInfo(userGender,"user_gender");
 
-    changePath('/join/profile');
-    props.history.push("/join/profile");
+    changePath('/5/join/profile');
+    props.history.push("/5/join/profile");
 }
 
 const DetailJoin = (props) =>{
@@ -182,8 +182,8 @@ const DetailJoin = (props) =>{
                 <JoinBtn type="button" onClick={()=>{DetailJoinNext(props,detail_join_form)}}>다음</JoinBtn>
             </JoinForm>
             <JoinOtherBox>
-                <JoinOtherLink  onClick={changePath.bind('link','/join/info')} arrow="left" ><Link to='/join/info'><LeftLongArrowIcon /> <span>이전</span> 단계로 돌아가기</Link></JoinOtherLink>
-                <JoinOtherLink arrow="right"><Link to='/login'><span>로그인</span> 화면으로 넘어가기 <RightLongArrowIcon /></Link></JoinOtherLink>
+                <JoinOtherLink  onClick={changePath.bind('link','/5/join/info')} arrow="left" ><Link to='/5/join/info'><LeftLongArrowIcon /> <span>이전</span> 단계로 돌아가기</Link></JoinOtherLink>
+                <JoinOtherLink arrow="right"><Link to='/5/login'><span>로그인</span> 화면으로 넘어가기 <RightLongArrowIcon /></Link></JoinOtherLink>
             </JoinOtherBox>
         </JoinBox>
     );

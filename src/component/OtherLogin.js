@@ -69,8 +69,8 @@ const OtherLogin = () =>{
             </OtherLoginBox>
 
             <LoginOtherBox>
-                <LoginOtherLink><Link to="/login">스타터디 로그인 하기<RightLongArrowIcon/></Link></LoginOtherLink>
-                <LoginOtherLink><Link to="/join">아직 계정이 없으신가요? <span>회원가입</span><RightLongArrowIcon/></Link></LoginOtherLink>
+                <LoginOtherLink><Link to="/5/login">스타터디 로그인 하기<RightLongArrowIcon/></Link></LoginOtherLink>
+                <LoginOtherLink><Link to="/5/join">아직 계정이 없으신가요? <span>회원가입</span><RightLongArrowIcon/></Link></LoginOtherLink>
             </LoginOtherBox>
         </LoginBox>
     );

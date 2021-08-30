@@ -136,8 +136,8 @@ const MainJoin = (props) =>{
 
     const MainJoinNext = (props)=>{
         if(!all_agree) return alert("필수 항목에 동의해주세요.");
-        changePath("/join/info");
-        props.history.push("/join/info");
+        changePath("/5/join/info");
+        props.history.push("/5/join/info");
     }
 
     return(
@@ -177,7 +177,7 @@ const MainJoin = (props) =>{
                 <JoinBtn type="button" onClick={()=>{MainJoinNext(props)}}>다음</JoinBtn>
             </JoinForm>
             <JoinOtherBox>
-                <JoinOtherLink><Link to='/login'><span>로그인</span> 화면으로 넘어가기 <RightLongArrowIcon/></Link></JoinOtherLink>
+                <JoinOtherLink><Link to='/5/login'><span>로그인</span> 화면으로 넘어가기 <RightLongArrowIcon/></Link></JoinOtherLink>
             </JoinOtherBox>
         </JoinBox>
     );

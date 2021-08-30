@@ -154,8 +154,8 @@ const ProfileJoin = (props) =>{
                 <Link to='/join/success'><JoinBtn type="button">가입완료</JoinBtn></Link>
             </JoinForm>
             <JoinOtherBox>
-                <JoinOtherLink  onClick={changePath.bind('link','/join/detail')} arrow="left" ><LeftLongArrowIcon /><Link to='/join/detail'><span>이전</span> 단계로 넘어가기</Link></JoinOtherLink>                
-                <JoinOtherLink arrow="right"><Link to='/login'><span>로그인</span> 화면으로 넘어가기 <RightLongArrowIcon/></Link></JoinOtherLink>
+                <JoinOtherLink  onClick={changePath.bind('link','/5/join/detail')} arrow="left" ><LeftLongArrowIcon /><Link to='/5/join/detail'><span>이전</span> 단계로 넘어가기</Link></JoinOtherLink>                
+                <JoinOtherLink arrow="right"><Link to='/5/login'><span>로그인</span> 화면으로 넘어가기 <RightLongArrowIcon/></Link></JoinOtherLink>
             </JoinOtherBox>
         </JoinBox>
     );

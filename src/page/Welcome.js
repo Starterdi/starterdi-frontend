@@ -319,7 +319,7 @@ const Welcome = () =>{
             <WelcomeImgBox>
                 {WelcomeImgList.map(Img=>(<WelcomeImgs rotate={Img.rotate} delay={Img.delay} position={Img.position} top={Img.top} left={Img.left} animation={Img.animation} imgSrc={Img.key} alt={Img.key} hover={hover} />))}
             </WelcomeImgBox>
-            <Link to="/login"><WelcomeBtn onMouseOver={HoverEffect} onMouseOut={HoverEffect}>시작하기</WelcomeBtn></Link>
+            <Link to="/5/login"><WelcomeBtn onMouseOver={HoverEffect} onMouseOut={HoverEffect}>시작하기</WelcomeBtn></Link>
         </WelcomePage>
     )
 }

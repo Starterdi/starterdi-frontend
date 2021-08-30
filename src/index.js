@@ -13,11 +13,10 @@ ReactDOM.render(
   <BrowserRouter >
     <Switch>
       <Route path='/5' exact component={Welcome} />
-      {/* <Route path='/welcome' exact component={Welcome} /> */}
-      <Route path='/main' component={Home} />
-      <Route path='/chat' component={Chat}/>
-      <Route path='/login' component={Login}/>
-      <Route path='/join' component={Join}/>
+      <Route path='/5/main' component={Home} />
+      <Route path='/5/chat' component={Chat}/>
+      <Route path='/5/login' component={Login}/>
+      <Route path='/5/join' component={Join}/>
     </Switch>
   </BrowserRouter>,
   document.getElementById('root')

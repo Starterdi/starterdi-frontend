@@ -88,9 +88,9 @@ const MainLogin = () =>{
                 <LoginBtn>로그인</LoginBtn>
             </form>
             <LoginOtherBox>
-                <LoginOtherLink><Link to="/login/find">아이디 / 비밀번호 찾기<RightLongArrowIcon/></Link></LoginOtherLink>
-                <LoginOtherLink><Link to="/login/other">다른 <span>로그인 하기</span><RightLongArrowIcon/></Link></LoginOtherLink>
-                <LoginOtherLink><Link to="/join">아직 계정이 없으신가요? <span>회원가입</span><RightLongArrowIcon/></Link></LoginOtherLink>
+                <LoginOtherLink><Link to="/5/login/find">아이디 / 비밀번호 찾기<RightLongArrowIcon/></Link></LoginOtherLink>
+                <LoginOtherLink><Link to="/5/login/other">다른 <span>로그인 하기</span><RightLongArrowIcon/></Link></LoginOtherLink>
+                <LoginOtherLink><Link to="/5/join">아직 계정이 없으신가요? <span>회원가입</span><RightLongArrowIcon/></Link></LoginOtherLink>
             </LoginOtherBox>
         </LoginBox>
     );

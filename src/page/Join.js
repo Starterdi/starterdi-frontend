@@ -223,22 +223,22 @@ const Join = (props) =>{
     return(
         <JoinPage>
             <LoginImg animation={WelcomeImgAnimate} top="20%" left="50px" imgSize="800px"><img src={loginMainCharacter} alt="loginMainCharacter"/></LoginImg>
-            <Route path='/join' exact component={(props)=>(<MainJoin changePath={changePath} {...props} />)}  />
-            <Route path='/join/info' component={(props)=>(<InfoJoin joinInfo={joinInfo} changeJoinInfo={changeJoinInfo} changePath={changePath} {...props} />)} />
-            <Route path='/join/detail' component={(props)=>(<DetailJoin joinInfo={joinInfo} changeJoinInfo={changeJoinInfo} changePath={changePath} {...props} />)}/>
-            <Route path='/join/profile' component={(props)=>(<ProfileJoin joinInfo={joinInfo} changeJoinInfo={changeJoinInfo} changePath={changePath} {...props} />)}/>
+            <Route path='/5/join' exact component={(props)=>(<MainJoin changePath={changePath} {...props} />)}  />
+            <Route path='/5/join/info' component={(props)=>(<InfoJoin joinInfo={joinInfo} changeJoinInfo={changeJoinInfo} changePath={changePath} {...props} />)} />
+            <Route path='/5/join/detail' component={(props)=>(<DetailJoin joinInfo={joinInfo} changeJoinInfo={changeJoinInfo} changePath={changePath} {...props} />)}/>
+            <Route path='/5/join/profile' component={(props)=>(<ProfileJoin joinInfo={joinInfo} changeJoinInfo={changeJoinInfo} changePath={changePath} {...props} />)}/>
             <JoinStepBox>
                 <JoinStep>
-                    <JoinStepTitle path={path === '/join' ? true : false}>Step. 1 약관동의</JoinStepTitle>
-                    <JoinStepCircle path={path === '/join' ? true : false} />
+                    <JoinStepTitle path={path === '/5/join' ? true : false}>Step. 1 약관동의</JoinStepTitle>
+                    <JoinStepCircle path={path === '/5/join' ? true : false} />
                 </JoinStep>
                 <JoinStep>
-                    <JoinStepTitle path={((path === '/join/info') || (path === '/join/detail')) ? true : false}>Step. 2 회원정보</JoinStepTitle>
-                    <JoinStepCircle path={((path === '/join/info') || (path === '/join/detail')) ? true : false} />
+                    <JoinStepTitle path={((path === '/5/join/info') || (path === '/5/join/detail')) ? true : false}>Step. 2 회원정보</JoinStepTitle>
+                    <JoinStepCircle path={((path === '/5/join/info') || (path === '/5/join/detail')) ? true : false} />
                 </JoinStep>
                 <JoinStep>
-                    <JoinStepTitle path={path === '/join/profile' ? true : false}>Step. 3 프로필</JoinStepTitle>
-                    <JoinStepCircle path={path === '/join/profile' ? true : false}/>
+                    <JoinStepTitle path={path === '/5/join/profile' ? true : false}>Step. 3 프로필</JoinStepTitle>
+                    <JoinStepCircle path={path === '/5/join/profile' ? true : false}/>
                 </JoinStep>
             </JoinStepBox>
             {WaveList.map(Options=>(<MakeWave key={Options.key} name={Options.name} color={Options.color} height={Options.height} amplitude={Options.amplitude} speed={Options.speed} points={Options.points} />))}

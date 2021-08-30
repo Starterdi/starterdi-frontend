@@ -107,8 +107,8 @@ const InfoJoinNext = (props,info_join_form) =>{
     changeJoinInfo(userPassword,"user_password");
     changeJoinInfo(userPasswordCheck,"user_password_check");
 
-    changePath('/join/info');
-    props.history.push("/join/detail");
+    changePath('/5/join/info');
+    props.history.push("/5/join/detail");
 }
 
 const InfoJoin = (props) =>{
@@ -148,7 +148,7 @@ const InfoJoin = (props) =>{
                 <JoinBtn type="button" onClick={()=>{InfoJoinNext(props,info_join_form)}}>다음</JoinBtn>
             </JoinForm>
             <JoinOtherBox>
-                <JoinOtherLink><Link to='/login'><span>로그인</span> 화면으로 넘어가기 <RightLongArrowIcon/></Link></JoinOtherLink>
+                <JoinOtherLink><Link to='/5/login'><span>로그인</span> 화면으로 넘어가기 <RightLongArrowIcon/></Link></JoinOtherLink>
             </JoinOtherBox>
         </JoinBox>
     );
