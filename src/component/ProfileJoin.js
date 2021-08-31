@@ -174,6 +174,7 @@ const ProfileJoin = (props) =>{
         reader.onload = () => {
             setUserProfileImg(reader.result);
             changeJoinInfo(reader.result,"user_profile_img");
+            console.log(reader.result);
         };
     }
 

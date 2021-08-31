@@ -202,6 +202,7 @@ const Join = (props) =>{
     }
 
     const [joinInfo,setJoinInfo] = useState({
+        key:"join",
         user_id:"",
         user_name:"",
         user_password:"",
