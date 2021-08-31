@@ -1,4 +1,5 @@
 import React from 'react';
+// import Axios from 'axios';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import HumanIcon from '../svg/HumanIcon';
@@ -73,13 +74,14 @@ const LoginOtherLink = styled.p`
 `;
 
 const MainLogin = () =>{
+
     return(
         <LoginBox>
             <LoginTitle>스타터디에 오신것을<br/>환영합니다!</LoginTitle>
             <form>
                 <LoginArea>
                     <HumanIcon/>
-                    <LoginInput type="text" placeholder="아이디" />
+                    <LoginInput type="text" placeholder="아이디"/>
                 </LoginArea>
                 <LoginArea>
                     <LockIcon/>
