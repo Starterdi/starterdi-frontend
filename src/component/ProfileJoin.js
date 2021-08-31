@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useRef, useState} from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import CameraIcon from '../svg/CameraIcon';
@@ -95,8 +95,9 @@ const JoinInputTitle = styled.p`
 `;
 
 const JoinInputBox = styled.div`
-    width : 100%;
+    width : 200px;
     margin-top : 2em;
+    position : relative;
 `;
 
 const JoinProfileBox = styled.div`
@@ -108,9 +109,10 @@ const JoinProfileBox = styled.div`
     display:flex;
     justify-content : center;
     align-items : center;
+    overflow : hidden;
 
     img {
-        width : 80%;
+        ${(props)=>(props.size === "width" ? "width : 90%;" : "height : 90%;")}
     }
 `;
 
@@ -124,15 +126,61 @@ const JoinProfileAddBtn = styled.button`
     border : 2px solid #333;
     border-radius : 100%;
     background-color : #fff;
-    bottom : 0px;
-    right : 0px;
+    bottom : 10px;
+    right : 10px;
     cursor : pointer;
     transition : 0.3s;
+    overflow : hidden;
     :hover { background-color : #ddd }
 `;
 
+const JoinProfileAddInput = styled.input`
+    width : 50px;
+    height : 50px;
+    position : absolute;
+    top : 0;
+    left : 0;
+    opacity : 0;
+    cursor:pointer;
+`;
+
 const ProfileJoin = (props) =>{
+    const joinInfo = props.joinInfo;
     const changePath = (link)=>{props.changePath(link)};
+    const changeJoinInfo = (info,type)=>{props.changeJoinInfo(info,type);};
+
+    const [user_profile_img,setUserProfileImg] = useState(joinInfo.user_profile_img); 
+    const [user_profile,setUserProfile] = useState(joinInfo.user_profile);
+    const [profileSize,setProfileSize] = useState(false);
+
+    const profileImg = useRef(null);
+    const profileImgAdd = useRef(null);
+    
+    const makeProfile = ()=>{
+        const height = profileImg.current.offsetHeight;
+        const width = profileImg.current.offsetWidth;
+        setProfileSize(width > height ? "height" : "width");
+    }
+
+    const addProfile = ()=>{
+        const file = profileImgAdd.current.files[0];
+        const fileExpReg = /^.+\.(png||jpg||jpeg||PNG||JPG||JPEG)$/g;
+        const fileExp = fileExpReg.test(file.name);
+        if(!fileExp) return alert("jpg, jpeg, png 형식의 파일만 업로드 가능합니다.");
+
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onload = () => {
+            setUserProfileImg(reader.result);
+            changeJoinInfo(reader.result,"user_profile_img");
+        };
+    }
+
+    const changeProfile = (e)=>{
+        setUserProfile(e.target.value);
+        changeJoinInfo(e.target.value,"user_profile");
+    }
 
     return(
         <JoinBox>
@@ -140,21 +188,22 @@ const ProfileJoin = (props) =>{
             <JoinForm>
                 <JoinInputBox>
                     <JoinProfileBox>
-                        <img src={basicProfile} />
-                        <JoinProfileAddBtn>
-                            <CameraIcon/>
-                        </JoinProfileAddBtn>
+                        <img ref={profileImg} src={user_profile_img ? user_profile_img : basicProfile} alt="profileSize" size={profileSize} onLoad={makeProfile} onChange={makeProfile} />
                     </JoinProfileBox>
+                    <JoinProfileAddBtn>
+                        <CameraIcon/>
+                        <JoinProfileAddInput type="file" ref={profileImgAdd} name="profileAdd" onChange={addProfile}  />
+                    </JoinProfileAddBtn>
                 </JoinInputBox>
                 <JoinFormBox>
                     <JoinInputTitle>한줄소개</JoinInputTitle>
-                    <JoinInput type="text" />
+                    <JoinInput type="text" name="profile" onChange={changeProfile} value={user_profile} />
                     <JoinErrorMsg></JoinErrorMsg>
                 </JoinFormBox>
                 <Link to='/join/success'><JoinBtn type="button">가입완료</JoinBtn></Link>
             </JoinForm>
             <JoinOtherBox>
-                <JoinOtherLink  onClick={changePath.bind('link','/5/join/detail')} arrow="left" ><LeftLongArrowIcon /><Link to='/5/join/detail'><span>이전</span> 단계로 넘어가기</Link></JoinOtherLink>                
+                <JoinOtherLink onClick={changePath.bind('link','/5/join/detail')} arrow="left" ><LeftLongArrowIcon /><Link to='/5/join/detail'><span>이전</span> 단계로 넘어가기</Link></JoinOtherLink>                
                 <JoinOtherLink arrow="right"><Link to='/5/login'><span>로그인</span> 화면으로 넘어가기 <RightLongArrowIcon/></Link></JoinOtherLink>
             </JoinOtherBox>
         </JoinBox>
