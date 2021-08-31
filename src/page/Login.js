@@ -159,7 +159,7 @@ const Login = ()=>{
             <Route path='/5/login' exact component={MainLogin} />
             <Route path='/5/login/other' exact component={OtherLogin} />
 
-            {WaveList.map(Options=>(<MakeWave name={Options.name} color={Options.color} height={Options.height} amplitude={Options.amplitude} speed={Options.speed} points={Options.points} />))}
+            {WaveList.map(Options=>(<MakeWave key={Options.key} name={Options.name} color={Options.color} height={Options.height} amplitude={Options.amplitude} speed={Options.speed} points={Options.points} />))}
         </LoginPage>
     );
 }
