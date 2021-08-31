@@ -112,7 +112,7 @@ const JoinProfileBox = styled.div`
     overflow : hidden;
 
     img {
-        ${(props)=>(props.size === "width" ? "width : 90%;" : "height : 90%;")}
+        ${(props)=>(props.data === "width" ? "width : 90%;" : "height : 90%;")}
     }
 `;
 
@@ -151,7 +151,7 @@ const ProfileJoin = (props) =>{
 
     const [user_profile_img,setUserProfileImg] = useState(joinInfo.user_profile_img); 
     const [user_profile,setUserProfile] = useState(joinInfo.user_profile);
-    const [profileSize,setProfileSize] = useState(false);
+    const [profileSize,setProfileSize] = useState("width");
 
     const profileImg = useRef(null);
     const profileImgAdd = useRef(null);
@@ -188,7 +188,7 @@ const ProfileJoin = (props) =>{
             <JoinForm>
                 <JoinInputBox>
                     <JoinProfileBox>
-                        <img ref={profileImg} src={user_profile_img ? user_profile_img : basicProfile} alt="profileSize" size={profileSize} onLoad={makeProfile} onChange={makeProfile} />
+                        <img ref={profileImg} src={user_profile_img ? user_profile_img : basicProfile} alt="profileSize" data={profileSize} onLoad={makeProfile} onChange={makeProfile} />
                     </JoinProfileBox>
                     <JoinProfileAddBtn>
                         <CameraIcon/>

@@ -123,7 +123,7 @@ const DetailJoinNext = (props,info_join_form) =>{
     const userEmail = info_join_form.current.user_email.value;
     const userBirth = info_join_form.current.user_birth.value;
     const userGender = info_join_form.current.user_gender.value;
-    const userEmailReg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    const userEmailReg = /^[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
     const date = new Date();
 
     if(userEmail === "" || userBirth === "" || userGender === "") return alert("값을 입력해주세요.");

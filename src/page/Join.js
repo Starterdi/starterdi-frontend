@@ -218,8 +218,6 @@ const Join = (props) =>{
         setJoinInfo(joinInfo);
     }
 
-    console.log(path);
-
     return(
         <JoinPage>
             <LoginImg animation={WelcomeImgAnimate} top="20%" left="50px" imgSize="800px"><img src={loginMainCharacter} alt="loginMainCharacter"/></LoginImg>
