@@ -9,10 +9,4 @@ let conn = mysql.createConnection({
 
 conn.connect();
 
-conn.query("SELECT user_name FROM User WHERE idx = 1",(err,rows,fileds)=>{
-    if(err) console.log(err);
-    console.log(rows);
-    conn.end();
-})
-
 exports.conn = conn;
