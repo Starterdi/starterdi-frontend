@@ -73,20 +73,21 @@ const LoginOtherLink = styled.p`
     }
 `;
 
-const MainLogin = () =>{
+const MainLogin = (props) =>{
     const LoginForm = useRef(null);
     const LoginProccess = ()=>{
         const user_id = LoginForm.current.user_id.value;
         const user_password = LoginForm.current.user_password.value;
         if(user_id === "" || user_password === "") return alert("값을 입력해주세요!");
         axios.post('http://localhost:3309/api/loginProccess',{
-            user_id:'234234',
-            user_password:'232'
+            user_id:user_id,
+            user_password:user_password
         })
         .then((res)=>{
-            console.log(res);
-            // const data = res.data.rows.user_name;
-            // alert(`환영합니다 ${data}님`);
+            if(res.data.rows.length < 1) return alert("아이디 또는 비밀번호가 틀렸습니다.");
+            const data = res.data.rows[0];
+            alert(`환영합니다 ${data.user_name}님`);
+            props.history.push("/5/main");
         })
         .then((err)=>{console.log(err);});
     }

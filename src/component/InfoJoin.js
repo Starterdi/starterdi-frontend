@@ -120,7 +120,6 @@ const InfoJoin = (props) =>{
     const InputUserId = (e) =>{setUserId(e.target.value);};
     const InputUserName = (e)=>{setUserName(e.target.value);};
     const InputUserPassword = (e)=>{setUserPassword(e.target.value);};
-    console.log(joinInfo);
 
     return(
         <JoinBox>
