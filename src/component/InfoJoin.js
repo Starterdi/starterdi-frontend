@@ -1,9 +1,10 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState} from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import HumanIcon from '../svg/HumanIcon';
 import LockIcon from '../svg/LockIcon';
 import RightLongArrowIcon from '../svg/RightLongArrowIcon';
+import axios from 'axios';
 
 const JoinBox = styled.div`
     width:700px;
@@ -87,7 +88,7 @@ const JoinOtherLink = styled.p`
     }
 `;
 
-const InfoJoinNext = (props,info_join_form) =>{
+const InfoJoinNext = async(props,info_join_form) =>{
     
     const changePath = (link)=>{props.changePath(link)};
     const changeJoinInfo = (info,type)=>{props.changeJoinInfo(info,type);};
@@ -98,17 +99,24 @@ const InfoJoinNext = (props,info_join_form) =>{
     const userPasswordCheck = info_join_form.current.user_password_check.value;
     const userPasswordReg = /[`~!@#$%^&*|\\\\\\'\\";:\\/?]/gi;
 
-    if(userId === "" || userName === "" || userPassword === "" || userPasswordCheck === "") return alert("값이 비워져있습니다");
-    if(userPassword.length < 6 || !userPasswordReg.test(userPassword)) return alert("비밀번호는 6자이상, 특수문자 1개 이상을 포함해야합니다.");
-    if(userPassword !== userPasswordCheck) return alert("비밀번호와 비밀번호 확인 값이 다릅니다.");
+    await axios.post('http://localhost:3309/api/loginIdCheck',{
+        user_id:userId
+    })
+    .then((res)=>{
+        if(res.data.rows.length > 0) return alert("이미 가입된 아이디입니다.");
+        if(userId === "" || userName === "" || userPassword === "" || userPasswordCheck === "") return alert("값이 비워져있습니다");
+        if(userPassword.length < 6 || !userPasswordReg.test(userPassword)) return alert("비밀번호는 6자이상, 특수문자 1개 이상을 포함해야합니다.");
+        if(userPassword !== userPasswordCheck) return alert("비밀번호와 비밀번호 확인 값이 다릅니다.");
 
-    changeJoinInfo(userId,"user_id");
-    changeJoinInfo(userName,"user_name");
-    changeJoinInfo(userPassword,"user_password");
-    changeJoinInfo(userPasswordCheck,"user_password_check");
+        changeJoinInfo(userId,"user_id");
+        changeJoinInfo(userName,"user_name");
+        changeJoinInfo(userPassword,"user_password");
+        changeJoinInfo(userPasswordCheck,"user_password_check");
 
-    changePath('/5/join/info');
-    props.history.push("/5/join/detail");
+        changePath('/5/join/info');
+        props.history.push("/5/join/detail");
+    })
+    .then((err)=>{console.log(err)})
 }
 
 const InfoJoin = (props) =>{

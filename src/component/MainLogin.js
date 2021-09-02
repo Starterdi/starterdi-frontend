@@ -83,7 +83,7 @@ const MainLogin = (props) =>{
             user_id:user_id,
             user_password:user_password
         })
-        .then((res)=>{
+        .then(async(res)=>{
             if(res.data.rows.length < 1) return alert("아이디 또는 비밀번호가 틀렸습니다.");
             const data = res.data.rows[0];
             window.localStorage.setItem('user',JSON.stringify(data));

@@ -135,7 +135,7 @@ const MainJoin = (props) =>{
     }
 
     const MainJoinNext = (props)=>{
-        if(!all_agree) return alert("필수 항목에 동의해주세요.");
+        if(!info_agree || !use_agree) return alert("필수 항목에 동의해주세요.");
         changePath("/5/join/info");
         props.history.push("/5/join/info");
     }
@@ -171,7 +171,7 @@ const MainJoin = (props) =>{
                             <JoinCheckedBox checked={send_agree} />
                         </JoinInputLabel>
                         <input type="checkbox" name="sendAgree" hidden checked={send_agree} onChange={change_send_agree} />
-                        <JoinInputTitle>프로모션 등 정보수신 (필수)</JoinInputTitle>
+                        <JoinInputTitle>프로모션 등 정보수신 (선택)</JoinInputTitle>
                     </JoinFormBox>
                 </div>
                 <JoinBtn type="button" onClick={()=>{MainJoinNext(props)}}>다음</JoinBtn>

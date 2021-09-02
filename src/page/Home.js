@@ -3,9 +3,9 @@ import Header from '../component/Header';
 import Visual from '../component/Visual';
 import HomeContent from '../component/HomeContent';
 
-const Home = (props) =>{
+const Home = () =>{
     const [mod,setMod] = useState(window.localStorage.getItem('theme') ? window.localStorage.getItem('theme') : 'light');
-    const [path] =  useState(props.location.pathname);
+    const [path] =  useState('/5/main');
     const changeMod = () =>{
         setMod(mod === "light" ? "dark" : "light");
         if(mod === "dark") window.localStorage.setItem('theme', 'light');

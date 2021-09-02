@@ -196,7 +196,7 @@ const Join = (props) =>{
         },
     ];
 
-    const [path,setPath] =  useState(props.location.pathname);
+    const [path,setPath] =  useState('/5/join');
     const changePath = (link)=>{
         setPath(link);
     }

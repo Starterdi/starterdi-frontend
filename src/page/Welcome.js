@@ -24,6 +24,7 @@ import welcomeSmallDarkCircle from '../image/welcomeSmallDarkCircle.png';
 import welcomeSmallPurpleCircle from '../image/welcomeSmallPurpleCircle.png';
 import welcomeSmallWhiteCircle from '../image/welcomeSmallWhiteCircle.png';
 import welcomeSmallYellowCircle from '../image/welcomeSmallYellowCircle.png';
+import isUser from '../lib/isUser';
 
 const WelcomePage = styled.div`
     position:relative;
@@ -315,7 +316,7 @@ const Welcome = () =>{
             <WelcomeImgBox>
                 {WelcomeImgList.map(Img=>(<WelcomeImgs key={Img.key} rotate={Img.rotate} delay={Img.delay} position={Img.position} top={Img.top} left={Img.left} animation={Img.animation} imgSrc={Img.key} alt={Img.key} hover={hover} />))}
             </WelcomeImgBox>
-            <Link to="/5/login" ><WelcomeBtn onMouseOver={HoverEffect} onMouseOut={HoverEffect}>시작하기</WelcomeBtn></Link>
+            <Link to={isUser ? "/5/main" : "/5/login"} ><WelcomeBtn onMouseOver={HoverEffect} onMouseOut={HoverEffect}>시작하기</WelcomeBtn></Link>
         </WelcomePage>
     )
 }

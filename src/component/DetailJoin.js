@@ -1,10 +1,11 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect,useRef, useState} from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import HumanIcon from '../svg/HumanIcon';
 import LockIcon from '../svg/LockIcon';
 import LeftLongArrowIcon from '../svg/LeftLongArrowIcon';
 import RightLongArrowIcon from '../svg/RightLongArrowIcon';
+import axios from 'axios';
 
 const JoinBox = styled.div`
     width:700px;
@@ -115,7 +116,7 @@ const JoinInputBtn = styled.button`
     }
 `;
 
-const DetailJoinNext = (props,info_join_form) =>{
+const DetailJoinNext = async(props,info_join_form) =>{
     
     const changePath = (link)=>{props.changePath(link)};
     const changeJoinInfo = (info,type)=>{props.changeJoinInfo(info,type);};
@@ -126,16 +127,22 @@ const DetailJoinNext = (props,info_join_form) =>{
     const userEmailReg = /^[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
     const date = new Date();
 
-    if(userEmail === "" || userBirth === "" || userGender === "") return alert("값을 입력해주세요.");
-    if(!userEmailReg.test(userEmail)) return alert("올바른 이메일을 입력해주세요.");
-    if(date < new Date(userBirth)) return alert("올바른 생일을 입력해주세요.");
-
-    changeJoinInfo(userEmail,"user_email");
-    changeJoinInfo(userBirth,"user_birth");
-    changeJoinInfo(userGender,"user_gender");
-
-    changePath('/5/join/profile');
-    props.history.push("/5/join/profile");
+    await axios.post('http://localhost:3309/api/loginEmailCheck',{
+        user_email : userEmail
+    })
+    .then((res)=>{
+        if(res.data.rows.length > 0) return alert("이미 가입된 이메일입니다.")
+        if(userEmail === "" || userBirth === "" || userGender === "") return alert("값을 입력해주세요.");
+        if(!userEmailReg.test(userEmail)) return alert("올바른 이메일을 입력해주세요.");
+        if(date < new Date(userBirth)) return alert("올바른 생일을 입력해주세요.");
+    
+        changeJoinInfo(userEmail,"user_email");
+        changeJoinInfo(userBirth,"user_birth");
+        changeJoinInfo(userGender,"user_gender");
+    
+        changePath('/5/join/profile');
+        props.history.push("/5/join/profile");
+    })
 }
 
 const DetailJoin = (props) =>{
@@ -150,6 +157,13 @@ const DetailJoin = (props) =>{
     const InputUserEmail = (e)=>{setUserEmail(e.target.value);};
     const InputUserGender = (e)=>{setUserGender(e.target.value);};
     const InputUserBirth = (e)=>{setUserBirth(e.target.value);};
+    const joinInfoChecking = ()=>{
+        if(joinInfo.user_name === "") props.history.push("/5/join/info")
+    }
+
+    useEffect(()=>{
+        joinInfoChecking();
+    });
 
     return(
         <JoinBox>

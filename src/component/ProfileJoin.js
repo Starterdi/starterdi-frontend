@@ -1,4 +1,4 @@
-import React,{useRef, useState} from 'react';
+import React,{useEffect,useRef, useState} from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import CameraIcon from '../svg/CameraIcon';
@@ -182,6 +182,14 @@ const ProfileJoin = (props) =>{
         setUserProfile(e.target.value);
         changeJoinInfo(e.target.value,"user_profile");
     }
+
+    const joinInfoChecking = ()=>{
+        if(joinInfo.user_name === "") props.history.push("/5/join/info")
+    }
+
+    useEffect(()=>{
+        joinInfoChecking();
+    });
 
     return(
         <JoinBox>
