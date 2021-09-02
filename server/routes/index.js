@@ -1,7 +1,10 @@
 const express = require('express');
-const router = express.Router();
+const app = express();
+const conn = require('../config/db');
 
-router.get('/', (req, res)=> res.json({username: 'by'}));
-router.get('/group', (req, res)=> res.json({username:'dev group'}));
+app.post('/loginProccess',(req,res)=>{
+    console.log(req.params);
+    console.log(req.body);
+});
 
-module.exports = router;
+module.exports = app;

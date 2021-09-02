@@ -1,10 +1,10 @@
-import React from 'react';
-// import Axios from 'axios';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import HumanIcon from '../svg/HumanIcon';
 import LockIcon from '../svg/LockIcon';
 import RightLongArrowIcon from '../svg/RightLongArrowIcon';
+import axios from 'axios';
 
 const LoginBox = styled.div`
     width:620px;
@@ -74,20 +74,36 @@ const LoginOtherLink = styled.p`
 `;
 
 const MainLogin = () =>{
+    const LoginForm = useRef(null);
+    const LoginProccess = ()=>{
+        const user_id = LoginForm.current.user_id.value;
+        const user_password = LoginForm.current.user_password.value;
+        if(user_id === "" || user_password === "") return alert("값을 입력해주세요!");
+        axios.post('http://localhost:3309/api/loginProccess',{
+            user_id:'234234',
+            user_password:'232'
+        })
+        .then((res)=>{
+            console.log(res);
+            // const data = res.data.rows.user_name;
+            // alert(`환영합니다 ${data}님`);
+        })
+        .then((err)=>{console.log(err);});
+    }
 
     return(
         <LoginBox>
             <LoginTitle>스타터디에 오신것을<br/>환영합니다!</LoginTitle>
-            <form>
+            <form ref={LoginForm}>
                 <LoginArea>
                     <HumanIcon/>
-                    <LoginInput type="text" placeholder="아이디"/>
+                    <LoginInput type="text" name="user_id" placeholder="아이디"/>
                 </LoginArea>
                 <LoginArea>
                     <LockIcon/>
-                    <LoginInput type="password" placeholder="비밀번호" />
+                    <LoginInput type="password" name="user_password" placeholder="비밀번호" />
                 </LoginArea>
-                <LoginBtn>로그인</LoginBtn>
+                <LoginBtn type="button" onClick={LoginProccess}>로그인</LoginBtn>
             </form>
             <LoginOtherBox>
                 <LoginOtherLink><Link to="/5/login/find">아이디 / 비밀번호 찾기<RightLongArrowIcon/></Link></LoginOtherLink>

@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from 'react';
+import React, {useState} from 'react';
 import styled , { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import mainCharacter from '../image/mainCharacter.png';
@@ -309,10 +309,6 @@ const Welcome = () =>{
     const HoverEffect = () =>{
         setHover(hover ? false : true);
     }
-
-    useEffect(()=>{
-
-    });
 
     return(
         <WelcomePage>
