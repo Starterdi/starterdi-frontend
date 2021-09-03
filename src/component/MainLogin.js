@@ -79,13 +79,13 @@ const MainLogin = (props) =>{
         const user_id = LoginForm.current.user_id.value;
         const user_password = LoginForm.current.user_password.value;
         if(user_id === "" || user_password === "") return alert("값을 입력해주세요!");
-        axios.post('http://localhost:3309/api/loginProccess',{
+        axios.post('/api/loginProccess',{
             user_id:user_id,
             user_password:user_password
         })
         .then(async(res)=>{
-            if(res.data.rows.length < 1) return alert("아이디 또는 비밀번호가 틀렸습니다.");
-            const data = res.data.rows[0];
+            if(res.data.length < 1) return alert("아이디 또는 비밀번호가 틀렸습니다.");
+            const data = res.data[0];
             window.localStorage.setItem('user',JSON.stringify(data));
             alert(`환영합니다 ${data.user_name}님`);
             props.history.push("/5/main");

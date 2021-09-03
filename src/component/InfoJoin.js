@@ -99,11 +99,11 @@ const InfoJoinNext = async(props,info_join_form) =>{
     const userPasswordCheck = info_join_form.current.user_password_check.value;
     const userPasswordReg = /[`~!@#$%^&*|\\\\\\'\\";:\\/?]/gi;
 
-    await axios.post('http://localhost:3309/api/loginIdCheck',{
+    await axios.post('/api/loginIdCheck',{
         user_id:userId
     })
     .then((res)=>{
-        if(res.data.rows.length > 0) return alert("이미 가입된 아이디입니다.");
+        if(res.data.length > 0) return alert("이미 가입된 아이디입니다.");
         if(userId === "" || userName === "" || userPassword === "" || userPasswordCheck === "") return alert("값이 비워져있습니다");
         if(userPassword.length < 6 || !userPasswordReg.test(userPassword)) return alert("비밀번호는 6자이상, 특수문자 1개 이상을 포함해야합니다.");
         if(userPassword !== userPasswordCheck) return alert("비밀번호와 비밀번호 확인 값이 다릅니다.");

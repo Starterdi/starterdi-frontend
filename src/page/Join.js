@@ -7,6 +7,7 @@ import InfoJoin from '../component/InfoJoin';
 import DetailJoin from '../component/DetailJoin';
 import ProfileJoin from '../component/ProfileJoin';
 import loginMainCharacter from '../image/loginMainCharacter.png';
+import SuccessJoin from '../component/SuccessJoin';
 
 const JoinPage = styled.div`
     position:relative;
@@ -226,6 +227,7 @@ const Join = (props) =>{
             <Route path='/5/join/info' component={(props)=>(<InfoJoin joinInfo={joinInfo} changeJoinInfo={changeJoinInfo} changePath={changePath} {...props} />)} />
             <Route path='/5/join/detail' component={(props)=>(<DetailJoin joinInfo={joinInfo} changeJoinInfo={changeJoinInfo} changePath={changePath} {...props} />)}/>
             <Route path='/5/join/profile' component={(props)=>(<ProfileJoin joinInfo={joinInfo} changeJoinInfo={changeJoinInfo} changePath={changePath} {...props} />)}/>
+            <Route path='/5/join/success' component={(props)=>(<SuccessJoin joinInfo={joinInfo} {...props} />)} />
             <JoinStepBox>
                 <JoinStep>
                     <JoinStepTitle path={path === '/5/join' ? true : false}>Step. 1 약관동의</JoinStepTitle>

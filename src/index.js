@@ -12,7 +12,7 @@ import PrivateRoute from './lib/PrivateRoute';
 import LoginRoute from './lib/LoginRoute';
 
 ReactDOM.render(
-  <BrowserRouter >
+  <BrowserRouter>
     <Switch>
       <Route path='/5' exact component={Welcome} />
       <PrivateRoute path='/5/main' component={Home} />     

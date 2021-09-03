@@ -2,9 +2,10 @@ import React,{useEffect,useRef, useState} from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import CameraIcon from '../svg/CameraIcon';
-import basicProfile from '../image/mainCharacter.png';
 import LeftLongArrowIcon from '../svg/LeftLongArrowIcon';
 import RightLongArrowIcon from '../svg/RightLongArrowIcon';
+import ImageIcon from '../svg/ImageIcon';
+import axios from 'axios';
 
 const JoinBox = styled.div`
     width:700px;
@@ -111,6 +112,12 @@ const JoinProfileBox = styled.div`
     align-items : center;
     overflow : hidden;
 
+    svg{
+        width : 50%;
+        height : 50%;
+        * { fill : #ddd; }
+    }
+
     img {
         ${(props)=>(props.data === "width" ? "width : 90%;" : "height : 90%;")}
     }
@@ -145,6 +152,7 @@ const JoinProfileAddInput = styled.input`
 `;
 
 const ProfileJoin = (props) =>{
+    const profileForm = useRef(null);
     const joinInfo = props.joinInfo;
     const changePath = (link)=>{props.changePath(link)};
     const changeJoinInfo = (info,type)=>{props.changeJoinInfo(info,type);};
@@ -174,7 +182,6 @@ const ProfileJoin = (props) =>{
         reader.onload = () => {
             setUserProfileImg(reader.result);
             changeJoinInfo(reader.result,"user_profile_img");
-            console.log(reader.result);
         };
     }
 
@@ -187,6 +194,24 @@ const ProfileJoin = (props) =>{
         if(joinInfo.user_name === "") props.history.push("/5/join/info")
     }
 
+    const joinProccess = async()=>{
+        if(user_profile_img === "" || user_profile === "") return alert("내용을 입력해주세요!");
+        await axios.post('/api/JoinProccess',{
+            user_id : joinInfo.user_id,
+            user_email : joinInfo.user_email,
+            user_name : joinInfo.user_name,
+            password : joinInfo.user_password,
+            profile : joinInfo.user_profile,
+            profile_img : joinInfo.user_profile_img,
+            gender : joinInfo.user_gender,
+            birth : joinInfo.user_birth
+        })
+        .then((res)=>{
+            console.log(res);
+            if(res) props.history.push('/5/join/success');
+        });
+    }
+
     useEffect(()=>{
         joinInfoChecking();
     });
@@ -194,10 +219,12 @@ const ProfileJoin = (props) =>{
     return(
         <JoinBox>
             <JoinTitle>회원가입</JoinTitle>
-            <JoinForm>
+            <JoinForm ref={profileForm}>
                 <JoinInputBox>
                     <JoinProfileBox>
-                        <img ref={profileImg} src={user_profile_img ? user_profile_img : basicProfile} alt="profileSize" data={profileSize} onLoad={makeProfile} onChange={makeProfile} />
+                        {
+                            user_profile_img ? <img ref={profileImg} src={user_profile_img} alt="profileSize" data={profileSize} onLoad={makeProfile} onChange={makeProfile} /> : <ImageIcon/>
+                        }
                     </JoinProfileBox>
                     <JoinProfileAddBtn>
                         <CameraIcon/>
@@ -209,7 +236,7 @@ const ProfileJoin = (props) =>{
                     <JoinInput type="text" name="profile" onChange={changeProfile} value={user_profile} />
                     <JoinErrorMsg></JoinErrorMsg>
                 </JoinFormBox>
-                <Link to='/join/success'><JoinBtn type="button">가입완료</JoinBtn></Link>
+                <JoinBtn type="button" onClick={joinProccess}>가입완료</JoinBtn>
             </JoinForm>
             <JoinOtherBox>
                 <JoinOtherLink onClick={changePath.bind('link','/5/join/detail')} arrow="left" ><LeftLongArrowIcon /><Link to='/5/join/detail'><span>이전</span> 단계로 넘어가기</Link></JoinOtherLink>                
