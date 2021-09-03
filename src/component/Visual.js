@@ -87,6 +87,14 @@ const VisualCateWrap = styled.div`
   align-items : center;
 `;
 
+const VisualCateListWrap = styled.div`
+  position : relative;
+  display : flex;
+  justify-content :center;
+  align-items : center;
+  height : 100%;
+`;
+
 const VisualCateTitle = styled.p`
   margin-right : 2em;
   color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
@@ -99,15 +107,12 @@ const VisualCateList = styled.div`
   width : 90%;
   height : 100%;
   overflow : hidden;
-  position : relative;
-  display : flex;
-  justify-content : flex-start;
-  align-items : center;
 `;
 
 const VisualCateItem = styled.div`
   padding : 0 2em;
   height : 40px;
+  min-width : 120px;
   cursor:pointer;
   text-align:center;
   border-radius : 20px;
@@ -149,6 +154,22 @@ const Visual = (props)=>{
     {
       key : "배경",
       backgroundColor : "#495E81"
+    },
+    {
+      key : "취직",
+      backgroundColor : "#F49B88"
+    },
+    {
+      key : "코딩",
+      backgroundColor : "#3AB014"
+    },
+    {
+      key : "외국어",
+      backgroundColor : "#EBC30D"
+    },
+    {
+      key : "작곡/편곡",
+      backgroundColor : "#D68EFD"
     }
   ];
 
@@ -171,7 +192,9 @@ const Visual = (props)=>{
         <VisualCateWrap>
           <VisualCateTitle mod={mod}>카테고리</VisualCateTitle>
           <VisualCateList>
-            {cateList.map(cate=>(<VisualCateItem backgroundColor={cate.backgroundColor}>{cate.key}</VisualCateItem>))}
+            <VisualCateListWrap>
+              {cateList.map(cate=>(<VisualCateItem key={cate.key} backgroundColor={cate.backgroundColor}>{cate.key}</VisualCateItem>))}
+            </VisualCateListWrap>
           </VisualCateList>
         </VisualCateWrap>
       </VisualNavStyle>
