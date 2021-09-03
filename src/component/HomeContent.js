@@ -1,6 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import HomeContentArrowIcon from '../svg/HomeContentArrowIcon';
+
+const ContentLeftHeader = styled.div`
+  display : flex;
+  align-items: center;
+  justify-content : center;
+  padding : 0 1em;
+`;
+
+const ContentSubTitle = styled.p`
+  color : #aaa;
+  font-weight :bold;
+`;
 
 const HomeContentStyled = styled.div`
  background-color : ${(props)=>(props.mod === "light" ? "#ffffff" : "#1E1E1E")}};
@@ -12,34 +23,13 @@ const HomeContentStyled = styled.div`
  }
 `;
 
-const StudyItemStyled = styled.div`
- background-color : ${(props)=>(props.mod === "light" ? "#ffffff" : "#1E1E1E")};
- transition : 0.3s background-color;
-`;
-
-const studyList = [
-  {title : "Study 1", subTitle : "Study 1 - sub Title "},
-  {title : "Study 2", subTitle : "Study 2 - sub Title "},
-  {title : "Study 3", subTitle : "Study 3 - sub Title "}
-];
-
-const StudyItem = (props) => {
-  return(
-    <StudyItemStyled className="study_item" mod={props.mod}>
-      <div className="study_img"></div>
-      <div className="study_info">
-        <h5 className="study_title">{props.title}</h5>
-        <p className="study_subTitle">{props.subTitle}</p>
-      </div>
-    </StudyItemStyled>
-  );
-}
-
 const ContentHeader = (props)=>{
   return(
     <div className="content_header">
-      <h5 className="content_title">{props.title}</h5>
-      <HomeContentArrowIcon/>
+      <ContentLeftHeader>
+        <h5 className="content_title">{props.title}</h5>
+        <ContentSubTitle>({props.subTitle})</ContentSubTitle>
+      </ContentLeftHeader>
     </div>
   );
 }
@@ -47,9 +37,8 @@ const ContentHeader = (props)=>{
 const ContentSection = (props) =>{
   return(
     <section>
-      <ContentHeader mod={props.mod} title={props.title} />
+      <ContentHeader mod={props.mod} title={props.title} subTitle={props.subTitle} />
       <div className="content_body">
-        <StudyItem title={studyList[0].title} subTitle={studyList[0].subTitle} mod={props.mod} />
       </div>
     </section>
   );
@@ -60,9 +49,7 @@ const HomeContent = (props) =>{
   
   return(
     <HomeContentStyled id="content" mod={mod}>
-      <ContentSection mod={mod} title="신규개설"/>
-      <ContentSection mod={mod} title="추천스터디"/>
-      <ContentSection mod={mod} title="최신 스터디 소식"/>
+      <ContentSection mod={mod} title="스터디방" subTitle="708" />
     </HomeContentStyled>
   );
 }

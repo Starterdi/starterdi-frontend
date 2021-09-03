@@ -16,10 +16,12 @@ import SearchIcon from '../svg/SearchIcon';
 import SunIcon from '../svg/SunIcon';
 import MoonIcon from '../svg/MoonIcon';
 import { Link } from 'react-router-dom';
+import isUser from '../lib/isUser';
 
 const Head = styled.header`
   background-color:${(props)=>(props.mod === "light" ? "#ffffff" : "#1E1E1E")};
   transition : 0.3s all;
+  border-right : ${(props)=>(props.mod === "light" ? "1px solid rgba(232,162,168,0.38)" : "1px solid rgba(0,0,0,0)")};
 `;
 
 const Logo = styled.div`
@@ -48,7 +50,7 @@ const NavLi = styled.li`
 `;
 
 const ContentHeader = styled.div`
-  background-color:${(props)=>(props.mod === "light" ? "#ffffff" : "#1E1E1E")};
+  background-color:rgba(0,0,0,0);
   transition : 0.3s;
   * {
     transition : 0.3s;
@@ -66,10 +68,15 @@ const Toggle = styled.div`
 const HeaderUserImg = styled.div`
   border : 3px solid ${(props)=>(props.mod === "light" ? "#333333" : "#f5f5f5")};
   > #header_user_img {
+    cursor:pointer;
     overflow : hidden;
+    display : flex;
+    align-items : center;
+    justify-content : center;
+    background-color : ${(props)=>(props.mod === "light" ? "#ffffff" : "#333333")};
     img{
-      width :100%;
-      height : 100% ;
+      width :90%;
+      height : 90% ;
     }
   }
 
@@ -157,6 +164,7 @@ const Header = (props) =>{
         </div>
         <HeaderUserImg id="header_user" mod={mod} >
           <div id="header_user_img">
+            <img src={isUser.profile_img} alt="header profile" />
           </div>
         </HeaderUserImg>
       </ContentHeader>
