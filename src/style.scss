@@ -274,7 +274,7 @@ nav{
     align-items: center;
 
     &:nth-child(2){right:2em;left: auto;}
-    &:last-child{right: 0.5em;left: auto;}
+    &:nth-child(3){right: 0.5em;left: auto;}
     &:hover{opacity: 0.5;}
 }
 

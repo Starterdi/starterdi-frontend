@@ -14,7 +14,7 @@ const ContentSubTitle = styled.p`
 `;
 
 const HomeContentStyled = styled.div`
- background-color : ${(props)=>(props.mod === "light" ? "#ffffff" : "#1E1E1E")}};
+ background-color : ${(props)=>(props.mod === "light" ? "#ffffff" : "#222")}};
  transition : 0.3s;
  color : ${(props)=>(props.mod === "light" ? "#333" : "#f5f5f5")};
  svg > path {
