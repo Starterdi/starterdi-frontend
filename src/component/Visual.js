@@ -7,7 +7,7 @@ import VisualImg1 from '../image/visual1.png';
 import SearchIcon from '../svg/SearchIcon';
 
 const VisualNavStyle = styled.div`
-  background-color : ${(props)=>(props.mod === "light" ? "#fff" : "#222")};
+  background-color : ${(props)=>(props.mod === "light" ? "#fff" : "#1F1F1F")};
   transition : 0.3s;
 `;
 

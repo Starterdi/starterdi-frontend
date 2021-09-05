@@ -19,7 +19,7 @@ import { Link } from 'react-router-dom';
 import isUser from '../lib/isUser';
 
 const Head = styled.header`
-  background-color:${(props)=>(props.mod === "light" ? "#ffffff" : "#1E1E1E")};
+  background-color:${(props)=>(props.mod === "light" ? "#ffffff" : "#1A1A1A")};
   transition : 0.3s all;
   border-right : ${(props)=>(props.mod === "light" ? "1px solid rgba(232,162,168,0.38)" : "1px solid rgba(0,0,0,0)")};
 `;
