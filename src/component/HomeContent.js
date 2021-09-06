@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import FillterIcon from '../svg/FillterIcon';
 import HomeToggleBackground from '../svg/HomeToggleBackground';
 import HomeToggle from '../svg/HomeToggle';
-import AscIcon from '../image/AscIcon.png';
-import DescIcon from '../image/DescIcon.png';
+import DescIcon from '../svg/DescIcon';
+import AscIcon from '../svg/AscIcon';
 
 const ContentLeftHeader = styled.div`
   display : flex;
@@ -23,7 +23,6 @@ const HomeContentStyled = styled.div`
  transition : 0.3s;
  color : ${(props)=>(props.mod === "light" ? "#333" : "#f5f5f5")};
  svg > path {
-  fill:${(props)=>(props.mod === "light" ? "#333" : "#f5f5f5")};
   transition : 0.3s;
  }
 `;
@@ -118,11 +117,6 @@ const HomeContentSortTitle = styled.p`
  margin-right : 0.5em;
 `;
 
-const HomeContentSortIcon = styled.img`
- width : 20px;
- height : 20px;
-`;
-
 const HomeContent = (props) =>{
   const mod = props.mod;
   const [contentSection,setContentSection] = useState("전체");
@@ -165,7 +159,7 @@ const HomeContent = (props) =>{
 
           <HomeContentSortWrap onClick={getContentSort}>
             <HomeContentSortTitle>{contentSort}</HomeContentSortTitle>
-			<HomeContentSortIcon src={<AscIcon/>} alt="sortIcon" />
+			{contentSort === "내림차순" ? <DescIcon mod={mod} /> : <AscIcon mod={mod} />}
           </HomeContentSortWrap>
           
           <HomeFillterBtn mod={mod} ><FillterIcon mod={mod} /></HomeFillterBtn>
