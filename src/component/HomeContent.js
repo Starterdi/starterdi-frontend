@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import FillterIcon from '../svg/FillterIcon';
 import HomeToggleBackground from '../svg/HomeToggleBackground';
 import HomeToggle from '../svg/HomeToggle';
+import AscIcon from '../image/AscIcon.png';
+import DescIcon from '../image/DescIcon.png';
 
 const ContentLeftHeader = styled.div`
   display : flex;
@@ -27,71 +29,58 @@ const HomeContentStyled = styled.div`
 `;
 
 const ContentSort = styled.div`
- display : flex;
- justify-content : flex-start;
- align-items : center;
- margin-left : 2em
+  display : flex;
+  justify-content : flex-start;
+  align-items : center;
+  margin-left : 2em
 `;
 
 const ContentSortItem = styled.button`
+  font-weight : bold;
   transition : 0.3s all;
- font-weight : bold;
- color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
- border : none;
- background-color : rgba(0,0,0,0);
- margin : 0 1em;
- cursor : pointer;
- font-size : 1.2em;
- border-bottom : 3px solid ${(props)=>(props.select ? "#E8A2A8" : "rgba(0,0,0,0)" )};
+  color : ${(props)=>(props.mod === "light" ? props.select ? "#333" : "#555" : props.select ? "#fff" : "#aaa")};
+  border : none;
+  background-color : rgba(0,0,0,0);
+  margin : 0 1em;
+  cursor : pointer;
+  font-size : 1em;
+  border-bottom : 3px solid ${(props)=>(props.select ? "#E8A2A8" : "rgba(0,0,0,0)" )};
 `;
 
 const ContentRightHeader = styled.div`
- display : flex;
- justify-content : flex-end;
- align-items : center;
- height : 100%;
+  display : flex;
+  justify-content : flex-end;
+  align-items : center;
+  height : 100%;
 `;
 
 const MakeStudyBtn = styled.button`
- padding : 0.5em 2em;
- border : 1px solid ${(props)=>(props.mod === "light" ? "#cbcbcb" : "#fff")};
- border-radius : 10px;
- color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
- font-size : 1em;
- font-weight : bold;
- background-color :rgba(0,0,0,0);
- transition : 0.3s;
- cursor : pointer;
- :hover{opacity : 0.5;}
+  padding : 0.5em 2em;
+  border : 1px solid ${(props)=>(props.mod === "light" ? "#cbcbcb" : "#fff")};
+  border-radius : 10px;
+  color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
+  font-size : 1em;
+  font-weight : bold;
+  background-color :rgba(0,0,0,0);
+  transition : 0.3s;
+  cursor : pointer;
+  :hover{opacity : 0.5;}
 `;
 
 const HomeFillterBtn = styled.button`
- border : 1px solid ${(props)=>(props.mod === "light" ? "#cbcbcb" : "#fff")};
- border-radius : 7px;
- padding : 0.7em;
- background-color : rgba(0,0,0,0);
- cursor : pointer;
- display : flex;
- justify-content : center;
- align-items : center;
- margin : 0 1em;
- transition : 0.3s;
- :hover{
-   opacity : 0.5;
- }
-`;
-
-const HomeSortInput = styled.select`
- width : 170px;
- border-radius : 10px;
- cursor : pointer;
- padding : 0.5em;
- border : 1px solid ${(props)=>(props.mod === "light" ? "#cbcbcb" : "#fff")};
- background-color : rgba(0,0,0,0);
-`;
-
-const HomeSortOption = styled.option`
-
+  border : 1px solid ${(props)=>(props.mod === "light" ? "#cbcbcb" : "#fff")};
+  border-radius : 7px;
+  padding : 0.7em;
+  background-color : rgba(0,0,0,0);
+  cursor : pointer;
+  display : flex;
+  justify-content : center;
+  align-items : center;
+  margin : 0 1em;
+  transition : 0.3s;
+  :hover{
+    opacity : 0.5;
+  }
 `;
 
 const HomeFindToggle = styled.div`
@@ -118,9 +107,31 @@ const HomeFindToggleWrap = styled.div`
  }
 `;
 
+const HomeContentSortWrap = styled.div`
+ display : flex;
+ justify-content : center;
+ align-items : center;
+ cursor : pointer;
+`;
+
+const HomeContentSortTitle = styled.p`
+ margin-right : 0.5em;
+`;
+
+const HomeContentSortIcon = styled.img`
+ width : 20px;
+ height : 20px;
+`;
+
 const HomeContent = (props) =>{
   const mod = props.mod;
   const [contentSection,setContentSection] = useState("전체");
+  const [contentSort,setContentSort] = useState("내림차순");
+
+  const getContentSort = ()=>{
+    setContentSort(contentSort === "내림차순" ? "오름차순" : "내림차순");
+  }
+
   const getContentSection = (val)=>{
     setContentSection(val.target.innerText);
   }
@@ -139,8 +150,11 @@ const HomeContent = (props) =>{
             <ContentSortItem select={contentSection === "인기순"} onClick={getContentSection.bind("인기순")} mod={mod}>인기순</ContentSortItem>
             <ContentSortItem select={contentSection === "조회순"} onClick={getContentSection.bind("조회순")} mod={mod}>조회순</ContentSortItem>
           </ContentSort>
+
         </ContentLeftHeader>
+
         <ContentRightHeader>
+
           <HomeFindToggle>
             <HomeFindToggleTitle>조건에 맞는 스터디방 찾기</HomeFindToggleTitle>
             <HomeFindToggleWrap>
@@ -148,9 +162,12 @@ const HomeContent = (props) =>{
               <HomeToggle/>
             </HomeFindToggleWrap>
           </HomeFindToggle>
-          <HomeSortInput mod={mod}>
-            <HomeSortOption>정렬 : Name</HomeSortOption>
-          </HomeSortInput>
+
+          <HomeContentSortWrap onClick={getContentSort}>
+            <HomeContentSortTitle>{contentSort}</HomeContentSortTitle>
+			<HomeContentSortIcon src={<AscIcon/>} alt="sortIcon" />
+          </HomeContentSortWrap>
+          
           <HomeFillterBtn mod={mod} ><FillterIcon mod={mod} /></HomeFillterBtn>
           <MakeStudyBtn mod={mod}>방 만들기</MakeStudyBtn>
         </ContentRightHeader>
