@@ -298,10 +298,10 @@ nav{
     .content_body{
         width: 100%;
         margin: 2em 0;
-        height: 300px;
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
+        flex-wrap : wrap;
     }
 }
 

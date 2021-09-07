@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import LeftArrowIcon from '../svg/LeftArrowIcon';
 import RightArrowIcon from '../svg/RightArrowIcon';
@@ -88,11 +88,14 @@ const VisualCateWrap = styled.div`
 `;
 
 const VisualCateListWrap = styled.div`
-  position : relative;
+  position : absolute;
+  top : 0;
+  left : -${(props)=>(props.size)}px;
   display : flex;
-  justify-content :center;
+  justify-content :flex-start;
   align-items : center;
   height : 100%;
+  transition : 0.3s;
 `;
 
 const VisualCateTitle = styled.p`
@@ -104,6 +107,7 @@ const VisualCateTitle = styled.p`
 `; 
 
 const VisualCateList = styled.div`
+  position : relative;
   width : 90%;
   height : 100%;
   overflow : hidden;
@@ -112,7 +116,7 @@ const VisualCateList = styled.div`
 const VisualCateItem = styled.div`
   padding : 0 2em;
   height : 40px;
-  min-width : 120px;
+  min-width : 150px;
   cursor:pointer;
   text-align:center;
   border-radius : 20px;
@@ -173,6 +177,15 @@ const Visual = (props)=>{
     }
   ];
 
+  const [visualNav,setVisualNav] = useState(0);
+  const getVisualNavRight = ()=>{
+    setVisualNav(visualNav <= 480 ? 480 - visualNav <= 150 ? 480 : visualNav+150 : 480 );
+  }
+
+  const getVisualNavLeft = ()=>{
+    setVisualNav(visualNav >= 0 ? visualNav <= 150 ? 0 : visualNav-150 : 0 );
+  }
+
   return(
     <div id="visual">
       <div id="visual_img_wrap">
@@ -186,13 +199,13 @@ const Visual = (props)=>{
         </VisualSearchWrap>
       </div>
       <VisualNavStyle id="visual_nav" mod={mod}>
-        <VisualNavBtn mod={mod} icon={<LeftArrowIcon/>} />
+      <VisualNavBtnStyled onClick={getVisualNavLeft} mod={mod} className="visual_nav_btn"><LeftArrowIcon/></VisualNavBtnStyled>
         <VisualNavBtn mod={mod} icon={<ListIcon/>} />
-        <VisualNavBtn mod={mod} icon={<RightArrowIcon/>} />
+        <VisualNavBtnStyled onClick={getVisualNavRight} mod={mod} className="visual_nav_btn"><RightArrowIcon/></VisualNavBtnStyled>
         <VisualCateWrap>
           <VisualCateTitle mod={mod}>카테고리</VisualCateTitle>
           <VisualCateList>
-            <VisualCateListWrap>
+            <VisualCateListWrap size={visualNav}>
               {cateList.map(cate=>(<VisualCateItem key={cate.key} backgroundColor={cate.backgroundColor}>{cate.key}</VisualCateItem>))}
             </VisualCateListWrap>
           </VisualCateList>

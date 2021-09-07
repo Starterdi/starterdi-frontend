@@ -1,10 +1,10 @@
 import React,{useState} from 'react';
 import styled from 'styled-components';
-import FillterIcon from '../svg/FillterIcon';
 import HomeToggleBackground from '../svg/HomeToggleBackground';
 import HomeToggle from '../svg/HomeToggle';
 import DescIcon from '../svg/DescIcon';
 import AscIcon from '../svg/AscIcon';
+import ErrorCharacter from '../image/ErrorCharacter.png';
 
 const ContentLeftHeader = styled.div`
   display : flex;
@@ -64,22 +64,7 @@ const MakeStudyBtn = styled.button`
   transition : 0.3s;
   cursor : pointer;
   :hover{opacity : 0.5;}
-`;
-
-const HomeFillterBtn = styled.button`
-  border : 1px solid ${(props)=>(props.mod === "light" ? "#cbcbcb" : "#fff")};
-  border-radius : 7px;
-  padding : 0.7em;
-  background-color : rgba(0,0,0,0);
-  cursor : pointer;
-  display : flex;
-  justify-content : center;
-  align-items : center;
-  margin : 0 1em;
-  transition : 0.3s;
-  :hover{
-    opacity : 0.5;
-  }
+  margin-left : 1em;
 `;
 
 const HomeFindToggle = styled.div`
@@ -101,8 +86,9 @@ const HomeFindToggleWrap = styled.div`
  > svg{cursor : pointer;}
  > svg:last-child{
    position:absolute;
-   left : 3px;
-   top : 3px;
+   left : ${(props)=>props.accept === "on" ? "3px" : "26px"};
+   top : 2.5px;
+   transition : 0.3s;
  }
 `;
 
@@ -117,10 +103,86 @@ const HomeContentSortTitle = styled.p`
  margin-right : 0.5em;
 `;
 
+const ErrorTitle = styled.p`
+ font-size : 1.5em;
+ font-weight :bold;
+ color : #aaa;
+`;
+
+const ErrorMsg = styled.div`
+ display : flex;
+ flex-direction : column;
+ justify-content : center;
+ align-items : center;
+ margin : 0 auto;
+ opacity : 0.5;
+ height : 100%;
+ width : 100%;
+`;
+
+const HomeContentItem = styled.div`
+ width : 300px;
+ height : 250px;
+ margin : 20px 30px;
+ border-radius : 20px;
+ overflow : hidden;
+ display : flex;
+ flex-direction : column;
+ border : 1px solid ${(props)=>(props.mod === "light" ? "#ddd" : "#fff")};
+ cursor : pointer;
+ transition : 0.3s;
+ :hover{
+   opacity : 0.5;
+ }
+`;
+
+const ContentImgWrap = styled.div`
+ width : 100%;
+ height : 160px;
+ overflow : hidden;
+`;
+
+const ContentInfoWrap = styled.div`
+ width : 100%;
+ height : 90px;
+ position : relative;
+ border-top : 1px solid ${(props)=>(props.mod === "light" ? "#ddd" : "#fff")};
+ background-color : ${(props)=>(props.mod === "light" ? "#fff" : "#333")};
+ display : flex;
+ justify-content :center;
+ align-items : center;
+ transition : 0.3s;
+`;
+
+const ContentCate = styled.div`
+ width : 150px;
+ height : 30px;
+ border-radius : 20px;
+ color : #fff;
+ text-align : center;
+ line-height:30px;
+ position : absolute;
+ background-color : ${(props)=>(props.cateColor)};
+ top : -15px;
+`;
+
+const ContentTitle = styled.p`
+ text-align : center;
+ font-size : 1.2em;
+ font-weight : bold;
+ color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
+ transition : 0.3s;
+`;
+
 const HomeContent = (props) =>{
   const mod = props.mod;
   const [contentSection,setContentSection] = useState("전체");
   const [contentSort,setContentSort] = useState("내림차순");
+  const [contentSortAccept,setContentSortAccept] = useState("on");
+
+  const getContentSortAccept = () =>{
+    setContentSortAccept(contentSortAccept === "on" ? "off" : "on");
+  }
 
   const getContentSort = ()=>{
     setContentSort(contentSort === "내림차순" ? "오름차순" : "내림차순");
@@ -129,6 +191,57 @@ const HomeContent = (props) =>{
   const getContentSection = (val)=>{
     setContentSection(val.target.innerText);
   }
+
+  const HomeContentRoomList = [
+    {
+      key : "스터디방 1",
+      cate : "크로키",
+      cateColor : "#F46F6F",
+      img : ""
+    },
+    {
+      key : "스터디방 2",
+      cate : "그림",
+      cateColor : "#59AFE8",
+      img : ""
+    },
+    {
+      key : "스터디방 3",
+      cate : "그림",
+      cateColor : "#59AFE8",
+      img : ""
+    },
+    {
+      key : "스터디방 4",
+      cate : "외국어",
+      cateColor : "#EBC30D",
+      img : ""
+    },
+    {
+      key : "스터디방 5",
+      cate : "취직",
+      cateColor : "#F49B88",
+      img : ""
+    },
+    {
+      key : "스터디방 6",
+      cate : "취직",
+      cateColor : "#F49B88",
+      img : ""
+    },
+    {
+      key : "스터디방 7",
+      cate : "코딩",
+      cateColor : "#3AB014",
+      img : ""
+    },
+    {
+      key : "스터디방 8",
+      cate : "작곡/편곡",
+      cateColor : "#D68EFD",
+      img : ""
+    }
+  ];
 
   const ContentHeader = (props)=>{
     const mod = props.mod;
@@ -151,21 +264,29 @@ const HomeContent = (props) =>{
 
           <HomeFindToggle>
             <HomeFindToggleTitle>조건에 맞는 스터디방 찾기</HomeFindToggleTitle>
-            <HomeFindToggleWrap>
-              <HomeToggleBackground/>
+            <HomeFindToggleWrap accept={contentSortAccept} onClick={getContentSortAccept}>
+              <HomeToggleBackground set={contentSortAccept} />
               <HomeToggle/>
             </HomeFindToggleWrap>
           </HomeFindToggle>
 
           <HomeContentSortWrap onClick={getContentSort}>
             <HomeContentSortTitle>{contentSort}</HomeContentSortTitle>
-			{contentSort === "내림차순" ? <DescIcon mod={mod} /> : <AscIcon mod={mod} />}
+	      		{contentSort === "내림차순" ? <DescIcon mod={mod} /> : <AscIcon mod={mod} />}
           </HomeContentSortWrap>
           
-          <HomeFillterBtn mod={mod} ><FillterIcon mod={mod} /></HomeFillterBtn>
           <MakeStudyBtn mod={mod}>방 만들기</MakeStudyBtn>
         </ContentRightHeader>
       </div>
+    );
+  }
+
+  const MakeError = (props)=>{
+    return(
+      <ErrorMsg>
+        <img src={ErrorCharacter} alt="error" />
+        <ErrorTitle>{props.title}</ErrorTitle>
+      </ErrorMsg>
     );
   }
 
@@ -174,6 +295,23 @@ const HomeContent = (props) =>{
       <section>
         <ContentHeader mod={props.mod} title={props.title} subTitle={props.subTitle} />
         <div className="content_body">
+        {
+          HomeContentRoomList.length ? HomeContentRoomList.map(room => (
+            <HomeContentItem mod={mod} key={room.key}>
+              <ContentImgWrap>
+                {room.img ? <img src={room.img} alt="roog img" /> : "" }             
+              </ContentImgWrap>
+              <ContentInfoWrap mod={mod}>
+                <ContentCate cateColor={room.cateColor}>
+                  {room.cate}
+                </ContentCate>
+                <ContentTitle mod={mod}>
+                  {room.key}
+                </ContentTitle>
+              </ContentInfoWrap>
+            </HomeContentItem>
+          )) : <MakeError title="관련정보를 찾을 수 없습니다!"/>
+        }
         </div>
       </section>
     );
