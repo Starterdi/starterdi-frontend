@@ -5,6 +5,7 @@ import HomeToggle from '../svg/HomeToggle';
 import DescIcon from '../svg/DescIcon';
 import AscIcon from '../svg/AscIcon';
 import ErrorCharacter from '../image/ErrorCharacter.png';
+import { Link } from 'react-router-dom';
 
 const ContentLeftHeader = styled.div`
   display : flex;
@@ -275,7 +276,7 @@ const HomeContent = (props) =>{
 	      		{contentSort === "내림차순" ? <DescIcon mod={mod} /> : <AscIcon mod={mod} />}
           </HomeContentSortWrap>
           
-          <MakeStudyBtn mod={mod}>방 만들기</MakeStudyBtn>
+          <Link to='/5/makeRoom'><MakeStudyBtn mod={mod}>방 만들기</MakeStudyBtn></Link>
         </ContentRightHeader>
       </div>
     );

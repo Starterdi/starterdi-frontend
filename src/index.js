@@ -6,6 +6,7 @@ import Chat from './page/Chat';
 import Welcome from './page/Welcome';
 import Login from './page/Login';
 import Join from './page/Join';
+import MakeRoom from './page/MakeRoom';
 import reportWebVitals from './reportWebVitals';
 import './style.scss';
 import PrivateRoute from './lib/PrivateRoute';
@@ -15,6 +16,7 @@ ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Route path='/5' exact component={Welcome} />
+      <PrivateRoute path='/5/makeRoom' component={MakeRoom} />
       <PrivateRoute path='/5/main' component={Home} />     
       <PrivateRoute path='/5/chat' component={Chat}/>
       <LoginRoute path='/5/login' component={Login}/>
