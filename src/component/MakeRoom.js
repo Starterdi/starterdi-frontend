@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import MakeRoomBackIcon from '../svg/MakeRoomBackIcon';
+import Room from './MakeRoom-Room';
 
 const MakeRoomWrap = styled.div`
     width : calc(100% - 300px);
@@ -21,7 +22,7 @@ const MakeRoomLeft = styled.div`
     flex-direction : column;
     align-items : center;
     justify-content :space-between;
-    margin : 1em
+    margin : 1em;
 `;
 
 const LeftBox = styled.div`
@@ -32,6 +33,9 @@ const LeftBox = styled.div`
     border-radius : 10px;
     padding : 2em;
     transition : 0.3s;
+    display : flex;
+    justify-content : center;
+    align-items : center;
 `;
 
 const RightBox = styled.div`
@@ -86,24 +90,132 @@ const MakeRoomTitle = styled.h3`
     color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
 `;
 
+const MakeRoomRightNav= styled.div`
+    width : 100%;
+    height : 70px;
+    border-bottom : 1px solid #ddd;
+    display : flex;
+    justify-content : center;
+    margin-top : -2px;
+`;
+
+const MakeRoomRightNavItem = styled.div`
+    width : calc(100% / 3);
+    height : 100%;
+    text-align : center;
+    line-height : 70px;
+    color : ${(props)=>(props.nav === "select" ? "#E8A2A8" : "#aaa")};
+    font-weight : bold;
+    font-size : 1.2em;
+    cursor : pointer;
+    border-bottom : 3px solid ${(props)=>(props.nav === "select" ? "#E8A2A8" : "rgba(0,0,0,0)")};
+    margin-top : 2px;
+`;
+
+// room-right
+
+const MakeRoomRightForm = styled.form`
+    width : 80%;
+    height : 80%;
+    margin : 0 auto;
+    padding-top : 1em;
+`;
+
+const MakeRoomRightInputWrap = styled.div`
+    width : 100%;
+    margin : 2em 0;
+    display : flex;
+    flex-direction : column;
+    align-items : flex-start;
+`;
+
+const MakeRoomRightInputLabel = styled.label`
+    font-size: 1.2em;
+    font-weight : bold;
+    transition : 0.3s;
+    color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
+`;
+
+const MakeRoomRightInput = styled.input`
+    background-color : #F5F6F8;
+    border : none;
+    border-radius : 30px;
+    width : 100%;
+    padding : 1em 1.5em;
+    font-size : 1em;
+    margin-top : 1.5em;
+`;
+
+const MakeRoomRightInputTextArea = styled.textarea`
+    background-color : #F5F6F8;
+    border : none;
+    border-radius : 20px;
+    width : 100%;
+    padding : 1.5em;
+    font-size : 1em;
+    margin-top : 1.5em;
+`;
+
 const MakeRoom = (props)=>{
     const mod = props.mod;
+    const [makeRoomNav,setMakeRoomNav] = useState("Room");
     const [makeRoomStatus] = useState("false");
+
+    const getMakeRoomNav = (e)=>{setMakeRoomNav(e.target.dataset.value);}
+    const makeRoomSetting = {
+        room_profile_img : "",
+        room_banner_img : "",
+        room_name : "",
+        room_cate : [],
+        room_intro : "",
+        room_join_intro : "",
+        room_condition : {
+            room_birth : "",
+            room_gender : "",
+            room_other : []
+        },
+        room_light_theme : "",
+        room_dark_theme : "",
+        room_arrangement : "",
+        room_sort : "",
+        room_order : ""
+    }
 
     return(
         <MakeRoomWrap mod={mod}>
             <MakeRoomLeft>
                 <LeftBox mod={mod}>
-                    <Link to="/5/main">
-                        <MakeRoomBackBtn>
-                            <MakeRoomBackIcon mod={mod} />
-                        </MakeRoomBackBtn>
-                    </Link>
+                    <Link to="/5/main"><MakeRoomBackBtn><MakeRoomBackIcon mod={mod} /></MakeRoomBackBtn></Link>
+                    {
+                        makeRoomNav === "Room" ? <Room mod={mod} makeRoomSetting={makeRoomSetting} /> : ""
+                    }
                 </LeftBox>
                 <MakeRoomBtn status={makeRoomStatus}>스터디방 만들기</MakeRoomBtn>
             </MakeRoomLeft>
+
             <RightBox mod={mod}>
                 <MakeRoomTitle mod={mod}>스터디방 만들기</MakeRoomTitle>
+                <MakeRoomRightNav mod={mod}>
+                    <MakeRoomRightNavItem nav={makeRoomNav === "Room" ? "select" : "false"} onClick={getMakeRoomNav} data-value="Room" mod={mod}>방 설정</MakeRoomRightNavItem>
+                    <MakeRoomRightNavItem nav={makeRoomNav === "Join" ? "select" : "false"} onClick={getMakeRoomNav} data-value="Join" mod={mod}>가입 설정</MakeRoomRightNavItem>
+                    <MakeRoomRightNavItem nav={makeRoomNav === "Design" ? "select" : "false"} onClick={getMakeRoomNav} data-value="Design" mod={mod}>꾸미기 설정</MakeRoomRightNavItem>
+                </MakeRoomRightNav>
+
+                <MakeRoomRightForm>
+                    <MakeRoomRightInputWrap>
+                        <MakeRoomRightInputLabel for="room_name" mod={mod}>스터디방 이름</MakeRoomRightInputLabel>
+                        <MakeRoomRightInput type="text" name="room_name" />
+                    </MakeRoomRightInputWrap>
+                    <MakeRoomRightInputWrap>
+                        <MakeRoomRightInputLabel mod={mod} for="room_cate">카테고리</MakeRoomRightInputLabel>
+                        
+                    </MakeRoomRightInputWrap>
+                    <MakeRoomRightInputWrap>
+                        <MakeRoomRightInputLabel mod={mod} for="room_intro">스터디방 소개</MakeRoomRightInputLabel>
+                        <MakeRoomRightInputTextArea rows="7" name="room_intro"></MakeRoomRightInputTextArea>
+                    </MakeRoomRightInputWrap>
+                </MakeRoomRightForm>
+
             </RightBox>
         </MakeRoomWrap>
     );
