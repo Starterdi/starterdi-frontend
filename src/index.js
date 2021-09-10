@@ -11,6 +11,9 @@ import reportWebVitals from './reportWebVitals';
 import './style.scss';
 import PrivateRoute from './lib/PrivateRoute';
 import LoginRoute from './lib/LoginRoute';
+import axios from 'axios';
+
+axios.defaults.baseURL = "http://localhost:3309";
 
 ReactDOM.render(
   <BrowserRouter>

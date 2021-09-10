@@ -8,37 +8,9 @@
     outline: none;
 }
 
-$main-background-color:#ffffff;
-$background-color:#f5f5f5;
-$background2-color:#f5f5f5;
-$bar-color:#E8A2A8;
-$color: #333333;
-$fill: #000;
-$stroke: #000;
-$border-color:#333333;
-$border2-color:#E8A2A8;
-$nav-color:#888;
-$nav-color2:#555;
-$box-shadow : rgba(0,0,0,0.2);
-
-// :root[color-theme='dark']{
-//     $main-background-color:#1E1E1E !global;
-//     $background-color:#1E1E1E !global;
-//     $background2-color:#A7A7A7 !global;
-//     $bar-color:#f5f5f5 !global;
-//     $color: #f5f5f5 !global;
-//     $fill: #f5f5f5 !global;
-//     $stroke: #f5f5f5 !global;
-//     $border-color:#f5f5f5 !global;
-//     $border2-color:#3C4042 !global;
-//     $nav-color:#aaa !global;
-//     $nav-color2:#ddd !global;
-//     $box-shadow : rgba(255,255,255,0) !global;
-// }
-
 ul,li{list-style: none;}
 a{text-decoration: none;color: inherit;}
-html,body{min-height: 100%;display: flex;width: 100%;background-color: $main-background-color !important;color: $color !important;transition: 0.3s;}
+html,body{min-height: 100%;display: flex;width: 100%;background-color: #ffffff !important;color: #333333 !important;transition: 0.3s;}
 #root{display: flex;justify-content: flex-end;width: 100%;flex-wrap: wrap;}
 header{
     position: fixed;
@@ -56,49 +28,47 @@ header{
 nav{
     margin-top: 1em;
     width: 70%;
+}
 
-    > ul{
-         li{
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            cursor: pointer;
-            margin: 2.5em 0;
-            position: relative;
-    
-            *{transition: 0.3s all;}
-            > span{font-size: 1.3em;font-weight: bold;color: $color;}
-            svg {
-                > path{fill: $fill;}
-                > g > path{stroke: $stroke;}
-            }
+nav > ul li{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    cursor: pointer;
+    margin: 2.5em 0;
+    position: relative;
 
-            &.select{
-                &::after {
-                    content: '';
-                    position: absolute;
-                    width: 10px;
-                    height: 100%;
-                    top: 0;
-                    left:-60px;
-                    border-radius: 20px;
-                    transition: 0.3s all;
-                }
-    
-                > span{color: #E8A2A8;}
-                > svg{
-                    > path{fill: #E8A2A8;}
-                    > g > path{stroke: #E8A2A8;}
-                }
-            }
+    *{transition: 0.3s all;}
+    > span{font-size: 1.3em;font-weight: bold;color: #333333;}
+    svg {
+        > path{fill: #000;}
+        > g > path{stroke: #000;}
+    }
 
-            &:hover{
-                &::after{background-color: #ff98a1 !important;}
-                > span{color: #ff98a1 !important;}
-                > svg{
-                    > path{fill: #ff98a1 !important;}
-                    > g > path{stroke: #ff98a1 !important;}
-                }
-            }
+    &.select{
+        &::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 100%;
+            top: 0;
+            left:-60px;
+            border-radius: 20px;
+            transition: 0.3s all;
+        }
+
+        > span{color: #E8A2A8;}
+        > svg{
+            > path{fill: #E8A2A8;}
+            > g > path{stroke: #E8A2A8;}
+        }
+    }
+
+    &:hover{
+        &::after{background-color: #ff98a1 !important;}
+        > span{color: #ff98a1 !important;}
+        > svg{
+            > path{fill: #ff98a1 !important;}
+            > g > path{stroke: #ff98a1 !important;}
         }
     }
 }
@@ -116,8 +86,8 @@ nav{
     border-bottom: rgba(0, 0, 0, 0);
 
     &.scroll{
-        background-color: $main-background-color;
-        border-color: $border-color;
+        background-color: #ffffff;
+        border-color: #333333;
     }
 }
 
@@ -191,8 +161,8 @@ nav{
     }
 
     &.on{
-        background-color: $main-background-color;
-        box-shadow: inset 0 0 10px $box-shadow;
+        background-color: #ffffff;
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
         > input{display: block;}
     }
 }
@@ -236,7 +206,7 @@ nav{
     width: 100%;
     height: 700px;
     position: relative;
-    background-color: $background2-color;
+    background-color: #f5f5f5;
     overflow: hidden;
     transition: 0.3s;
 }

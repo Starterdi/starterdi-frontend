@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 
 // room-right
@@ -59,68 +59,53 @@ const MakeRoomRightSelect = styled.select`
 `;
 
 const Room = (props)=>{
-    const cateList = [
-        {
-          key : "그림",
-          backgroundColor : "#59AFE8"
-        },
-        {
-          key : "크로키",
-          backgroundColor : "#F46F6F"
-        },
-        {
-          key : "수채화",
-          backgroundColor : "#81D86E"
-        },
-        {
-          key : "패턴",
-          backgroundColor : "#777777"
-        },
-        {
-          key : "배경",
-          backgroundColor : "#495E81"
-        },
-        {
-          key : "취직",
-          backgroundColor : "#F49B88"
-        },
-        {
-          key : "코딩",
-          backgroundColor : "#3AB014"
-        },
-        {
-          key : "외국어",
-          backgroundColor : "#EBC30D"
-        },
-        {
-          key : "작곡/편곡",
-          backgroundColor : "#D68EFD"
-        }
-      ];
+  const cateList = [{key : "그림",backgroundColor : "#59AFE8"},{key : "크로키",backgroundColor : "#F46F6F"},{key : "수채화",backgroundColor : "#81D86E"},{key : "패턴",backgroundColor : "#777777"},{key : "배경",backgroundColor : "#495E81"},{key : "취직",backgroundColor : "#F49B88"},{key : "코딩",backgroundColor : "#3AB014"},{key : "외국어",backgroundColor : "#EBC30D"},{key : "작곡/편곡",backgroundColor : "#D68EFD"}];
+  const mod = props.mod;
+  const makeRoomSetting = props.makeRoomSetting;
+  console.log(makeRoomSetting);
+  const getMakeRoomSetting = (value,type)=>{props.getMakeRoomSetting(value,type);}
+  
+  const MakeRoomForm = useRef(null);
+  const [roomName,setRoomName] = useState(makeRoomSetting.room_name);
+  const [roomCate,setRoomCate] = useState(makeRoomSetting.room_cate);
+  const [roomIntro,setRoomIntro] = useState(makeRoomSetting.room_intro);
 
-    const mod = props.mod;
+  const setMakeRoomSetting =()=>{
+    const form = MakeRoomForm.current;
+    const name = form.room_name.value;
+    const cate = form.room_cate.value;
+    const intro = form.room_intro.value;
 
-    return(
-        <MakeRoomRightForm>
-            <MakeRoomRightInputWrap>
-                <MakeRoomRightInputLabel for="room_name" mod={mod}>스터디방 이름</MakeRoomRightInputLabel>
-                <MakeRoomRightInput type="text" name="room_name" />
-            </MakeRoomRightInputWrap>
-            <MakeRoomRightInputWrap>
-                <MakeRoomRightInputLabel mod={mod} for="room_cate">카테고리</MakeRoomRightInputLabel>
-                <MakeRoomRightSelect mod={mod}>
-                    <option value="">카테고리를 선택해주세요</option>
-                    {
-                        cateList.map(cate=>(<option value={cate.key} key={cate.key}>{cate.key}</option>))
-                    }
-                </MakeRoomRightSelect>
-            </MakeRoomRightInputWrap>
-            <MakeRoomRightInputWrap>
-                <MakeRoomRightInputLabel mod={mod} for="room_intro">스터디방 소개</MakeRoomRightInputLabel>
-                <MakeRoomRightInputTextArea rows="7" name="room_intro"></MakeRoomRightInputTextArea>
-            </MakeRoomRightInputWrap>
-        </MakeRoomRightForm>
-    );
+    setRoomName(name);
+    setRoomCate(cate);
+    setRoomIntro(intro);
+
+    getMakeRoomSetting(name,"room_name");
+    getMakeRoomSetting(cate,"room_cate");
+    getMakeRoomSetting(intro,"room_intro");
+  }
+
+  return(
+    <MakeRoomRightForm ref={MakeRoomForm}>
+        <MakeRoomRightInputWrap>
+            <MakeRoomRightInputLabel htmlFor="room_name" mod={mod}>스터디방 이름</MakeRoomRightInputLabel>
+            <MakeRoomRightInput type="text" name="room_name" value={roomName} onChange={setMakeRoomSetting} />
+        </MakeRoomRightInputWrap>
+        <MakeRoomRightInputWrap>
+            <MakeRoomRightInputLabel mod={mod} htmlFor="room_cate">카테고리</MakeRoomRightInputLabel>
+            <MakeRoomRightSelect mod={mod} name="room_cate" onChange={setMakeRoomSetting}>
+                <option value="" >카테고리를 선택해주세요</option>
+                {
+                    cateList.map(cate=>(<option value={cate.key} key={cate.key} selected={roomCate === cate.key ? true : false} >{cate.key}</option>))
+                }
+            </MakeRoomRightSelect>
+        </MakeRoomRightInputWrap>
+        <MakeRoomRightInputWrap>
+            <MakeRoomRightInputLabel mod={mod} htmlFor="room_intro">스터디방 소개</MakeRoomRightInputLabel>
+            <MakeRoomRightInputTextArea rows="7" name="room_intro" onChange={setMakeRoomSetting}>{roomIntro}</MakeRoomRightInputTextArea>
+        </MakeRoomRightInputWrap>
+    </MakeRoomRightForm>
+  );
 }
 
 export default Room;

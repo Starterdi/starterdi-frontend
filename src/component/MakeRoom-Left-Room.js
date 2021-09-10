@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import styled from 'styled-components';
 
 // makeroom : room
@@ -25,6 +25,15 @@ const LeftBoxContentImgWrap = styled.div`
     width : ${(props)=>(props.type === "circle" ? "150px" : "100%")};
     height : 150px;
     border-radius : ${(props)=>(props.type === "circle" ? "100%" : "20px")};
+    overflow : hidden;
+    display : flex;
+    align-items : center;
+    justify-content : center;
+    overflow:hidden;
+    > img{
+        min-width : 100%;
+        min-height : 100%;
+    }
 `;
 
 const LeftBoxContentTitle = styled.p`
@@ -42,27 +51,75 @@ const LeftBoxContentChangeBtn = styled.button`
     cursor : pointer;
     border: none;
     transition : 0.3s;
+    position : relative;
     :hover {
         opacity : 0.5;
     }
 `;
 
+const LeftBoxContentChangeImg = styled.input`
+    position :absolute;
+    width : 100%;
+    height :100%;
+    opacity : 0;
+    top  : 0;
+    left : 0;
+    cursor : pointer;
+`;
+
 const Room = (props)=>{
     const makeRoomSetting = props.makeRoomSetting;
+    const getMakeRoomSetting = (value,type)=>{props.getMakeRoomSetting(value,type);}
     const mod = props.mod;
+    const roomProfile = useRef(null);
+    const roomBanner = useRef(null);
+    const [roomProfileImg,setRoomProfileImg] = useState(makeRoomSetting.room_profile_img);
+    const [roomBannerImg,setRoomBannerImg] = useState(makeRoomSetting.room_banner_img);
+    const RoomProfileChange = ()=>{
+        const file = roomProfile.current.files[0];
+        const fileExpReg = /^.+\.(png||jpg||jpeg||PNG||JPG||JPEG)$/g;
+        const fileExp = fileExpReg.test(file.name);
+        if(!fileExp) return alert("jpg, jpeg, png 형식의 파일만 업로드 가능합니다.");
+
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onload = ()=>{
+            getMakeRoomSetting(reader.result,"room_profile_img");
+            setRoomProfileImg(reader.result);
+        }
+    }
+
+    const RoomBannerChange=()=>{
+        const file = roomBanner.current.files[0];
+        const fileExpReg = /^.+\.(png||jpg||jpeg||PNG||JPG||JPEG)$/g;
+        const fileExp = fileExpReg.test(file.name);
+        if(!fileExp) return alert("jpg, jpeg, png 형식의 파일만 업로드 가능합니다.");
+
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onload = ()=>{
+            getMakeRoomSetting(reader.result,"room_banner_img");
+            setRoomBannerImg(reader.result);
+        }
+    }
+
     return(
     <LeftBoxContentWrap>
         <LeftBoxContent>
             <LeftBoxContentImgWrap type="circle">
-                {makeRoomSetting.room_profile_img === "" ? "" : <img src={makeRoomSetting.room_profile_img} alt="room profile"/>}
+                {roomProfileImg === "" ? "" : <img src={roomProfileImg} alt="room profile"/>}
             </LeftBoxContentImgWrap>
             <LeftBoxContentTitle mod={mod}>프로필</LeftBoxContentTitle>
-            <LeftBoxContentChangeBtn>이미지 변경</LeftBoxContentChangeBtn>
+            <LeftBoxContentChangeBtn>이미지 변경<LeftBoxContentChangeImg ref={roomProfile} type="file" name="room_profile" onChange={RoomProfileChange} /></LeftBoxContentChangeBtn>
         </LeftBoxContent>
         <LeftBoxContent>
-            <LeftBoxContentImgWrap type="square"></LeftBoxContentImgWrap>
+            <LeftBoxContentImgWrap type="square">
+                {roomBannerImg === "" ? "" : <img src={roomBannerImg} alt="room profile"/>}
+            </LeftBoxContentImgWrap>
             <LeftBoxContentTitle mod={mod}>배너</LeftBoxContentTitle>
-            <LeftBoxContentChangeBtn>이미지 변경</LeftBoxContentChangeBtn>
+            <LeftBoxContentChangeBtn>이미지 변경<LeftBoxContentChangeImg ref={roomBanner} type="file" name="room_banner" onChange={RoomBannerChange} /></LeftBoxContentChangeBtn>
         </LeftBoxContent>
     </LeftBoxContentWrap>
     );

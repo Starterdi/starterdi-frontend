@@ -123,7 +123,7 @@ const MakeRoom = (props)=>{
         room_profile_img : "",
         room_banner_img : "",
         room_name : "",
-        room_cate : [],
+        room_cate : "",
         room_intro : "",
         room_join_intro : "",
         room_condition : {
@@ -164,7 +164,7 @@ const MakeRoom = (props)=>{
                 </MakeRoomRightNav>
 
                 {
-                    makeRoomNav === "Room" ? <RightRoom mod={mod} getMakeRoomSetting={getMakeRoomSetting} /> : ""
+                    makeRoomNav === "Room" ? <RightRoom mod={mod} getMakeRoomSetting={getMakeRoomSetting} makeRoomSetting={makeRoomSetting} /> : ""
                 }
 
             </RightBox>
