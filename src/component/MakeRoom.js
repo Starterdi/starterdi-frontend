@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import MakeRoomBackIcon from '../svg/MakeRoomBackIcon';
-import Room from './MakeRoom-Room';
+import LeftRoom from './MakeRoom-Left-Room';
+import RightRoom from './MakeRoom-Right-Room';
 
 const MakeRoomWrap = styled.div`
     width : calc(100% - 300px);
     background-color : ${(props)=>(props.mod === "light" ? "#F5F6F8" : "#1E1E1E")};
-    padding : 2em;
+    padding : 0 2em;
     padding-top : 100px;
     display : flex;
     justify-content : center;
@@ -112,57 +113,13 @@ const MakeRoomRightNavItem = styled.div`
     margin-top : 2px;
 `;
 
-// room-right
-
-const MakeRoomRightForm = styled.form`
-    width : 80%;
-    height : 80%;
-    margin : 0 auto;
-    padding-top : 1em;
-`;
-
-const MakeRoomRightInputWrap = styled.div`
-    width : 100%;
-    margin : 2em 0;
-    display : flex;
-    flex-direction : column;
-    align-items : flex-start;
-`;
-
-const MakeRoomRightInputLabel = styled.label`
-    font-size: 1.2em;
-    font-weight : bold;
-    transition : 0.3s;
-    color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
-`;
-
-const MakeRoomRightInput = styled.input`
-    background-color : #F5F6F8;
-    border : none;
-    border-radius : 30px;
-    width : 100%;
-    padding : 1em 1.5em;
-    font-size : 1em;
-    margin-top : 1.5em;
-`;
-
-const MakeRoomRightInputTextArea = styled.textarea`
-    background-color : #F5F6F8;
-    border : none;
-    border-radius : 20px;
-    width : 100%;
-    padding : 1.5em;
-    font-size : 1em;
-    margin-top : 1.5em;
-`;
-
 const MakeRoom = (props)=>{
     const mod = props.mod;
     const [makeRoomNav,setMakeRoomNav] = useState("Room");
     const [makeRoomStatus] = useState("false");
 
     const getMakeRoomNav = (e)=>{setMakeRoomNav(e.target.dataset.value);}
-    const makeRoomSetting = {
+    const [makeRoomSetting,setMakeRoomSetting] = useState({
         room_profile_img : "",
         room_banner_img : "",
         room_name : "",
@@ -179,6 +136,11 @@ const MakeRoom = (props)=>{
         room_arrangement : "",
         room_sort : "",
         room_order : ""
+    });
+
+    const getMakeRoomSetting = (value,type)=>{
+        makeRoomSetting[type] = value;
+        setMakeRoomSetting(makeRoomSetting);
     }
 
     return(
@@ -187,7 +149,7 @@ const MakeRoom = (props)=>{
                 <LeftBox mod={mod}>
                     <Link to="/5/main"><MakeRoomBackBtn><MakeRoomBackIcon mod={mod} /></MakeRoomBackBtn></Link>
                     {
-                        makeRoomNav === "Room" ? <Room mod={mod} makeRoomSetting={makeRoomSetting} /> : ""
+                        makeRoomNav === "Room" ? <LeftRoom mod={mod} makeRoomSetting={makeRoomSetting} getMakeRoomSetting={getMakeRoomSetting} /> : ""
                     }
                 </LeftBox>
                 <MakeRoomBtn status={makeRoomStatus}>스터디방 만들기</MakeRoomBtn>
@@ -201,20 +163,9 @@ const MakeRoom = (props)=>{
                     <MakeRoomRightNavItem nav={makeRoomNav === "Design" ? "select" : "false"} onClick={getMakeRoomNav} data-value="Design" mod={mod}>꾸미기 설정</MakeRoomRightNavItem>
                 </MakeRoomRightNav>
 
-                <MakeRoomRightForm>
-                    <MakeRoomRightInputWrap>
-                        <MakeRoomRightInputLabel for="room_name" mod={mod}>스터디방 이름</MakeRoomRightInputLabel>
-                        <MakeRoomRightInput type="text" name="room_name" />
-                    </MakeRoomRightInputWrap>
-                    <MakeRoomRightInputWrap>
-                        <MakeRoomRightInputLabel mod={mod} for="room_cate">카테고리</MakeRoomRightInputLabel>
-                        
-                    </MakeRoomRightInputWrap>
-                    <MakeRoomRightInputWrap>
-                        <MakeRoomRightInputLabel mod={mod} for="room_intro">스터디방 소개</MakeRoomRightInputLabel>
-                        <MakeRoomRightInputTextArea rows="7" name="room_intro"></MakeRoomRightInputTextArea>
-                    </MakeRoomRightInputWrap>
-                </MakeRoomRightForm>
+                {
+                    makeRoomNav === "Room" ? <RightRoom mod={mod} getMakeRoomSetting={getMakeRoomSetting} /> : ""
+                }
 
             </RightBox>
         </MakeRoomWrap>
