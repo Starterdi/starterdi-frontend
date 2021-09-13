@@ -62,7 +62,6 @@ const Room = (props)=>{
   const cateList = [{key : "그림",backgroundColor : "#59AFE8"},{key : "크로키",backgroundColor : "#F46F6F"},{key : "수채화",backgroundColor : "#81D86E"},{key : "패턴",backgroundColor : "#777777"},{key : "배경",backgroundColor : "#495E81"},{key : "취직",backgroundColor : "#F49B88"},{key : "코딩",backgroundColor : "#3AB014"},{key : "외국어",backgroundColor : "#EBC30D"},{key : "작곡/편곡",backgroundColor : "#D68EFD"}];
   const mod = props.mod;
   const makeRoomSetting = props.makeRoomSetting;
-  console.log(makeRoomSetting);
   const getMakeRoomSetting = (value,type)=>{props.getMakeRoomSetting(value,type);}
   
   const MakeRoomForm = useRef(null);
@@ -93,16 +92,16 @@ const Room = (props)=>{
         </MakeRoomRightInputWrap>
         <MakeRoomRightInputWrap>
             <MakeRoomRightInputLabel mod={mod} htmlFor="room_cate">카테고리</MakeRoomRightInputLabel>
-            <MakeRoomRightSelect mod={mod} name="room_cate" onChange={setMakeRoomSetting}>
+            <MakeRoomRightSelect mod={mod} name="room_cate" value={roomCate} onChange={setMakeRoomSetting}>
                 <option value="" >카테고리를 선택해주세요</option>
                 {
-                    cateList.map(cate=>(<option value={cate.key} key={cate.key} selected={roomCate === cate.key ? true : false} >{cate.key}</option>))
+                    cateList.map(cate=>(<option value={cate.key} key={cate.key} >{cate.key}</option>))
                 }
             </MakeRoomRightSelect>
         </MakeRoomRightInputWrap>
         <MakeRoomRightInputWrap>
             <MakeRoomRightInputLabel mod={mod} htmlFor="room_intro">스터디방 소개</MakeRoomRightInputLabel>
-            <MakeRoomRightInputTextArea rows="7" name="room_intro" onChange={setMakeRoomSetting}>{roomIntro}</MakeRoomRightInputTextArea>
+            <MakeRoomRightInputTextArea rows="7" name="room_intro" onChange={setMakeRoomSetting} value={roomIntro}></MakeRoomRightInputTextArea>
         </MakeRoomRightInputWrap>
     </MakeRoomRightForm>
   );

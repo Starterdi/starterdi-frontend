@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import MakeRoomBackIcon from '../svg/MakeRoomBackIcon';
 import LeftRoom from './MakeRoom-Left-Room';
 import RightRoom from './MakeRoom-Right-Room';
+import LeftJoin from './MakeRoom-Left-Join';
+import RightJoin from './MakeRoom-Right-Join';
 
 const MakeRoomWrap = styled.div`
     width : calc(100% - 300px);
@@ -127,7 +129,7 @@ const MakeRoom = (props)=>{
         room_intro : "",
         room_join_intro : "",
         room_condition : {
-            room_birth : "",
+            room_birth : ["",""],
             room_gender : "",
             room_other : []
         },
@@ -143,13 +145,17 @@ const MakeRoom = (props)=>{
         setMakeRoomSetting(makeRoomSetting);
     }
 
+    useEffect(()=>{
+        console.log(makeRoomSetting);
+    },[makeRoomSetting]);
+
     return(
         <MakeRoomWrap mod={mod}>
             <MakeRoomLeft>
                 <LeftBox mod={mod}>
                     <Link to="/5/main"><MakeRoomBackBtn><MakeRoomBackIcon mod={mod} /></MakeRoomBackBtn></Link>
                     {
-                        makeRoomNav === "Room" ? <LeftRoom mod={mod} makeRoomSetting={makeRoomSetting} getMakeRoomSetting={getMakeRoomSetting} /> : ""
+                        makeRoomNav === "Room" ? <LeftRoom mod={mod} makeRoomSetting={makeRoomSetting} getMakeRoomSetting={getMakeRoomSetting} /> : makeRoomNav === "Join" ? <LeftJoin mod={mod} makeRoomSetting={makeRoomSetting} /> : ""
                     }
                 </LeftBox>
                 <MakeRoomBtn status={makeRoomStatus}>스터디방 만들기</MakeRoomBtn>
@@ -164,7 +170,7 @@ const MakeRoom = (props)=>{
                 </MakeRoomRightNav>
 
                 {
-                    makeRoomNav === "Room" ? <RightRoom mod={mod} getMakeRoomSetting={getMakeRoomSetting} makeRoomSetting={makeRoomSetting} /> : ""
+                    makeRoomNav === "Room" ? <RightRoom mod={mod} getMakeRoomSetting={getMakeRoomSetting} makeRoomSetting={makeRoomSetting} /> :  makeRoomNav === "Join" ? <RightJoin mod={mod} getMakeRoomSetting={getMakeRoomSetting} makeRoomSetting={makeRoomSetting}  /> : ""
                 }
 
             </RightBox>
