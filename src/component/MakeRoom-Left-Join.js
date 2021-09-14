@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const LeftJoinWrap = styled.div`
@@ -46,6 +46,7 @@ const RoomName = styled.h3`
 `;
 
 const RoomIntro = styled.textarea`
+    background-color : rgba(0,0,0,0);
     border : none;
     width : 100%;
     height : 120px;
@@ -95,32 +96,35 @@ const RoomConditionValue = styled.p`
 
 const LeftJoin = (props) =>{
     const mod = props.mod;
-    const makeRoomSetting = props.makeRoomSetting;
-    const birth1 = makeRoomSetting.room_condition.room_birth[0];
-    const birth2 = makeRoomSetting.room_condition.room_birth[1];
+    const [makeRoomSetting] = useState(props.makeRoomSetting);
+    const [birth2] = useState(makeRoomSetting.room_condition.room_birth[1]);
+    const [birth1] = useState(makeRoomSetting.room_condition.room_birth[0]);
+    const [cate] = useState(makeRoomSetting.room_cate);
+    const [name] = useState(makeRoomSetting.room_name);
+    const [join_intro] = useState(makeRoomSetting.room_join_intro);
+    const [gender] = useState(makeRoomSetting.room_condition.room_gender);
+    const [other] = useState(makeRoomSetting.room_condition.room_other);
 
     return(
         <LeftJoinWrap>
             <LeftJoinTitle mod={mod}>미리보기</LeftJoinTitle>
             <LeftJoinPreviewWrap mod={mod}>
-                <RoomCate data={makeRoomSetting.room_cate === "" ? "yes" : "no"}>#{makeRoomSetting.room_cate === "" ? "카테고리" : makeRoomSetting.room_cate}</RoomCate>
-                <RoomName data={makeRoomSetting.room_name === "" ? "yes" : "no"}>{makeRoomSetting.room_name ==="" ? "스터디방 이름" : makeRoomSetting.room_name}</RoomName>
-                <RoomIntro onChange={()=>{}} readonly data={makeRoomSetting.room_join_intro === "" ? "yes" : "no"}  value={makeRoomSetting.room_join_intro === "" ? "예시 텍스트입니다." : makeRoomSetting.room_join_intro}></RoomIntro>
+                <RoomCate data={cate === "" ? "yes" : "no"}>#{cate === "" ? "카테고리" : cate}</RoomCate>
+                <RoomName data={name === "" ? "yes" : "no"}>{name ==="" ? "스터디방 이름" : name}</RoomName>
+                <RoomIntro onChange={()=>{}} disabled data={join_intro === "" ? "yes" : "no"}  value={join_intro === "" ? "예시 텍스트입니다." : join_intro}></RoomIntro>
                 <RoomCondition>
                     <RoomConditionTitle>참여 조건</RoomConditionTitle>
                     <RoomConditionItem>
                         <RoomConditionLabel>나이</RoomConditionLabel>
-                        <RoomConditionValue data={birth1 === "" && birth2 === "" ? "yes" : "no"}>{birth1 === "" && birth2 === "" ? "예시 텍스트입니다." : birth1 === "" ? `${birth2}세 이하` : birth2 === "" ? `${birth1}세 이상` : `${birth1}세 ~ ${birth2}세`}</RoomConditionValue>
+                        <RoomConditionValue data={birth1 === "" && birth2 === "" ? "yes" : "no"}>{birth1 === "" && birth2 === "" ? "예시 텍스트입니다." : birth1 === "" ? `${birth2}세 이하` : birth2 === "" ? `${birth1}세 이상` : birth1 === birth2 ? `${birth1}세` :`${birth1}세 ~ ${birth2}세`}</RoomConditionValue>
                     </RoomConditionItem>
                     <RoomConditionItem>
                         <RoomConditionLabel>성별</RoomConditionLabel>
-                        <RoomConditionValue data={makeRoomSetting.room_condition.room_gender === "" ? "yes" : "no"}>{makeRoomSetting.room_condition.room_gender === "" ? "예시 텍스트입니다." : makeRoomSetting.room_condition.room_gender}</RoomConditionValue>
+                        <RoomConditionValue data={gender === "" ? "yes" : "no"}>{gender === "" ? "예시 텍스트입니다." : gender}</RoomConditionValue>
                     </RoomConditionItem>
                     <RoomConditionItem type="other">
                         <RoomConditionLabel type="other">그외 조건</RoomConditionLabel>
-                        <RoomConditionValue type="other">1. !</RoomConditionValue>
-                        <RoomConditionValue type="other">2. !!</RoomConditionValue>
-                        <RoomConditionValue type="other">3. !!!</RoomConditionValue>
+                        {other.length > 0 ? other.map(others=>(<RoomConditionValue type="other" key={others.key}>{others.key}. {others.value}</RoomConditionValue>)) : <RoomConditionValue type="other">조건이 없습니다.</RoomConditionValue>}
                     </RoomConditionItem>
                 </RoomCondition>
             </LeftJoinPreviewWrap>

@@ -38,6 +38,8 @@ const RoomJoinLabel = styled.label`
     margin : 0.5em 0;
     font-weight : bold;
     font-size : 1.2em;
+    color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
+    transition : 0.3s;
 `;
 
 const RoomJoinBirthWrap = styled.div`
@@ -96,6 +98,8 @@ const RoomJoinGenderText = styled.p`
     margin-left : 1.2em;
     font-weight : bold;
     font-size : 1em;
+    color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
+    transition : 0.3s;
 `;
 
 const RoomJoinTextArea = styled.textarea`
@@ -107,6 +111,45 @@ const RoomJoinTextArea = styled.textarea`
     border : none;
 `;
 
+const RoomJoinOtherWrap = styled.div`
+    width : 100%;
+    display : flex;
+    flex-direction : column;
+    justify-content : flex-start;
+    align-items : flex-start;
+`;
+
+const RoomJoinOtherAddBtn = styled.button`
+    width : 100%;
+    height : 50px;
+    border-radius : 10px;
+    border : 1px solid #aaa;
+    background-color :rgba(0,0,0,0);
+    color : #aaa;
+    text-align : center;
+    line-height : 50px;
+    cursor : pointer;
+    font-size : 1.3em;
+    transition : 0.3s;
+    :hover{
+        border-color : #E8A2A8;
+        color : #E8A2A8;
+    }
+`;
+
+const RoomJoinOtherValueWrap = styled.div`
+    width : 100%;
+`;
+
+const RoomJoinOtherValule = styled.input`
+    width : 100%;
+    border : none;
+    borer-radius : 10px;
+    background-color : #F5F6F8;
+    padding : 1em;
+    margin-bottom : 1em;
+`;
+
 const RightJoin = (props) =>{
     const makeRoomSetting = props.makeRoomSetting;
     const getMakeRoomSetting = (value,type)=>{props.getMakeRoomSetting(value,type);}
@@ -115,20 +158,30 @@ const RightJoin = (props) =>{
     const [room_birth,setRoomBirth] = useState(makeRoomSetting.room_condition.room_birth);
     const [room_gender,setRoomGender] = useState(makeRoomSetting.room_condition.room_gender);
     const [room_join_intro,setRoomJoinIntro] = useState(makeRoomSetting.room_join_intro);
-    // const [room_other,setRoomOther] = useState(makeRoomSetting.room_condition.room_other);
+    const [room_other,setRoomOther] = useState(makeRoomSetting.room_condition.room_other);
 
     const form = useRef(null);
 
     const setRightJoinSetting = () =>{
         const joinForm = form.current;
-        const birth1 = joinForm.room_birth_one.value === "" ? "" : joinForm.room_birth_two.value=== "" ? joinForm.room_birth_one.value : joinForm.room_birth_one.value > joinForm.room_birth_two.value ? joinForm.room_birth_two.value : joinForm.room_birth_one.value;
-        const birth2 = joinForm.room_birth_two.value === "" ? "" : joinForm.room_birth_one.value=== "" ? joinForm.room_birth_two.value : joinForm.room_birth_one.value < joinForm.room_birth_two.value ? joinForm.room_birth_two.value : joinForm.room_birth_one.value;
-        console.log(joinForm.room_birth_one.value > joinForm.room_birth_two.value);
-        console.log(joinForm.room_birth_one.value , joinForm.room_birth_two.value);
-        const birth = [birth1,birth2];
+        let birth1 = joinForm.room_birth_one.value === "" ? "" : Number(joinForm.room_birth_one.value);
+        let birth2 = joinForm.room_birth_two.value === "" ? "" : Number(joinForm.room_birth_two.value);
         const gender = joinForm.room_gender.value;
         const join_intro = joinForm.room_join_intro.value;
         // const other = joinForm.room_other;
+        if((birth1 !== "" && birth2 !== "")){
+            if(birth1 > birth2){
+                birth2 = birth1;
+                joinForm.room_birth_two.value = birth1;
+            }
+
+            if(birth2 < birth1){
+                birth1 = birth2;
+                joinForm.room_birth_one.value = birth2;
+            }
+        }
+
+        const birth = [birth1,birth2];
 
         setRoomBirth(birth);
         setRoomGender(gender);
@@ -174,19 +227,30 @@ const RightJoin = (props) =>{
                         <RoomJoinGender data-value="여자" onClick={setRightJoinGender} data={room_gender === "여자" ? "yes" : "no"}>
                             <input type="radio" name="room_gender" value="여자" onChange={setRightJoinSetting} checked={room_gender === "여자" ? true : false} hidden />
                             <RoomJoinSpan></RoomJoinSpan>
-                            <RoomJoinGenderText>여자</RoomJoinGenderText>
+                            <RoomJoinGenderText mod={mod}>여자</RoomJoinGenderText>
                         </RoomJoinGender>
                         <RoomJoinGender data-value="남자" onClick={setRightJoinGender} data={room_gender === "남자" ? "yes" : "no"}>
                             <input type="radio" name="room_gender" value="남자" onChange={setRightJoinSetting} checked={room_gender === "남자" ? true : false} hidden />
                             <RoomJoinSpan></RoomJoinSpan>
-                            <RoomJoinGenderText>남자</RoomJoinGenderText>
+                            <RoomJoinGenderText mod={mod}>남자</RoomJoinGenderText>
                         </RoomJoinGender>
                         <RoomJoinGender data-value="무관" onClick={setRightJoinGender} data={room_gender === "무관" ? "yes" : "no"}>
                             <input type="radio" name="room_gender" value="무관" onChange={setRightJoinSetting} checked={room_gender === "무관" ? true : false} hidden />
                             <RoomJoinSpan></RoomJoinSpan>
-                            <RoomJoinGenderText>무관</RoomJoinGenderText>
+                            <RoomJoinGenderText mod={mod}>무관</RoomJoinGenderText>
                         </RoomJoinGender>
                     </RoomJoinGenderWrap>
+                </RoomJoinInputWrap>
+                <RoomJoinInputWrap>
+                    <RoomJoinLabel mod={mod} >그외 조건</RoomJoinLabel>
+                    <RoomJoinOtherWrap>
+                        <RoomJoinOtherValueWrap>
+                            <RoomJoinOtherValule type="text"  />
+                            <RoomJoinOtherValule type="text"  />
+                            <RoomJoinOtherValule type="text"  />
+                        </RoomJoinOtherValueWrap>
+                        <RoomJoinOtherAddBtn>+</RoomJoinOtherAddBtn>
+                    </RoomJoinOtherWrap>
                 </RoomJoinInputWrap>
             </RoomJoinFormLeft>
             <RoomJoinFormRight>
