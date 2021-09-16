@@ -145,18 +145,17 @@ const MakeRoom = (props)=>{
         setMakeRoomSetting(makeRoomSetting);
     }
 
-    useEffect(()=>{
-        console.log(makeRoomSetting);
-    },[makeRoomSetting]);
+    useEffect(()=>{},[makeRoomSetting,makeRoomNav]);
+
+    const Left = ()=>{return(makeRoomNav === "Room" ? <LeftRoom mod={mod} makeRoomSetting={makeRoomSetting} getMakeRoomSetting={getMakeRoomSetting} /> : makeRoomNav === "Join" ? <LeftJoin mod={mod} makeRoomSetting={makeRoomSetting} /> : "")} ;
+    const Right = ()=>{return(makeRoomNav === "Room" ? <RightRoom mod={mod} getMakeRoomSetting={getMakeRoomSetting} makeRoomSetting={makeRoomSetting} /> :  makeRoomNav === "Join" ? <RightJoin mod={mod} getMakeRoomSetting={getMakeRoomSetting} makeRoomSetting={makeRoomSetting}  /> : "")};
 
     return(
         <MakeRoomWrap mod={mod}>
             <MakeRoomLeft>
                 <LeftBox mod={mod}>
                     <Link to="/5/main"><MakeRoomBackBtn><MakeRoomBackIcon mod={mod} /></MakeRoomBackBtn></Link>
-                    {
-                        makeRoomNav === "Room" ? <LeftRoom mod={mod} makeRoomSetting={makeRoomSetting} getMakeRoomSetting={getMakeRoomSetting} /> : makeRoomNav === "Join" ? <LeftJoin mod={mod} makeRoomSetting={makeRoomSetting} /> : ""
-                    }
+                    { Left(makeRoomSetting,makeRoomNav) }
                 </LeftBox>
                 <MakeRoomBtn status={makeRoomStatus}>스터디방 만들기</MakeRoomBtn>
             </MakeRoomLeft>
@@ -169,9 +168,7 @@ const MakeRoom = (props)=>{
                     <MakeRoomRightNavItem nav={makeRoomNav === "Design" ? "select" : "false"} onClick={getMakeRoomNav} data-value="Design" mod={mod}>꾸미기 설정</MakeRoomRightNavItem>
                 </MakeRoomRightNav>
 
-                {
-                    makeRoomNav === "Room" ? <RightRoom mod={mod} getMakeRoomSetting={getMakeRoomSetting} makeRoomSetting={makeRoomSetting} /> :  makeRoomNav === "Join" ? <RightJoin mod={mod} getMakeRoomSetting={getMakeRoomSetting} makeRoomSetting={makeRoomSetting}  /> : ""
-                }
+                { Right(makeRoomSetting,makeRoomNav) }
 
             </RightBox>
         </MakeRoomWrap>

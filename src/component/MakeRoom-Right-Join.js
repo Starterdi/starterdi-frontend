@@ -144,14 +144,14 @@ const RoomJoinOtherValueWrap = styled.div`
 const RoomJoinOtherValule = styled.input`
     width : 100%;
     border : none;
-    borer-radius : 10px;
+    border-radius : 10px;
     background-color : #F5F6F8;
     padding : 1em;
     margin-bottom : 1em;
 `;
 
 const RightJoin = (props) =>{
-    const makeRoomSetting = props.makeRoomSetting;
+    const [makeRoomSetting] = useState(props.makeRoomSetting);
     const getMakeRoomSetting = (value,type)=>{props.getMakeRoomSetting(value,type);}
     const mod = props.mod;
 
@@ -194,19 +194,16 @@ const RightJoin = (props) =>{
             room_other : [],
         },"room_condition");
         getMakeRoomSetting(join_intro,"room_join_intro");
-
     }
 
     const setRightJoinGender = (e) =>{
-        const joinForm = form.current;
-        const birth = [joinForm.room_birth_one.value,joinForm.room_birth_two.value];
         const value = e.currentTarget.dataset.value;
         setRoomGender(value);
         
         getMakeRoomSetting({
-            room_birth : birth,
+            room_birth : room_birth,
             room_gender : value,
-            room_other : [],
+            room_other : room_other,
         },"room_condition");
     }
 
@@ -245,11 +242,11 @@ const RightJoin = (props) =>{
                     <RoomJoinLabel mod={mod} >그외 조건</RoomJoinLabel>
                     <RoomJoinOtherWrap>
                         <RoomJoinOtherValueWrap>
-                            <RoomJoinOtherValule type="text"  />
-                            <RoomJoinOtherValule type="text"  />
-                            <RoomJoinOtherValule type="text"  />
+                            <RoomJoinOtherValule type="text" />
+                            <RoomJoinOtherValule type="text" />
+                            <RoomJoinOtherValule type="text" />
                         </RoomJoinOtherValueWrap>
-                        <RoomJoinOtherAddBtn>+</RoomJoinOtherAddBtn>
+                        <RoomJoinOtherAddBtn type="button">+</RoomJoinOtherAddBtn>
                     </RoomJoinOtherWrap>
                 </RoomJoinInputWrap>
             </RoomJoinFormLeft>

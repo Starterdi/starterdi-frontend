@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import styled from 'styled-components';
 
 const LeftJoinWrap = styled.div`
@@ -105,6 +105,8 @@ const LeftJoin = (props) =>{
     const [gender] = useState(makeRoomSetting.room_condition.room_gender);
     const [other] = useState(makeRoomSetting.room_condition.room_other);
 
+    useEffect(()=>{},[makeRoomSetting]);
+
     return(
         <LeftJoinWrap>
             <LeftJoinTitle mod={mod}>미리보기</LeftJoinTitle>
@@ -124,7 +126,7 @@ const LeftJoin = (props) =>{
                     </RoomConditionItem>
                     <RoomConditionItem type="other">
                         <RoomConditionLabel type="other">그외 조건</RoomConditionLabel>
-                        {other.length > 0 ? other.map(others=>(<RoomConditionValue type="other" key={others.key}>{others.key}. {others.value}</RoomConditionValue>)) : <RoomConditionValue type="other">조건이 없습니다.</RoomConditionValue>}
+                        {other.length > 0 ? other.map(others=>(<RoomConditionValue type="other" key={others.key}>{others.value}</RoomConditionValue>)) : <RoomConditionValue type="other">조건이 없습니다.</RoomConditionValue>}
                     </RoomConditionItem>
                 </RoomCondition>
             </LeftJoinPreviewWrap>
