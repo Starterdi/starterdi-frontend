@@ -6,6 +6,7 @@ import LeftRoom from './MakeRoom-Left-Room';
 import RightRoom from './MakeRoom-Right-Room';
 import LeftJoin from './MakeRoom-Left-Join';
 import RightJoin from './MakeRoom-Right-Join';
+import RightDesign from './MakeRoom-Right-Design';
 
 const MakeRoomWrap = styled.div`
     width : calc(100% - 300px);
@@ -118,7 +119,7 @@ const MakeRoomRightNavItem = styled.div`
 const MakeRoom = (props)=>{
     const mod = props.mod;
     const [makeRoomNav,setMakeRoomNav] = useState("Room");
-    const [makeRoomStatus] = useState("false");
+    const [makeRoomStatus,setMakeRoomStatus] = useState("false");
 
     const getMakeRoomNav = (e)=>{setMakeRoomNav(e.target.dataset.value);}
     const [makeRoomSetting,setMakeRoomSetting] = useState({
@@ -131,7 +132,6 @@ const MakeRoom = (props)=>{
         room_condition : {
             room_birth : ["",""],
             room_gender : "",
-            room_other : []
         },
         room_light_theme : "",
         room_dark_theme : "",
@@ -143,19 +143,33 @@ const MakeRoom = (props)=>{
     const getMakeRoomSetting = (value,type)=>{
         makeRoomSetting[type] = value;
         setMakeRoomSetting(makeRoomSetting);
+        
+        const room_profile_img = makeRoomSetting.room_profile_img;
+        const room_banner_img = makeRoomSetting.room_banner_img;
+        const room_name = makeRoomSetting.room_name;
+        const room_cate = makeRoomSetting.room_cate;
+        const room_intro = makeRoomSetting.room_intro;
+        const room_join_intro = makeRoomSetting.room_join_intro;
+        const room_birth = makeRoomSetting.room_condition.room_birth[0] === "" && makeRoomSetting.room_condition.room_birth[1] === "" ? "" : "true";
+        const room_gender = makeRoomSetting.room_condition.room_gender;
+        const room_light_theme = makeRoomSetting.room_light_theme;
+        const room_dark_theme = makeRoomSetting.room_dark_theme;
+        const room_arrangement = makeRoomSetting.room_arrangement;
+        const room_sort = makeRoomSetting.room_sort;
+        const room_order = makeRoomSetting.room_order;
+
+        if(room_banner_img === "" || room_profile_img === "" || room_name === "" || room_cate === "" || room_intro === "" || room_join_intro === "" || room_birth === "" || room_gender === "" || room_light_theme === "" || room_dark_theme === "" || room_arrangement === "" || room_sort === "" || room_order === "")  setMakeRoomStatus("false");
+        else setMakeRoomStatus("true");
     }
 
     useEffect(()=>{},[makeRoomSetting,makeRoomNav]);
-
-    const Left = ()=>{return(makeRoomNav === "Room" ? <LeftRoom mod={mod} makeRoomSetting={makeRoomSetting} getMakeRoomSetting={getMakeRoomSetting} /> : makeRoomNav === "Join" ? <LeftJoin mod={mod} makeRoomSetting={makeRoomSetting} /> : "")} ;
-    const Right = ()=>{return(makeRoomNav === "Room" ? <RightRoom mod={mod} getMakeRoomSetting={getMakeRoomSetting} makeRoomSetting={makeRoomSetting} /> :  makeRoomNav === "Join" ? <RightJoin mod={mod} getMakeRoomSetting={getMakeRoomSetting} makeRoomSetting={makeRoomSetting}  /> : "")};
 
     return(
         <MakeRoomWrap mod={mod}>
             <MakeRoomLeft>
                 <LeftBox mod={mod}>
                     <Link to="/5/main"><MakeRoomBackBtn><MakeRoomBackIcon mod={mod} /></MakeRoomBackBtn></Link>
-                    { Left(makeRoomSetting,makeRoomNav) }
+                    { makeRoomNav === "Room" ? <LeftRoom mod={mod} makeRoomSetting={makeRoomSetting} getMakeRoomSetting={getMakeRoomSetting} /> : makeRoomNav === "Join" ? <LeftJoin mod={mod} makeRoomSetting={makeRoomSetting} /> : "" }
                 </LeftBox>
                 <MakeRoomBtn status={makeRoomStatus}>스터디방 만들기</MakeRoomBtn>
             </MakeRoomLeft>
@@ -168,7 +182,7 @@ const MakeRoom = (props)=>{
                     <MakeRoomRightNavItem nav={makeRoomNav === "Design" ? "select" : "false"} onClick={getMakeRoomNav} data-value="Design" mod={mod}>꾸미기 설정</MakeRoomRightNavItem>
                 </MakeRoomRightNav>
 
-                { Right(makeRoomSetting,makeRoomNav) }
+                { makeRoomNav === "Room" ? <RightRoom mod={mod} getMakeRoomSetting={getMakeRoomSetting} makeRoomSetting={makeRoomSetting} /> :  makeRoomNav === "Join" ? <RightJoin mod={mod} getMakeRoomSetting={getMakeRoomSetting} makeRoomSetting={makeRoomSetting}  /> : <RightDesign mod={mod} getMakeRoomSetting={getMakeRoomSetting} makeRoomSetting={makeRoomSetting}  />  }
 
             </RightBox>
         </MakeRoomWrap>

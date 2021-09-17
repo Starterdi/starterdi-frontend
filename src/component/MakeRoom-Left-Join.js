@@ -49,9 +49,9 @@ const RoomIntro = styled.textarea`
     background-color : rgba(0,0,0,0);
     border : none;
     width : 100%;
-    height : 120px;
+    height : 250px;
     overflow : auto;
-    font-size : 0.9em;
+    font-size : 1.1em;
     margin-bottom : 1em;
     pointer-events : normal;
     resize : none;
@@ -103,30 +103,26 @@ const LeftJoin = (props) =>{
     const [name] = useState(makeRoomSetting.room_name);
     const [join_intro] = useState(makeRoomSetting.room_join_intro);
     const [gender] = useState(makeRoomSetting.room_condition.room_gender);
-    const [other] = useState(makeRoomSetting.room_condition.room_other);
 
-    useEffect(()=>{},[makeRoomSetting]);
+    useEffect(()=>{
+    },[makeRoomSetting]);
 
     return(
         <LeftJoinWrap>
             <LeftJoinTitle mod={mod}>미리보기</LeftJoinTitle>
             <LeftJoinPreviewWrap mod={mod}>
-                <RoomCate data={cate === "" ? "yes" : "no"}>#{cate === "" ? "카테고리" : cate}</RoomCate>
-                <RoomName data={name === "" ? "yes" : "no"}>{name ==="" ? "스터디방 이름" : name}</RoomName>
+                <RoomCate  data={cate === "" ? "yes" : "no"}>#{cate === "" ? "카테고리" : cate}</RoomCate>
+                <RoomName  data={name === "" ? "yes" : "no"}>{name ==="" ? "스터디방 이름" : name}</RoomName>
                 <RoomIntro onChange={()=>{}} disabled data={join_intro === "" ? "yes" : "no"}  value={join_intro === "" ? "예시 텍스트입니다." : join_intro}></RoomIntro>
                 <RoomCondition>
                     <RoomConditionTitle>참여 조건</RoomConditionTitle>
                     <RoomConditionItem>
                         <RoomConditionLabel>나이</RoomConditionLabel>
-                        <RoomConditionValue data={birth1 === "" && birth2 === "" ? "yes" : "no"}>{birth1 === "" && birth2 === "" ? "예시 텍스트입니다." : birth1 === "" ? `${birth2}세 이하` : birth2 === "" ? `${birth1}세 이상` : birth1 === birth2 ? `${birth1}세` :`${birth1}세 ~ ${birth2}세`}</RoomConditionValue>
+                        <RoomConditionValue key={birth1} data={birth1 === "" && birth2 === "" ? "yes" : "no"}>{birth1 === "" && birth2 === "" ? "예시 텍스트입니다." : birth1 === "" ? `${birth2}세 이하` : birth2 === "" ? `${birth1}세 이상` : birth1 === birth2 ? `${birth1}세` :`${birth1}세 ~ ${birth2}세`}</RoomConditionValue>
                     </RoomConditionItem>
                     <RoomConditionItem>
                         <RoomConditionLabel>성별</RoomConditionLabel>
-                        <RoomConditionValue data={gender === "" ? "yes" : "no"}>{gender === "" ? "예시 텍스트입니다." : gender}</RoomConditionValue>
-                    </RoomConditionItem>
-                    <RoomConditionItem type="other">
-                        <RoomConditionLabel type="other">그외 조건</RoomConditionLabel>
-                        {other.length > 0 ? other.map(others=>(<RoomConditionValue type="other" key={others.key}>{others.value}</RoomConditionValue>)) : <RoomConditionValue type="other">조건이 없습니다.</RoomConditionValue>}
+                        <RoomConditionValue key={gender} data={gender === "" ? "yes" : "no"}>{gender === "" ? "예시 텍스트입니다." : gender}</RoomConditionValue>
                     </RoomConditionItem>
                 </RoomCondition>
             </LeftJoinPreviewWrap>

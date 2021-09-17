@@ -12,17 +12,12 @@ const RightJoinForm = styled.form`
 `;
 
 const RoomJoinFormLeft = styled.div`
-    width : 65%;
+    width : 90%;
+    margin : 0 auto;
     display : flex;
     flex-direction : column;
     justify-content : flex-start;
     align-items : flex-start;
-`;
-
-const RoomJoinFormRight = styled.div`
-    width : 30%;
-    height : 95%;
-    > div{height : 100%;}
 `;
 
 const RoomJoinInputWrap = styled.div`
@@ -109,45 +104,7 @@ const RoomJoinTextArea = styled.textarea`
     background-color :#F5F6F8;
     padding : 1em;
     border : none;
-`;
-
-const RoomJoinOtherWrap = styled.div`
-    width : 100%;
-    display : flex;
-    flex-direction : column;
-    justify-content : flex-start;
-    align-items : flex-start;
-`;
-
-const RoomJoinOtherAddBtn = styled.button`
-    width : 100%;
-    height : 50px;
-    border-radius : 10px;
-    border : 1px solid #aaa;
-    background-color :rgba(0,0,0,0);
-    color : #aaa;
-    text-align : center;
-    line-height : 50px;
-    cursor : pointer;
-    font-size : 1.3em;
-    transition : 0.3s;
-    :hover{
-        border-color : #E8A2A8;
-        color : #E8A2A8;
-    }
-`;
-
-const RoomJoinOtherValueWrap = styled.div`
-    width : 100%;
-`;
-
-const RoomJoinOtherValule = styled.input`
-    width : 100%;
-    border : none;
-    border-radius : 10px;
-    background-color : #F5F6F8;
-    padding : 1em;
-    margin-bottom : 1em;
+    font-size : 1em;
 `;
 
 const RightJoin = (props) =>{
@@ -158,8 +115,6 @@ const RightJoin = (props) =>{
     const [room_birth,setRoomBirth] = useState(makeRoomSetting.room_condition.room_birth);
     const [room_gender,setRoomGender] = useState(makeRoomSetting.room_condition.room_gender);
     const [room_join_intro,setRoomJoinIntro] = useState(makeRoomSetting.room_join_intro);
-    const [room_other,setRoomOther] = useState(makeRoomSetting.room_condition.room_other);
-
     const form = useRef(null);
 
     const setRightJoinSetting = () =>{
@@ -168,7 +123,6 @@ const RightJoin = (props) =>{
         let birth2 = joinForm.room_birth_two.value === "" ? "" : Number(joinForm.room_birth_two.value);
         const gender = joinForm.room_gender.value;
         const join_intro = joinForm.room_join_intro.value;
-        // const other = joinForm.room_other;
         if((birth1 !== "" && birth2 !== "")){
             if(birth1 > birth2){
                 birth2 = birth1;
@@ -186,12 +140,10 @@ const RightJoin = (props) =>{
         setRoomBirth(birth);
         setRoomGender(gender);
         setRoomJoinIntro(join_intro);
-        // setRoomOther(other);
 
         getMakeRoomSetting({
             room_birth : birth,
-            room_gender : gender,
-            room_other : [],
+            room_gender : gender
         },"room_condition");
         getMakeRoomSetting(join_intro,"room_join_intro");
     }
@@ -203,7 +155,6 @@ const RightJoin = (props) =>{
         getMakeRoomSetting({
             room_birth : room_birth,
             room_gender : value,
-            room_other : room_other,
         },"room_condition");
     }
 
@@ -239,23 +190,10 @@ const RightJoin = (props) =>{
                     </RoomJoinGenderWrap>
                 </RoomJoinInputWrap>
                 <RoomJoinInputWrap>
-                    <RoomJoinLabel mod={mod} >그외 조건</RoomJoinLabel>
-                    <RoomJoinOtherWrap>
-                        <RoomJoinOtherValueWrap>
-                            <RoomJoinOtherValule type="text" />
-                            <RoomJoinOtherValule type="text" />
-                            <RoomJoinOtherValule type="text" />
-                        </RoomJoinOtherValueWrap>
-                        <RoomJoinOtherAddBtn type="button">+</RoomJoinOtherAddBtn>
-                    </RoomJoinOtherWrap>
+                    <RoomJoinLabel mod={mod} htmlFor="room_join_intro">가입 소개</RoomJoinLabel>
+                    <RoomJoinTextArea rows="10" column="25" name="room_join_intro" value={room_join_intro} onChange={setRightJoinSetting}></RoomJoinTextArea>
                 </RoomJoinInputWrap>
             </RoomJoinFormLeft>
-            <RoomJoinFormRight>
-                <RoomJoinInputWrap>
-                    <RoomJoinLabel mod={mod} htmlFor="room_join_intro">가입 소개</RoomJoinLabel>
-                    <RoomJoinTextArea rows="25" column="10" name="room_join_intro" value={room_join_intro} onChange={setRightJoinSetting}></RoomJoinTextArea>
-                </RoomJoinInputWrap>
-            </RoomJoinFormRight>
         </RightJoinForm>
     );
 }
