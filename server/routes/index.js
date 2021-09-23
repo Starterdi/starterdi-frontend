@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const user_controller = require('../controller/UserController');
 const study_controller = require('../controller/StudyController');
+const upload = require('../lib/multer');
 
 // user
 app.post('/loginProccess',user_controller.loginProccess);
@@ -11,5 +12,8 @@ app.post('/joinProccess',user_controller.joinProccess);
 
 // study
 app.post('/studyAdd',study_controller.studyAdd);
+app.post('/uploadImg',upload.single('img'),(req,res)=>{
+    res.send(req.file);
+})
 
 module.exports = app;

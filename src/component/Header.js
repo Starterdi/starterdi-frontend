@@ -16,6 +16,7 @@ import SearchIcon from '../svg/SearchIcon';
 import SunIcon from '../svg/SunIcon';
 import MoonIcon from '../svg/MoonIcon';
 import { Link } from 'react-router-dom';
+import User from '../lib/isUser';
 
 const Head = styled.header`
   background-color:${(props)=>(props.mod === "light" ? "#ffffff" : "#1A1A1A")};
@@ -163,7 +164,7 @@ const Header = (props) =>{
         </div>
         <HeaderUserImg id="header_user" mod={mod} >
           <div id="header_user_img">
-            <img src={JSON.parse(localStorage.getItem("user")).profile_img} alt="header profile" />
+            <img src={require(User.profile_img).default} alt="header profile" />
           </div>
         </HeaderUserImg>
       </ContentHeader>

@@ -196,20 +196,29 @@ const ProfileJoin = (props) =>{
 
     const joinProccess = async()=>{
         if(user_profile_img === "" || user_profile === "") return alert("내용을 입력해주세요!");
-        await axios.post('/api/JoinProccess',{
-            user_id : joinInfo.user_id,
-            user_email : joinInfo.user_email,
-            user_name : joinInfo.user_name,
-            password : joinInfo.user_password,
-            profile : joinInfo.user_profile,
-            profile_img : joinInfo.user_profile_img,
-            gender : joinInfo.user_gender,
-            birth : joinInfo.user_birth
+        let formData = new FormData();
+        formData.append('img',profileImgAdd.current.files[0]);
+        await axios.post('/api/uploadImg',formData,{
+            headers:{
+                'Content-Type' : 'multipart/form-data'
+            }
         })
         .then((res)=>{
-            console.log(res);
-            if(res) props.history.push('/5/join/success');
-        });
+            axios.post('/api/JoinProccess',{
+                user_id : joinInfo.user_id,
+                user_email : joinInfo.user_email,
+                user_name : joinInfo.user_name,
+                password : joinInfo.user_password,
+                profile : joinInfo.user_profile,
+                profile_img : res.data.filename,
+                gender : joinInfo.user_gender,
+                birth : joinInfo.user_birth
+            })
+            .then((res)=>{
+                console.log(res);
+                if(res) props.history.push('/5/join/success');
+            });
+        })
     }
 
     useEffect(()=>{

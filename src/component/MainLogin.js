@@ -87,6 +87,7 @@ const MainLogin = (props) =>{
             if(res.data.length < 1) return alert("아이디 또는 비밀번호가 틀렸습니다.");
             const data = res.data[0];
             window.localStorage.setItem('user',JSON.stringify(data));
+            window.localStorage.setItem('userProfile',JSON.stringify(data.profile_img));
             alert(`환영합니다 ${data.user_name}님`);
             props.history.push("/5/main");
         })
