@@ -13,13 +13,12 @@ module.exports = {
         const gender = req.body.gender;
         const light_theme = req.body.light_theme;
         const dark_theme = req.body.dark_theme;
-        const birth = req.body.birth;
         const arragement = req.body.arragement;
         const sort = req.body.sort;
         const order = req.body.order;
         const params = [title,intro,join_intro,host_id,category,profile_img,banner_img,birth,gender,light_theme,dark_theme,arragement,sort,order];
         Study.setStudyAddProccess(params).them((result)=>{
             res.send(result);
-        })
+        });
     }
 };

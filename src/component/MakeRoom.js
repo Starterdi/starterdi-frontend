@@ -164,6 +164,10 @@ const MakeRoom = (props)=>{
 
     useEffect(()=>{},[makeRoomSetting,makeRoomNav]);
 
+    const MakeRoomProccess = ()=>{
+        console.log(makeRoomSetting);
+    }
+
     return(
         <MakeRoomWrap mod={mod}>
             <MakeRoomLeft>
@@ -171,7 +175,7 @@ const MakeRoom = (props)=>{
                     <Link to="/5/main"><MakeRoomBackBtn><MakeRoomBackIcon mod={mod} /></MakeRoomBackBtn></Link>
                     { makeRoomNav === "Room" ? <LeftRoom mod={mod} makeRoomSetting={makeRoomSetting} getMakeRoomSetting={getMakeRoomSetting} /> : makeRoomNav === "Join" ? <LeftJoin mod={mod} makeRoomSetting={makeRoomSetting} /> : "" }
                 </LeftBox>
-                <MakeRoomBtn status={makeRoomStatus}>스터디방 만들기</MakeRoomBtn>
+                <MakeRoomBtn status={makeRoomStatus} onClick={MakeRoomProccess}>스터디방 만들기</MakeRoomBtn>
             </MakeRoomLeft>
 
             <RightBox mod={mod}>

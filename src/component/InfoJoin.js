@@ -116,7 +116,7 @@ const InfoJoinNext = async(props,info_join_form) =>{
         changePath('/5/join/info');
         props.history.push("/5/join/detail");
     })
-    .then((err)=>{console.log(err)})
+    .then((err)=>{})
 }
 
 const InfoJoin = (props) =>{

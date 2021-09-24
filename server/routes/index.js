@@ -12,8 +12,10 @@ app.post('/joinProccess',user_controller.joinProccess);
 
 // study
 app.post('/studyAdd',study_controller.studyAdd);
+
+// imgs
 app.post('/uploadImg',upload.single('img'),(req,res)=>{
     res.send(req.file);
-})
+});
 
 module.exports = app;

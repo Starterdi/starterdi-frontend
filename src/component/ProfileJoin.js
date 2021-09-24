@@ -198,6 +198,7 @@ const ProfileJoin = (props) =>{
         if(user_profile_img === "" || user_profile === "") return alert("내용을 입력해주세요!");
         let formData = new FormData();
         formData.append('img',profileImgAdd.current.files[0]);
+        
         await axios.post('/api/uploadImg',formData,{
             headers:{
                 'Content-Type' : 'multipart/form-data'
