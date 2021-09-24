@@ -210,12 +210,11 @@ const ProfileJoin = (props) =>{
                 user_name : joinInfo.user_name,
                 password : joinInfo.user_password,
                 profile : joinInfo.user_profile,
-                profile_img : res.data.filename,
+                profile_img : "upload/"+res.data.filename,
                 gender : joinInfo.user_gender,
                 birth : joinInfo.user_birth
             })
             .then((res)=>{
-                console.log(res);
                 if(res) props.history.push('/5/join/success');
             });
         })
