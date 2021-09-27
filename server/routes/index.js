@@ -18,4 +18,8 @@ app.post('/uploadImg',upload.single('img'),(req,res)=>{
     res.send(req.file);
 });
 
+app.post('/uploadImgs',upload.array('img'),(req,res)=>{
+    res.send(req.files);
+});
+
 module.exports = app;

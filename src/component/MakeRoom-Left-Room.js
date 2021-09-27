@@ -87,6 +87,7 @@ const Room = (props)=>{
         reader.onload = ()=>{
             getMakeRoomSetting(reader.result,"room_profile_img");
             setRoomProfileImg(reader.result);
+            getMakeRoomSetting(roomProfile.current,"room_profile_img_input");
         }
     }
 
@@ -102,6 +103,7 @@ const Room = (props)=>{
         reader.onload = ()=>{
             getMakeRoomSetting(reader.result,"room_banner_img");
             setRoomBannerImg(reader.result);
+            getMakeRoomSetting(roomBanner.current,"room_banner_img_input");
         }
     }
 

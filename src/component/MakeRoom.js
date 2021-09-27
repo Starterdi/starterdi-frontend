@@ -7,6 +7,7 @@ import RightRoom from './MakeRoom-Right-Room';
 import LeftJoin from './MakeRoom-Left-Join';
 import RightJoin from './MakeRoom-Right-Join';
 import RightDesign from './MakeRoom-Right-Design';
+import axios from 'axios';
 
 const MakeRoomWrap = styled.div`
     width : calc(100% - 300px);
@@ -137,7 +138,9 @@ const MakeRoom = (props)=>{
         room_dark_theme : "",
         room_arrangement : "",
         room_sort : "",
-        room_order : ""
+        room_order : "",
+        room_profile_img_input : null,
+        room_banner_img_input : null
     });
 
     const getMakeRoomSetting = (value,type)=>{
@@ -164,8 +167,51 @@ const MakeRoom = (props)=>{
 
     useEffect(()=>{},[makeRoomSetting,makeRoomNav]);
 
-    const MakeRoomProccess = ()=>{
-        console.log(makeRoomSetting);
+    const MakeRoomProccess = async ()=>{
+        let formData = new FormData();
+        formData.append('img',makeRoomSetting.room_profile_img_input.files[0]);
+        await axios.post('/api/uploadImg',formData,{
+            headers:{
+                'Content-Type':'multipart/form-data'
+            }
+        })
+        .then((res)=>{
+            getMakeRoomSetting(res.data.filename,"room_profile_img");
+            formData.delete('img');
+            formData.append('img',makeRoomSetting.room_banner_img_input.files[0]);
+            axios.post('/api/uploadImg',formData,{
+                headers:{
+                    'Content-Type' : 'multipart/form-data'
+                }
+            })
+            .then((res)=>{
+                getMakeRoomSetting(res.data.filename,"room_banner_img");
+                makeRoomSetting.room_condition.room_birth = JSON.stringify(makeRoomSetting.room_condition.room_birth);
+                getMakeRoomSetting(makeRoomSetting.room_condition,"room_condition");
+                console.log(makeRoomSetting);
+                axios.post('/api/studyAdd',{
+                    title : makeRoomSetting.room_name,
+                    intro : makeRoomSetting.room_intro,
+                    join_intro : makeRoomSetting.room_join_intro,
+                    category : makeRoomSetting.room_cate,
+                    profile_img : makeRoomSetting.room_profile_img,
+                    banner_img : makeRoomSetting.room_banner_img,
+                    host_id : JSON.parse(localStorage.getItem("user")).idx,
+                    birth : makeRoomSetting.room_condition.room_birth,
+                    gender : makeRoomSetting.room_condition.room_gender,
+                    light_theme : makeRoomSetting.room_light_theme,
+                    dark_theme : makeRoomSetting.room_dark_theme,
+                    arrangement : makeRoomSetting.room_arrangement,
+                    sort : makeRoomSetting.room_sort,
+                    order : makeRoomSetting.room_order
+                })
+                .then((res)=>{
+                    console.log(res);
+                    alert("스터디방이 등록되었습니다.");
+                    window.location.href = "/5/main";
+                });
+            })
+        })
     }
 
     return(
