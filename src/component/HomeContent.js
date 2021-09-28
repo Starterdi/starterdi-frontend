@@ -244,8 +244,9 @@ const HomeContent = (props) =>{
     }
   ];
 
-  const ContentHeader = (props)=>{
+  const ContentHeader = async (props)=>{
     const mod = props.mod;
+    
     return(
       <div className="content_header">
         <ContentLeftHeader>

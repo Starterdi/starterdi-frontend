@@ -20,5 +20,19 @@ module.exports = {
         Study.setStudyAddProccess(params).then((result)=>{
             res.send(result);
         });
+    },
+
+    studyListLoad : (req,res)=>{
+        Study.setStudyListLoadProccess().then((result)=>{
+            res.send(result);
+        });
+    },
+
+    studyLoad : (req,res)=>{
+        const idx = req.body.idx;
+        const params = [idx];
+        Study.setStudyLoadProccess(params).then((result)=>{
+            res.send(result);
+        });
     }
 };

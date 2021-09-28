@@ -13,5 +13,33 @@ module.exports = {
                 })
             })
         })
+    },
+
+    setStudyListLoadProccess: ()=>{
+        return new Promise((res,rej)=>{
+            pool.getConnection((err,conn)=>{
+                if(err) throw err;
+                const sql = 'SELECT idx, banner_img, title, category FROM Study ORDER BY idx DESC';
+                conn.query(sql,[],(err,rows,fileds)=>{
+                    if(err) rej(err);
+                    else res(rows);
+                    conn.release();
+                })
+            })
+        })
+    },
+
+    setStudyLoadProccess: (params)=>{
+        return new Promise((res,rej)=>{
+            pool.getConnection((err,conn)=>{
+                if(err) throw err;
+                const sql = 'SELECT * FROM Study WHERE idx = ?';
+                conn.query(sql,params,(err,rows,fileds)=>{
+                    if(err) rej(err);
+                    else res(rows);
+                    conn.release();
+                })
+            })
+        })
     }
 }
