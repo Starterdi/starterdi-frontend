@@ -5,7 +5,7 @@ import HomeToggle from '../svg/HomeToggle';
 import DescIcon from '../svg/DescIcon';
 import AscIcon from '../svg/AscIcon';
 import ErrorCharacter from '../image/ErrorCharacter.png';
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 const ContentLeftHeader = styled.div`
@@ -182,6 +182,7 @@ const ContentTitle = styled.p`
 
 const HomeContent = (props) =>{
   const mod = props.mod;
+  const history = useHistory();
   const [contentSection,setContentSection] = useState("전체");
   const [contentSort,setContentSort] = useState("내림차순");
   const [contentSortAccept,setContentSortAccept] = useState("on");
@@ -310,8 +311,14 @@ const HomeContent = (props) =>{
     return val;
   }
 
-  const LoadRoom = (e)=>{
-    window.location.href = `/5/studyRoom/${e.currentTarget.dataset.idx}`;
+  const LoadRoom = async(e)=>{
+    const idx = e.currentTarget.dataset.idx;
+    await axios.post('/api/setStudyHit',{
+      idx : idx
+    })
+    .then((res)=>{
+      history.push(`/5/studyRoom/${idx}`);
+    });
   }
   
   return(

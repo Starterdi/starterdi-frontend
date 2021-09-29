@@ -14,6 +14,7 @@ app.post('/joinProccess',user_controller.joinProccess);
 app.post('/studyAdd',study_controller.studyAdd);
 app.post('/studyListLoad',study_controller.studyListLoad);
 app.post('/studyLoad',study_controller.studyLoad);
+app.post('/setStudyHit',study_controller.setStudyHit);
 
 // imgs
 app.post('/uploadImg',upload.single('img'),(req,res)=>{

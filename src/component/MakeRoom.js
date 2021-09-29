@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 import MakeRoomBackIcon from '../svg/MakeRoomBackIcon';
 import LeftRoom from './MakeRoom-Left-Room';
 import RightRoom from './MakeRoom-Right-Room';
@@ -119,6 +119,7 @@ const MakeRoomRightNavItem = styled.div`
 
 const MakeRoom = (props)=>{
     const mod = props.mod;
+    const history = useHistory();
     const [makeRoomNav,setMakeRoomNav] = useState("Room");
     const [makeRoomStatus,setMakeRoomStatus] = useState("false");
 
@@ -206,9 +207,8 @@ const MakeRoom = (props)=>{
                     order : makeRoomSetting.room_order
                 })
                 .then((res)=>{
-                    console.log(res);
                     alert("스터디방이 등록되었습니다.");
-                    window.location.href = "/5/main";
+                    history.push("/5/main");
                 });
             })
         })
