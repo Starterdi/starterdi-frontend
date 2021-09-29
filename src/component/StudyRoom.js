@@ -16,40 +16,53 @@ const StudyRoomHeader = styled.div`
     width : 100%;
     height : 700px;
     overflow : hidden;
+    position : relative;
+`;
+
+const StudyRoomHeaderWrapImg = styled.div`
+    position : absolute;
+    width : 100%;
+    height : 100%;
     background: linear-gradient(
         rgba(245, 246, 248, 0) 10%,
         rgba(245, 246, 248, 0.2) 25%,
         rgba(245, 246, 248, 0.4) 50%,
         rgba(245, 246, 248, 0.6) 75%,
         rgba(245, 246, 248, 1) 100%
-      ), url(${(props)=>(props.img)});
-    background-size: cover;
-    backdrop-filter : blur(1em);
+    ),url(${(props)=>(props.img)});
+
+    background-repeat : no-repeat;
+    background-size : cover;
+    filter : blur(1em);
+    top : 0;
+    right : 0;
 
     ::before{
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 2;
-        width : 100%;
-        height : 700px;
-        content: ""; 
-        background: linear-gradient(
-            to bottom,
-            rgba(30, 30, 30, 0) 10%,
-            rgba(30, 30, 30, 0.2) 40%,
-            rgba(30, 30, 30, 0.2) 60%,
-            rgba(30, 30, 30, 0.5) 80%,
-            rgba(30, 30, 30, 1) 100%
-            ); 
-        transition: opacity 0.3s;
-        opacity: ${(props)=>(props.mod === "light" ? 0 : 1)};
-    }
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    width : 100%;
+    height : 700px;
+    content: ""; 
+    background: linear-gradient(
+        to bottom,
+        rgba(30, 30, 30, 0) 10%,
+        rgba(30, 30, 30, 0.2) 40%,
+        rgba(30, 30, 30, 0.2) 60%,
+        rgba(30, 30, 30, 0.5) 80%,
+        rgba(30, 30, 30, 1) 100%
+        ); 
+    transition: opacity 0.3s;
+    opacity: ${(props)=>(props.mod === "light" ? 0 : 1)};
+}
 `;
 
 const StudyRoomHeaderWrap = styled.div`
+    position : relative;
+    z-index : 10;
     width : 80%;
     height : 500px;
     display : flex;
@@ -98,7 +111,8 @@ const StudyRoom = (props) =>{
         <StudyRoomWrap mod={mod}>
         {
             roomInfo ? (
-                <StudyRoomHeader mod={mod} img={roomInfo.banner_img ? "../upload/"+roomInfo.banner_img : ""}>
+                <StudyRoomHeader mod={mod} >
+                    <StudyRoomHeaderWrapImg img={roomInfo.banner_img ? "../upload/"+roomInfo.banner_img : ""} mod={mod} />
                     <StudyRoomHeaderWrap>
                         <StudyRoomHeaderImg>
                             <img src={roomInfo.banner_img ? "../upload/"+roomInfo.banner_img : "" } alt="study" />
