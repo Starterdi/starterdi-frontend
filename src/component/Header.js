@@ -125,6 +125,7 @@ const ContentHeaderNav = (props)=>{
 }
 
 const Header = (props) =>{
+  const imgBasicUrl = props.imgBasicUrl ? props.imgBasicUrl : "";
   const changeMod = () =>{props.changeMod();}
   const NavItemList = [
     {key : "홈",link : "/5/main",icon : <HomeIcon/>},
@@ -163,7 +164,7 @@ const Header = (props) =>{
         </div>
         <HeaderUserImg id="header_user" mod={mod} >
           <div id="header_user_img">
-            <img src={JSON.parse(localStorage.getItem("user")).profile_img} alt="header profile" />
+            <img src={imgBasicUrl+JSON.parse(localStorage.getItem("user")).profile_img} alt="header profile" />
           </div>
         </HeaderUserImg>
       </ContentHeader>

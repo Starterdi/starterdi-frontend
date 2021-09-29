@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import styled from 'styled-components';
 import HomeToggleBackground from '../svg/HomeToggleBackground';
 import HomeToggle from '../svg/HomeToggle';
@@ -6,6 +6,7 @@ import DescIcon from '../svg/DescIcon';
 import AscIcon from '../svg/AscIcon';
 import ErrorCharacter from '../image/ErrorCharacter.png';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const ContentLeftHeader = styled.div`
   display : flex;
@@ -141,6 +142,10 @@ const ContentImgWrap = styled.div`
  width : 100%;
  height : 160px;
  overflow : hidden;
+ > img{
+  width : 100%;
+  min-height : 100%;
+}
 `;
 
 const ContentInfoWrap = styled.div`
@@ -180,73 +185,81 @@ const HomeContent = (props) =>{
   const [contentSection,setContentSection] = useState("전체");
   const [contentSort,setContentSort] = useState("내림차순");
   const [contentSortAccept,setContentSortAccept] = useState("on");
+  const [RoomList,setRoomList] = useState([]);
 
-  const getContentSortAccept = () =>{
-    setContentSortAccept(contentSortAccept === "on" ? "off" : "on");
-  }
-
+  const getContentSortAccept = () =>{setContentSortAccept(contentSortAccept === "on" ? "off" : "on");}
   const getContentSort = ()=>{
+    setRoomList(RoomList.reverse());
     setContentSort(contentSort === "내림차순" ? "오름차순" : "내림차순");
   }
-
   const getContentSection = (val)=>{
-    setContentSection(val.target.innerText);
+    let value = val.target.innerText;
+    if(value === "최신순") RoomSort("idx");
+    if(value === "인기순" || value === "전체") RoomSort("good_num");
+    if(value === "조회순") RoomSort("hit");
+
+    if(contentSort === "오름차순") RoomList.reverse();
+    setContentSection(value);
   }
 
-  const HomeContentRoomList = [
+  const RoomSort = (key)=>{
+    RoomList.sort((a,b)=>{
+      if(a[key] <= b[key]) return 1;
+      else return -1;
+    });
+  }
+
+  const CateList = [
     {
-      key : "스터디방 1",
-      cate : "크로키",
-      cateColor : "#F46F6F",
-      img : ""
+      key : "그림",
+      backgroundColor : "#59AFE8"
     },
     {
-      key : "스터디방 2",
-      cate : "그림",
-      cateColor : "#59AFE8",
-      img : ""
+      key : "크로키",
+      backgroundColor : "#F46F6F"
     },
     {
-      key : "스터디방 3",
-      cate : "그림",
-      cateColor : "#59AFE8",
-      img : ""
+      key : "수채화",
+      backgroundColor : "#81D86E"
     },
     {
-      key : "스터디방 4",
-      cate : "외국어",
-      cateColor : "#EBC30D",
-      img : ""
+      key : "패턴",
+      backgroundColor : "#777777"
     },
     {
-      key : "스터디방 5",
-      cate : "취직",
-      cateColor : "#F49B88",
-      img : ""
+      key : "배경",
+      backgroundColor : "#495E81"
     },
     {
-      key : "스터디방 6",
-      cate : "취직",
-      cateColor : "#F49B88",
-      img : ""
+      key : "취직",
+      backgroundColor : "#F49B88"
     },
     {
-      key : "스터디방 7",
-      cate : "코딩",
-      cateColor : "#3AB014",
-      img : ""
+      key : "코딩",
+      backgroundColor : "#3AB014"
     },
     {
-      key : "스터디방 8",
-      cate : "작곡/편곡",
-      cateColor : "#D68EFD",
-      img : ""
+      key : "외국어",
+      backgroundColor : "#EBC30D"
+    },
+    {
+      key : "작곡/편곡",
+      backgroundColor : "#D68EFD"
     }
   ];
 
-  const ContentHeader = async (props)=>{
-    const mod = props.mod;
-    
+  const LoadRoomList = async () =>{
+    await axios.post('/api/studyListLoad')
+          .then((res)=>{
+            setRoomList(res.data);
+          });
+  }
+
+  useEffect(()=>{
+    LoadRoomList();
+  },[]);
+
+  const ContentHeader = (props)=>{
     return(
       <div className="content_header">
         <ContentLeftHeader>
@@ -263,7 +276,6 @@ const HomeContent = (props) =>{
         </ContentLeftHeader>
 
         <ContentRightHeader>
-
           <HomeFindToggle>
             <HomeFindToggleTitle>조건에 맞는 스터디방 찾기</HomeFindToggleTitle>
             <HomeFindToggleWrap accept={contentSortAccept} onClick={getContentSortAccept}>
@@ -292,36 +304,40 @@ const HomeContent = (props) =>{
     );
   }
 
-  const ContentSection = (props) =>{
-    return(
-      <section>
-        <ContentHeader mod={props.mod} title={props.title} subTitle={props.subTitle} />
-        <div className="content_body">
-        {
-          HomeContentRoomList.length ? HomeContentRoomList.map(room => (
-            <HomeContentItem mod={mod} key={room.key}>
-              <ContentImgWrap>
-                {room.img ? <img src={room.img} alt="roog img" /> : "" }             
-              </ContentImgWrap>
-              <ContentInfoWrap mod={mod}>
-                <ContentCate cateColor={room.cateColor}>
-                  {room.cate}
-                </ContentCate>
-                <ContentTitle mod={mod}>
-                  {room.key}
-                </ContentTitle>
-              </ContentInfoWrap>
-            </HomeContentItem>
-          )) : <MakeError title="관련정보를 찾을 수 없습니다!"/>
-        }
-        </div>
-      </section>
-    );
+  const CateSearch = (cate) =>{
+    let val = "";
+    CateList.forEach(x=>{if(x.key === cate) val = x.backgroundColor;});
+    return val;
+  }
+
+  const LoadRoom = (e)=>{
+    window.location.href = `/5/studyRoom/${e.currentTarget.dataset.idx}`;
   }
   
   return(
     <HomeContentStyled id="content" mod={mod}>
-      <ContentSection mod={mod} title="스터디방" subTitle="708" />
+      <section>
+        <ContentHeader mod={mod} title="스터디방" subTitle={RoomList.length} />
+        <div className="content_body">
+        {
+          RoomList.length ? RoomList.map(room => (
+              <HomeContentItem mod={mod} key={room.idx} onClick={LoadRoom} data-idx = {room.idx}>
+                <ContentImgWrap>
+                  {room.banner_img ? <img src={"upload/"+room.banner_img} alt="roog img" /> : "" }             
+                </ContentImgWrap>
+                <ContentInfoWrap mod={mod}>
+                  <ContentCate cateColor={CateSearch(room.category)}>
+                    {room.category}
+                  </ContentCate>
+                  <ContentTitle mod={mod}>
+                    {room.title}
+                  </ContentTitle>
+                </ContentInfoWrap>
+              </HomeContentItem>
+          )) : <MakeError title="관련정보를 찾을 수 없습니다!"/>
+        }
+        </div>
+      </section>
     </HomeContentStyled>
   );
 }

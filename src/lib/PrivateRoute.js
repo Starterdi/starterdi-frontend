@@ -8,9 +8,8 @@ const PrivateRoute = ({component: Component, ...parentProps}) => {
 
   return (
     <Route
-      {...parentProps}
       render={() => (
-        <Component />
+        <Component {...parentProps} />
       )}
     />
   );

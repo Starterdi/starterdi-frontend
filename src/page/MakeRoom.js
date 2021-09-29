@@ -11,9 +11,7 @@ const MakeRoom = () =>{
         else window.localStorage.setItem('theme', 'dark');
     }
 
-    useEffect(()=>{
-
-    });
+    useEffect(()=>{ },[]);
 
     return(
         <>
