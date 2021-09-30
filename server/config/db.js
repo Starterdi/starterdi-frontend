@@ -6,7 +6,8 @@ const conn = mysql.createPool({
     database:'sw202135',
     waitForConnections: true,
     connectionLimit: 10,
-    queueLimit: 0
+    queueLimit: 0,
+    multipleStatements: true
 });
 
 module.exports = conn;
