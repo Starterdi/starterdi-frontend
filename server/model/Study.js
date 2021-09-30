@@ -61,7 +61,7 @@ module.exports = {
         return new Promise((res,rej)=>{
             pool.getConnection((err,conn)=>{
                 if(err) throw err;
-                const sql = 'SELECT U.* FROM User AS U, US AS User_study WHERE US.study_idx = ? AND U.idx = US.user_idx';
+                const sql = 'SELECT U.* FROM User AS U, User_study AS US WHERE US.study_idx = ? AND U.idx = US.user_idx';
                 conn.query(sql,params,(err,rows,fileds)=>{
                     if(err) rej(err);
                     else res(rows);
@@ -89,9 +89,9 @@ module.exports = {
         return new Promise((res,rej)=>{
             pool.getConnection((err,conn)=>{
                 if(err) throw err;
-                const sql = 'INSERT INTO Good_study(`study_idx`,`user_idx`) VALUES(?,?)';
-                const sql = 'UPDATE Study SET good = good + 1 WHERE idx = ?';
-                conn.query(sql,params,(err,rows,fileds)=>{
+                const sql = 'INSERT INTO Good_study(`study_idx`,`user_idx`) VALUES(?,?);';
+                const sql2 = 'UPDATE Study SET good = good + 1 WHERE idx = ?';
+                conn.query(sql+sql2,params,(err,rows,fileds)=>{
                     if(err) rej(err);
                     else res(rows);
                     conn.release();

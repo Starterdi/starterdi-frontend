@@ -42,5 +42,43 @@ module.exports = {
         Study.setStudyHitProccess(params).then((result)=>{
             res.send(result);
         })
+    },
+
+    setStudyUserInfo : (req,res)=>{
+        const study_idx = req.body.study_idx;
+        const params = [study_idx];
+        Study.setStudyUserInfoProccess(params).then((result)=>{
+            res.send(result);
+        });
+    },
+
+    setStudyUserAdd : (req,res)=>{
+        const study_idx = req.body.study_idx;
+        const user_idx = req.body.user_idx;
+        const status = req.body.status;
+        const params = [study_idx,user_idx,status];
+        Study.setStudyUserAddProccess(params).then((result)=>{
+            res.send(result);
+        });
+    },
+
+    setStudyUserGoodAdd : (req,res)=>{
+        const study_idx = req.body.study_idx;
+        const user_idx = req.body.user_idx;
+        const idx = req.body.idx;
+        const params = [study_idx,user_idx,idx];
+        Study.setStudyUserGoodAddProccess(params).then((result)=>{
+            res.send(result);
+        })
+    },
+
+    setStudyUserGoodDes : (req,res)=>{
+        const study_idx = req.body.study_idx;
+        const user_idx = req.body.user_idx;
+        const idx = req.body.idx;
+        const params = [study_idx,user_idx,idx];
+        Study.setStudyUserGoodDesProccess(params).then((result)=>{
+            res.send(result);
+        })
     }
 };

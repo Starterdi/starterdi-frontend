@@ -7,6 +7,7 @@ const StudyRoom = ({computedMatch}) =>{
     const [mod,setMod] = useState(window.localStorage.getItem('theme') ? window.localStorage.getItem('theme') : 'light');
     const [path] =  useState('/5/studyroom');
     const [info,setInfo] = useState(null);
+    const [studyUserInfo,setStudyUserInfo] = useState(null);
     const changeMod = () =>{
         setMod(mod === "light" ? "dark" : "light");
         if(mod === "dark") window.localStorage.setItem('theme', 'light');
@@ -21,6 +22,12 @@ const StudyRoom = ({computedMatch}) =>{
         })
         .then((res)=>{
             setInfo(res.data[0]);
+            axios.post('/api/setStudyUserInfo',{
+                study_idx : idx
+            })
+            .then((res)=>{
+                setStudyUserInfo(res.data);
+            })
         });
     }
 
@@ -32,7 +39,7 @@ const StudyRoom = ({computedMatch}) =>{
     return(
         <>
             <Header mod={mod} changeMod={changeMod} path={path} imgBasicUrl = "../" />
-            <StudyRoomComponent info = {info} mod={mod} />
+            <StudyRoomComponent info = {info} mod={mod} userInfo={studyUserInfo} />
         </>
     )
 }
