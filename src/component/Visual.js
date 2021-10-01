@@ -99,6 +99,7 @@ const VisualCateListWrap = styled.div`
 `;
 
 const VisualCateTitle = styled.p`
+  width : 110px;
   margin-right : 2em;
   color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
   font-size : 1.3em;

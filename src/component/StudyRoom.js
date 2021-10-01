@@ -4,6 +4,9 @@ import CalendarIcon from '../svg/CalendarIcon';
 import ChatIcon from '../svg/ChatIcon';
 import RightLongArrowIcon from '../svg/RightLongArrowIcon';
 import GoodIcon from '../svg/GoodIcon';
+import SmallGoodIcon from '../svg/SmallGoodIcon';
+import EyeIcon from '../svg/EyeIcon';
+import LockIcon from '../svg/LockIcon';
 
 const StudyRoomWrap = styled.div`
     width : calc(100% - 300px);
@@ -50,7 +53,6 @@ const StudyRoomHeaderWrapImg = styled.div`
 
 const StudyRoomHeaderWrap = styled.div`
     position : relative;
-    z-index : 10;
     width : 80%;
     height : 500px;
     display : flex;
@@ -63,6 +65,7 @@ const StudyRoomHeaderImg = styled.div`
     height : 300px;
     border-radius : 20px;
     overflow : hidden;
+    position : relative;
 
     > img{
         min-width : 100%;
@@ -71,7 +74,7 @@ const StudyRoomHeaderImg = styled.div`
 `;
 
 const StudyRoomHeaderBox = styled.div`
-    width : 50%;
+    width : 55%;
     height : 100%;
     margin-left: 3em;
     padding : 3em;
@@ -89,6 +92,20 @@ const StudyRoomIntro = styled.pre`
     color : #444;
     margin-bottom : 2em;
     overflow : auto;
+    
+    ::-webkit-scrollbar{
+        width : 8px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #333;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      border-radius: 10px;
+      background-color : rgba(0,0,0,0.3);
+    }
 `;
 
 const StudyRoomHeaderLeft = styled.div`
@@ -150,14 +167,73 @@ const StudyRoomHeaderInfoItemTitle = styled.p`
     font-size : 0.9em;
     font-weight : bold;
     color : #333;
-    margin : 0 1em;
+    margin : 0 2em 0 1em;
+`;
+
+const StudyRoomHeaderImgGoodBtn = styled.button`
+    border : none;
+    background-color : rgba(0,0,0,0);
+    position : absolute;
+    top : 20px;
+    right : 20px;
+    cursor : pointer;
+    > svg > path{
+        fill : #DB3F3F;
+    }
+`;
+
+const StudyRoomLockWrap = styled.div`
+    width : 100%;
+    padding : 2em;
+    display : flex;
+    align-items : center;
+    flex-direction : column;
+`;
+
+const StudyRoomLockBox = styled.div`
+    width : 100px;
+    height : 100px;
+    border-radius : 100%;
+    border : 1px solid #ddd;
+    display : flex;
+    justify-content : center;
+    align-items :center;
+    > svg > path {
+        fill : ${(props)=>(props.mod === "light" ? "#333" : "#ddd")};
+    }
+`;
+
+const StudyRoomLockTitle = styled.p`
+    font-size : 1.3em;
+    font-weight :bold;
+    text-align:center;
+    margin : 1em 0;
+    color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
+`;
+
+const StudyRoomLockBtn = styled.button`
+    border : 1px solid #ddd;
+    border-radius : 10px;
+    cursor : pointer;
+    padding : 1em;
+    background-color : rgba(0,0,0,0);
+    display : flex;
+    justify-content : space-between;
+    align-items: center;
+    color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
+    > svg {
+        margin-left : 1em;
+        > path {
+            fill : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
+        }
+    }
 `;
 
 const StudyRoom = (props) =>{
     const roomInfo = props.info;
     const mod = props.mod;
     const roomUserInfo = props.userInfo;
-    console.log(roomInfo,roomUserInfo);
+    const quail = roomUserInfo !== null ? (roomUserInfo.length > 0 ? roomUserInfo.find(a => a.idx === JSON.parse(localStorage.getItem("user")).idx ) : false ): false; 
 
     return(
         <>
@@ -167,13 +243,17 @@ const StudyRoom = (props) =>{
                 <>
                 <StudyRoomHeader mod={mod} >
                     <StudyRoomHeaderWrapImg img={roomInfo.banner_img ? "../upload/"+roomInfo.banner_img : ""} mod={mod} />
+                    {/* <StudyRoomHeaderWrapImg img={roomInfo.banner_img ? "./upload/"+roomInfo.banner_img : ""} mod={mod} /> */}
                     <StudyRoomHeaderWrap>
                         <StudyRoomHeaderLeft>
                             <StudyRoomHeaderImg>
+                                <StudyRoomHeaderImgGoodBtn>
+                                    <GoodIcon/>
+                                </StudyRoomHeaderImgGoodBtn>
                                 <img src={roomInfo.banner_img ? "../upload/"+roomInfo.banner_img : "" } alt="study" />
                             </StudyRoomHeaderImg>
                             {
-                            roomInfo.host_id !== JSON.parse(localStorage.getItem('user')).idx ? 
+                            !(quail) ? 
                             <StudyRoomAddBtn backgroundColor = {mod === "light" ? roomInfo.light_theme : roomInfo.dark_theme}>가입하기</StudyRoomAddBtn> :
                             ""
                             }
@@ -193,8 +273,9 @@ const StudyRoom = (props) =>{
                                 <RightLongArrowIcon/>
                             </StudyRoomHeaderItem>
                             <StudyRoomHeaderInfoItem>
-                                <GoodIcon/>
+                                <SmallGoodIcon/>
                                 <StudyRoomHeaderInfoItemTitle>좋아요 {roomInfo.good}</StudyRoomHeaderInfoItemTitle>
+                                <EyeIcon/>
                                 <StudyRoomHeaderInfoItemTitle>조회수 {roomInfo.hit}</StudyRoomHeaderInfoItemTitle>
                             </StudyRoomHeaderInfoItem>
                         </StudyRoomHeaderBox>
@@ -202,7 +283,22 @@ const StudyRoom = (props) =>{
                 </StudyRoomHeader>
                 
                 <StudyRoomBody>
-                    
+                    {
+                        quail ? 
+                        (
+                        <>
+                        </>
+                        ) :
+                        (
+                            <StudyRoomLockWrap>
+                                <StudyRoomLockBox mod={mod}>
+                                    <LockIcon />
+                                </StudyRoomLockBox>
+                                <StudyRoomLockTitle mod={mod}>{roomInfo.title} 스터디원만<br/>볼 수 있습니다.</StudyRoomLockTitle>
+                                <StudyRoomLockBtn mod={mod}>소개글 보러가기 <RightLongArrowIcon/></StudyRoomLockBtn>
+                            </StudyRoomLockWrap>
+                        ) 
+                    }
                 </StudyRoomBody>
                 </>
             ) : ""

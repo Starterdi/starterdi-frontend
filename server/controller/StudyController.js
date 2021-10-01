@@ -16,7 +16,10 @@ module.exports = {
         const arrangement = req.body.arrangement;
         const sort = req.body.sort;
         const order = req.body.order;
-        const params = [title,intro,join_intro,host_id,category,profile_img,banner_img,birth,gender,light_theme,dark_theme,arrangement,sort,order];
+        const host_name = req.body.host_name;
+        const host_profile = req.body.host_profile;
+        const host_profile_img = req.body.host_profile_img;
+        const params = [title,intro,join_intro,host_id,category,profile_img,banner_img,birth,gender,light_theme,dark_theme,arrangement,sort,order,host_id,host_id,host_name,host_profile,host_profile_img];
         Study.setStudyAddProccess(params).then((result)=>{
             res.send(result);
         });
@@ -30,7 +33,8 @@ module.exports = {
 
     studyLoad : (req,res)=>{
         const idx = req.body.idx;
-        const params = [idx];
+        const user_idx = req.body.user_idx;
+        const params = [idx,idx,idx,user_idx];
         Study.setStudyLoadProccess(params).then((result)=>{
             res.send(result);
         });

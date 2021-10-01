@@ -204,7 +204,10 @@ const MakeRoom = (props)=>{
                     dark_theme : makeRoomSetting.room_dark_theme,
                     arrangement : makeRoomSetting.room_arrangement,
                     sort : makeRoomSetting.room_sort,
-                    order : makeRoomSetting.room_order
+                    order : makeRoomSetting.room_order,
+                    host_name : JSON.parse(localStorage.getItem("user")).user_name,
+                    host_profile : JSON.parse(localStorage.getItem("user")).profile,
+                    host_profile_img : JSON.parse(localStorage.getItem("user")).profile_img
                 })
                 .then((res)=>{
                     alert("스터디방이 등록되었습니다.");

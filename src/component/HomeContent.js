@@ -173,6 +173,7 @@ const ContentCate = styled.div`
 `;
 
 const ContentTitle = styled.p`
+ padding : 0 0.5em;
  text-align : center;
  font-size : 1.2em;
  font-weight : bold;
@@ -252,6 +253,7 @@ const HomeContent = (props) =>{
   const LoadRoomList = async () =>{
     await axios.post('/api/studyListLoad')
           .then((res)=>{
+            console.log(res.data);
             setRoomList(res.data);
           });
   }

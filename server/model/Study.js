@@ -5,8 +5,10 @@ module.exports = {
         return new Promise((res,rej)=>{
             pool.getConnection((err,conn)=>{
                 if(err) throw err;
-                const sql = 'INSERT INTO Study(`title`,`intro`,`join_intro`,`host_id`,`category`,`profile_img`,`banner_img`,`birth`,`gender`,`light_theme`,`dark_theme`,`arrangement`,`sort`,`order`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-                conn.query(sql,params,(err,rows,fileds)=>{
+                const sql = 'INSERT INTO Study(`title`,`intro`,`join_intro`,`host_id`,`category`,`profile_img`,`banner_img`,`birth`,`gender`,`light_theme`,`dark_theme`,`arrangement`,`sort`,`order`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?);';
+                const sql2 = 'INSERT INTO User_study(`study_idx`,`user_idx`,`status`) VALUES((SELECT LAST_INSERT_ID(`idx`) AS idx FROM Study ORDER BY idx DESC LIMIT 1),?,"allowed");';
+                const sql3 = 'INSERT INTO Study_profile(`user_idx`,`study_idx`,`user_name`,`profile`,`profile_img`) VALUES(?,(SELECT LAST_INSERT_ID(`idx`) AS idx FROM Study ORDER BY idx DESC LIMIT 1) ,?,?,?);';
+                conn.query(sql+sql2+sql3,params,(err,rows,fileds)=>{
                     if(err) rej(err);
                     else res(rows);
                     conn.release();
@@ -33,8 +35,10 @@ module.exports = {
         return new Promise((res,rej)=>{
             pool.getConnection((err,conn)=>{
                 if(err) throw err;
-                const sql = 'SELECT * FROM Study WHERE idx = ?';
-                conn.query(sql,params,(err,rows,fileds)=>{
+                const sql = 'SELECT * FROM Study WHERE idx = ?;';
+                const sql2 = 'SELECT U.* FROM User AS U, User_study AS US WHERE US.study_idx = ? AND U.idx = US.user_idx;'
+                const sql3 = 'SELECT * FROM Good_study WHERE study_idx = ? AND user_idx = ?;';
+                conn.query(sql+sql2+sql3,params,(err,rows,fileds)=>{
                     if(err) rej(err);
                     else res(rows);
                     conn.release();
@@ -61,7 +65,7 @@ module.exports = {
         return new Promise((res,rej)=>{
             pool.getConnection((err,conn)=>{
                 if(err) throw err;
-                const sql = 'SELECT U.* FROM User AS U, User_study AS US WHERE US.study_idx = ? AND U.idx = US.user_idx';
+                const sql = 'SELECT U.* FROM User AS U, User_study AS US WHERE US.study_idx = ? AND U.idx = US.user_idx;';
                 conn.query(sql,params,(err,rows,fileds)=>{
                     if(err) rej(err);
                     else res(rows);

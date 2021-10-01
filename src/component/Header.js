@@ -74,8 +74,8 @@ const HeaderUserImg = styled.div`
     justify-content : center;
     background-color : ${(props)=>(props.mod === "light" ? "#ffffff" : "#333333")};
     img{
-      width :90%;
-      height : 90% ;
+      width :100%;
+      height : 100% ;
     }
   }
 
