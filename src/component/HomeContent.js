@@ -197,7 +197,7 @@ const HomeContent = (props) =>{
   const getContentSection = (val)=>{
     let value = val.target.innerText;
     if(value === "최신순") RoomSort("idx");
-    if(value === "인기순" || value === "전체") RoomSort("good_num");
+    if(value === "인기순" || value === "전체") RoomSort("good");
     if(value === "조회순") RoomSort("hit");
 
     if(contentSort === "오름차순") RoomList.reverse();
@@ -253,7 +253,6 @@ const HomeContent = (props) =>{
   const LoadRoomList = async () =>{
     await axios.post('/api/studyListLoad')
           .then((res)=>{
-            console.log(res.data);
             setRoomList(res.data);
           });
   }

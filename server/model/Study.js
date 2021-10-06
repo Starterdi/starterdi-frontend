@@ -94,7 +94,7 @@ module.exports = {
             pool.getConnection((err,conn)=>{
                 if(err) throw err;
                 const sql = 'INSERT INTO Good_study(`study_idx`,`user_idx`) VALUES(?,?);';
-                const sql2 = 'UPDATE Study SET good = good + 1 WHERE idx = ?';
+                const sql2 = 'UPDATE Study SET good = good + 1 WHERE idx = ?;';
                 conn.query(sql+sql2,params,(err,rows,fileds)=>{
                     if(err) rej(err);
                     else res(rows);

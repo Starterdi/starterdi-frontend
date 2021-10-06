@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import CalendarIcon from '../svg/CalendarIcon';
 import ChatIcon from '../svg/ChatIcon';
@@ -7,6 +7,7 @@ import GoodIcon from '../svg/GoodIcon';
 import SmallGoodIcon from '../svg/SmallGoodIcon';
 import EyeIcon from '../svg/EyeIcon';
 import LockIcon from '../svg/LockIcon';
+import axios from 'axios';
 
 const StudyRoomWrap = styled.div`
     width : calc(100% - 300px);
@@ -178,7 +179,7 @@ const StudyRoomHeaderImgGoodBtn = styled.button`
     right : 20px;
     cursor : pointer;
     > svg > path{
-        fill : #DB3F3F;
+        fill : ${(props)=>(props.color)};
     }
 `;
 
@@ -231,9 +232,40 @@ const StudyRoomLockBtn = styled.button`
 
 const StudyRoom = (props) =>{
     const roomInfo = props.info;
+    const [good,setGood] = useState(null);
     const mod = props.mod;
     const roomUserInfo = props.userInfo;
+    const [roomGood,setRoomGood] = useState(props.goodInfo);
     const quail = roomUserInfo !== null ? (roomUserInfo.length > 0 ? roomUserInfo.find(a => a.idx === JSON.parse(localStorage.getItem("user")).idx ) : false ): false; 
+
+    useEffect(()=>{;
+        setRoomGood(props.goodInfo);
+        if(props.info !== null) setGood(props.info.good);
+    },[props.goodInfo,props.info]);
+
+    const AddGood = async ()=>{
+        if(roomGood === undefined || roomGood === null){
+            await axios.post('/api/setStudyUserGoodAdd',{
+                study_idx : roomInfo.idx,
+                user_idx : JSON.parse(localStorage.getItem('user')).idx,
+                idx : roomInfo.idx
+            })
+            .then((res)=>{
+                setRoomGood(true);
+                setGood(good+1);
+            });
+        }else{
+            await axios.post('/api/setStudyUserGoodDes',{
+                study_idx : roomInfo.idx,
+                user_idx : JSON.parse(localStorage.getItem('user')).idx,
+                idx : roomInfo.idx
+            })
+            .then((res)=>{
+                setRoomGood(undefined);
+                setGood(good-1);
+            })
+        }
+    }
 
     return(
         <>
@@ -247,7 +279,7 @@ const StudyRoom = (props) =>{
                     <StudyRoomHeaderWrap>
                         <StudyRoomHeaderLeft>
                             <StudyRoomHeaderImg>
-                                <StudyRoomHeaderImgGoodBtn>
+                                <StudyRoomHeaderImgGoodBtn color = {roomGood === undefined ? "#333" : "#DB3F3F"} onClick={AddGood}>
                                     <GoodIcon/>
                                 </StudyRoomHeaderImgGoodBtn>
                                 <img src={roomInfo.banner_img ? "../upload/"+roomInfo.banner_img : "" } alt="study" />
@@ -274,7 +306,7 @@ const StudyRoom = (props) =>{
                             </StudyRoomHeaderItem>
                             <StudyRoomHeaderInfoItem>
                                 <SmallGoodIcon/>
-                                <StudyRoomHeaderInfoItemTitle>좋아요 {roomInfo.good}</StudyRoomHeaderInfoItemTitle>
+                                <StudyRoomHeaderInfoItemTitle>좋아요 {good}</StudyRoomHeaderInfoItemTitle>
                                 <EyeIcon/>
                                 <StudyRoomHeaderInfoItemTitle>조회수 {roomInfo.hit}</StudyRoomHeaderInfoItemTitle>
                             </StudyRoomHeaderInfoItem>

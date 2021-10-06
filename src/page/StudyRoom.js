@@ -25,7 +25,7 @@ const StudyRoom = ({computedMatch}) =>{
         .then(async (res)=>{
             setInfo(res.data[0][0]);
             setStudyUserInfo(res.data[1]);
-            setStudyGoodInfo(res.data[2]);
+            setStudyGoodInfo(res.data[2][0]);
         });
     }
 
