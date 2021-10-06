@@ -71,11 +71,12 @@ const StudyJoinCondition = (props)=>{
     const info = props.info;
     const mod = props.mod;
     const user = JSON.parse(localStorage.getItem("user"));
+    const userBirth = user.birth;
     const birth = JSON.parse(info.birth);
     const setJoinPath = (value)=>{props.setJoinPath(value);}
     const PrevComponent=()=>{setJoinPath("1");}
     const NextComponent=()=>{setJoinPath("3");}
-    console.log(info);
+    console.log(new Date().getFullYear()-new Date(userBirth).getFullYear() + 1 , (new Date().getMonth() , new Date(userBirth).getMonth()));
     return(
         <>
             <StudyJoinContent mod={mod}>
@@ -94,7 +95,7 @@ const StudyJoinCondition = (props)=>{
                     <StudyConditionTitle>내 프로필</StudyConditionTitle>
                     <StudyConditionItem>
                         <StudyConditionItemTitle>나이</StudyConditionItemTitle>
-                        <StudyConditionItemData>{user.birth}</StudyConditionItemData>
+                        <StudyConditionItemData>{userBirth}</StudyConditionItemData>
                     </StudyConditionItem>
                     <StudyConditionItem>
                         <StudyConditionItemTitle>성별</StudyConditionItemTitle>
