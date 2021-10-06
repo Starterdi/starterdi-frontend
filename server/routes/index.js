@@ -19,6 +19,7 @@ app.post('/setStudyUserInfo',study_controller.setStudyUserInfo);
 app.post('/setStudyUserAdd',study_controller.setStudyUserAdd);
 app.post('/setStudyUserGoodAdd',study_controller.setStudyUserGoodAdd);
 app.post('/setStudyUserGoodDes',study_controller.setStudyUserGoodDes);
+app.post('/studyJoinLoad',study_controller.studyJoinLoad);
 
 // imgs
 app.post('/uploadImg',upload.single('img'),(req,res)=>{

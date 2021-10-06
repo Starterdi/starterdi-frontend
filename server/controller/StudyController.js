@@ -40,6 +40,14 @@ module.exports = {
         });
     },
 
+    studyJoinLoad : (req,res)=>{
+        const idx = req.body.idx;
+        const params = [idx];
+        Study.setStudyJoinLoadProccess(params).then((result)=>{
+            res.send(result);
+        })
+    },
+
     setStudyHit : (req,res)=>{
         const idx = req.body.idx;
         const params = [idx];

@@ -47,6 +47,20 @@ module.exports = {
         })
     },
 
+    setStudyJoinLoadProccess:(params)=>{
+        return new Promise((res,rej)=>{
+            pool.getConnection((err,conn)=>{
+                if(err) throw err;
+                const sql = 'SELECT * FROM Study WHERE idx = ?';
+                conn.query(sql,params,(err,rows,fileds)=>{
+                    if(err) rej(err);
+                    else res(rows);
+                    conn.release();
+                });
+            })
+        })
+    },
+
     setStudyHitProccess: (params)=>{
         return new Promise((res,rej)=>{
             pool.getConnection((err,conn)=>{

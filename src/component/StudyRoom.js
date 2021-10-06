@@ -8,6 +8,7 @@ import SmallGoodIcon from '../svg/SmallGoodIcon';
 import EyeIcon from '../svg/EyeIcon';
 import LockIcon from '../svg/LockIcon';
 import axios from 'axios';
+import { Link} from 'react-router-dom';
 
 const StudyRoomWrap = styled.div`
     width : calc(100% - 300px);
@@ -118,7 +119,7 @@ const StudyRoomHeaderLeft = styled.div`
 `;
 
 const StudyRoomAddBtn = styled.button`
-    width : 100%;
+    width : 380px;
     margin : 1.5em 0;
     background-color : #fff;
     border : none;
@@ -286,7 +287,7 @@ const StudyRoom = (props) =>{
                             </StudyRoomHeaderImg>
                             {
                             !(quail) ? 
-                            <StudyRoomAddBtn backgroundColor = {mod === "light" ? roomInfo.light_theme : roomInfo.dark_theme}>가입하기</StudyRoomAddBtn> :
+                            <Link to={"/5/studyJoin/"+roomInfo.idx}><StudyRoomAddBtn backgroundColor = {mod === "light" ? roomInfo.light_theme : roomInfo.dark_theme}>가입하기</StudyRoomAddBtn></Link>:
                             ""
                             }
                         </StudyRoomHeaderLeft>
