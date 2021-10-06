@@ -125,13 +125,14 @@ nav > ul li{
 
 #content_header_nav{
     margin-right: 3em;
-    display: grid;
-    grid-template-columns: auto 50px 50px 50px 100px 20px;
+    display : flex;
+    justify-content : flex-end;
+    align-items: center;
     width: calc(100% - 6em - 70px);
 
     > a{
         display: flex;align-items: center;justify-content: center;
-        
+        margin : 0 0.5em;
         > svg > path{transition: 0.3s;}
     }
 }
@@ -172,11 +173,11 @@ nav > ul li{
     height: 30px;
     border-radius: 20px;
     margin-left: 0.5em;
+    margin-right: 1em;
     transition: 0.3s all;
     padding: 2.5px;
     cursor: pointer;
     position: relative;
-    margin:  auto;
 }
 
 #toggle_icon{

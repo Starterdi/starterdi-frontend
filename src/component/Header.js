@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import LogoSvg from '../svg/Logo';
 import HomeIcon from '../svg/HomeIcon';
@@ -15,7 +15,7 @@ import StudyRoomIcon from '../svg/StudyRoomIcon';
 import SearchIcon from '../svg/SearchIcon';
 import SunIcon from '../svg/SunIcon';
 import MoonIcon from '../svg/MoonIcon';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const Head = styled.header`
   background-color:${(props)=>(props.mod === "light" ? "#ffffff" : "#1A1A1A")};
@@ -117,6 +117,32 @@ const ToggleIcon = styled.div`
   > svg:last-child{top:${(props)=>(props.mod === "light" ? "20px" : "0")}};}
 `;
 
+const HeaderUserMenu = styled.div`
+  position : absolute;
+  top : 110px;
+  right : 40px;
+  width : 150px;
+  height : ${(props)=>(props.open === "close" ? "0px" : "40px")};
+  border-radius : 10px;
+  background-color : #fff;
+  overflow : hidden;
+  border : ${(props)=>(props.open === "close" ? "none" : "1px solid #ddd")};
+`;
+
+const HeaderUserMenuItem = styled.div`
+  width : 100%;
+  height : 40px;
+  cursor : pointer;
+  line-height : 40px;
+  font-size : 0.9em;
+  font-weight :bold;
+  transition : 0.3s;
+  padding : 0 1em;
+  :hover{
+    opacity : 0.5;
+  }
+`;
+
 const ContentHeaderNav = (props)=>{
   const changeMod = () =>{props.changeMod();}
   if(props.name === "토글") return(<Toggle mod={props.mod} id="toggle" onClick={changeMod}><div id="toggle_icon"></div></Toggle>);
@@ -125,8 +151,10 @@ const ContentHeaderNav = (props)=>{
 }
 
 const Header = (props) =>{
+  const history = useHistory();
   const imgBasicUrl = props.imgBasicUrl ? props.imgBasicUrl : "";
   const changeMod = () =>{props.changeMod();}
+  const [headerUserOpen,setHeaderUserOpen] = useState("close");
   const NavItemList = [
     {key : "홈",link : "/5/main",icon : <HomeIcon/>},
     {key : "채팅",link : "/5/chat",icon : <ChatIcon/>},
@@ -140,6 +168,13 @@ const Header = (props) =>{
   const mod = props.mod;
   const path = props.path;
 
+  const OpenUserMenu=()=>{setHeaderUserOpen(headerUserOpen === "close" ? "open" : "close");}
+  const UserLogout = ()=>{
+    localStorage.removeItem("user");
+    alert("로그아웃 되었습니다.");
+    history.push("/5/login");
+  }
+
   return (
     <Head mod={mod}>
       <Logo id="logo" mod={mod}><Link to="/5/main"><LogoSvg/></Link></Logo>
@@ -152,7 +187,9 @@ const Header = (props) =>{
 
       <ContentHeader id="content_header" mod={mod}>
         <div id="content_header_nav">
-          <ContentHeaderNav icon={<SearchIcon/>} mod={mod} name="검색" />          
+          {
+            path === "/5/main" ? "" : <ContentHeaderNav icon={<SearchIcon/>} mod={mod} name="검색" />
+          }
           <ContentHeaderNav icon={<SettingIcon/>} mod={mod} name="설정" />
           <ContentHeaderNav icon={<MessageIcon/>} mod={mod} name="메세지" />
           <ContentHeaderNav icon={<AlertIcon/>} mod={mod} name="알림" />
@@ -162,11 +199,14 @@ const Header = (props) =>{
             <MoonIcon/>
           </ToggleIcon>
         </div>
-        <HeaderUserImg id="header_user" mod={mod} >
+        <HeaderUserImg id="header_user" mod={mod} onClick={OpenUserMenu} >
           <div id="header_user_img">
             <img src={imgBasicUrl+JSON.parse(localStorage.getItem("user")).profile_img} alt="header profile" />
           </div>
         </HeaderUserImg>
+        <HeaderUserMenu open={headerUserOpen}>
+          <HeaderUserMenuItem onClick={UserLogout}>로그아웃</HeaderUserMenuItem>
+        </HeaderUserMenu>
       </ContentHeader>
     </Head>
   );
