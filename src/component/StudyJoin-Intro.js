@@ -27,6 +27,9 @@ const StudyJoinIntro = styled.pre`
     font-size : 1.3em;
     font-weight : bold;
     overflow : auto;
+    transition : 0.3s;
+    color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
+
     ::-webkit-scrollbar{
         width : 8px;
     }
@@ -76,11 +79,11 @@ const StudyJoinIntroComponent = (props)=>{
     const NextComponent=()=>{setJoinPath("2");}
     return(
         <>
-            <StudyJoinContent mod={mod}>
+            <StudyJoinContent>
                 <StudyJoinProfileWrap>
                     <img src={"../upload/"+info.profile_img} alt="스터디 가입하기 프로필 사진" />
                 </StudyJoinProfileWrap>
-                <StudyJoinIntro>{info.join_intro}</StudyJoinIntro>
+                <StudyJoinIntro mod={mod}>{info.join_intro}</StudyJoinIntro>
             </StudyJoinContent>
             <StudyJoinButtonBox>
                 <StudyJoinButton onClick={NextComponent}>다음</StudyJoinButton>

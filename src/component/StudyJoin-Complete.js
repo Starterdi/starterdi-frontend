@@ -7,4 +7,4 @@ const StudyJoinComplete = ()=>{
     );
 }
 
-export default;
+export default StudyJoinComplete;

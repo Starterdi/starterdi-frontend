@@ -33,6 +33,8 @@ const StudyJoinButton = styled.button`
     transition : 0.3s;
     margin-left : 1em;
     pointer-events : ${(props)=>(props.type === "next" && props.check === "notOk" ? "none" : "all")};
+    transition : 0.3s;
+    color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
     :hover{
         opacity : 0.5;
     }
@@ -52,6 +54,8 @@ const StudyJoinProfileLabel = styled.p`
     font-size : 1.3em;
     font-weight : bold;
     margin-bottom : 1em;
+    transition : 0.3s;
+    color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
 `;
 
 const StudyJoinProfileInput = styled.input`
@@ -96,6 +100,10 @@ const StudyJoinProfileAddBox = styled.div`
     > svg {
         width : 50px;
         height : 50px;
+        > path{
+            transition : 0.3s;
+            fill : ${(props)=>(props.mod === "light" ? "#000" : "#fff")};
+        }
     }
 `;
 
@@ -165,23 +173,23 @@ const StudyJoinProfile = (props)=>{
 
     return(
         <>
-            <StudyJoinContent mod={mod}>
+            <StudyJoinContent>
                 <StudyJoinProfileWrap>
                     <StudyJoinProfileItem>
-                        <StudyJoinProfileLabel>프로필 이름</StudyJoinProfileLabel>
+                        <StudyJoinProfileLabel mod={mod}>프로필 이름</StudyJoinProfileLabel>
                         <StudyJoinProfileInput width="name" ref={profileName} type="text" value={userName} onChange={getUserName} />
                         <StudyJoinProfileMsg>* 비속어나 타인에게 불쾌감을 유발할 수 있는 이름은 사용하실 수 없습니다.</StudyJoinProfileMsg>
                     </StudyJoinProfileItem>
                     <StudyJoinProfileItem>
-                        <StudyJoinProfileLabel>프로필 소개</StudyJoinProfileLabel>
+                        <StudyJoinProfileLabel mod={mod}>프로필 소개</StudyJoinProfileLabel>
                         <StudyJoinProfileInput type="text" ref={profileIntro} value={userIntro} onChange={getUserIntro} />
                         <StudyJoinProfileMsg>* 한 줄 소개를 입력하지 않은 경우 '한 줄 소개가 없습니다'라고 표시됩니다.</StudyJoinProfileMsg>
                     </StudyJoinProfileItem>
                 </StudyJoinProfileWrap>
                 <StudyJoinProfileImgWrap>
-                    <StudyJoinProfileLabel>이미지 설정</StudyJoinProfileLabel>
+                    <StudyJoinProfileLabel mod={mod}>이미지 설정</StudyJoinProfileLabel>
                     <StudyJoinProfileInputWrap>
-                        <StudyJoinProfileAddBox>
+                        <StudyJoinProfileAddBox mod={mod}>
                             <StudyJoinProfileInputs type="file" ref={profileImg} onChange={StudyProfileChange} />
                             <CameraIcon/>
                         </StudyJoinProfileAddBox>
@@ -192,7 +200,7 @@ const StudyJoinProfile = (props)=>{
                 </StudyJoinProfileImgWrap>
             </StudyJoinContent>
             <StudyJoinButtonBox>
-                <StudyJoinButton type="prev" onClick={PrevComponent}>이전</StudyJoinButton>
+                <StudyJoinButton  mod={mod} type="prev" onClick={PrevComponent}>이전</StudyJoinButton>
                 <StudyJoinButton check="notOk" type="next" onClick={NextComponent}>등록</StudyJoinButton>
             </StudyJoinButtonBox>
         </>

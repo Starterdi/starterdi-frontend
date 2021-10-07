@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import StudyJoinBackIcon from '../svg/StudyJoinBackIcon';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import StudyJoinIntroComponent from './StudyJoin-Intro';
 import StudyJoinCondition from './StudyJoin-Condition';
 import StudyJoinProfile from './StudyJoin-Profile';
 
 const StudyJoinWrap = styled.div`
-    width : calc(100% - 300px); 
-    height : calc(100% - 7em);
-    margin-top : 7em;
-    padding : 3em 5em;
+    width : calc(100% - 300px);
+    height : 100%;
+    padding : 10em 5em 3em 5em;
+    transition : 0.3s;
+    background-color : ${(props)=>(props.mod === "light" ? "#fff" : "#1F1F1F")};
 `;
 
 const StudyJoinHeader = styled.div`
@@ -20,12 +21,19 @@ const StudyJoinHeader = styled.div`
         justify-content : flex-start;
         align-items :center;
     }
+
+    svg > path{
+        transition : 0.3s;
+        fill : ${(props) => (props.mod === "light" ? "#000" : "#fff")};
+    }
 `;
 
 const StudyJoinHeaderTitle = styled.p`
     font-size : 1.8em;
     font-weight :bold;
     margin-left:1em;
+    transition : 0.3s;
+    color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
 `;
 
 const StudyJoinBody = styled.div`
@@ -58,6 +66,8 @@ const StudyJoinNavItemTitle = styled.p`
     font-weight : bold;
     margin-bottom : 0.5em;
     text-align : center;
+    transition : 0.3s;
+    color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
 `;
 
 const StudyJoinNaveItemCircle = styled.div`
@@ -79,33 +89,38 @@ const StudyJoin = (props)=>{
     const mod = props.mod;
     const info = props.info;
     const [joinPath,setJoinPath] = useState("1");
+    const [joinInfo,setJoinInfo] = useState({
+        study_idx : info.idx,
+        user_idx : JSON.parse(localStorage.getItem("user")).idx,
+
+    })
 
     return(
-        <StudyJoinWrap>
+        <StudyJoinWrap mod={mod}>
         {
             info ? 
             (
             <>
-                <StudyJoinHeader>
+                <StudyJoinHeader  mod={mod}>
                     <Link to={"/5/studyRoom/"+info.idx}>
                         <StudyJoinBackIcon mod={mod}/>
-                        <StudyJoinHeaderTitle>{info.title}</StudyJoinHeaderTitle>
+                        <StudyJoinHeaderTitle  mod={mod}>{info.title}</StudyJoinHeaderTitle>
                     </Link>
                 </StudyJoinHeader>
                 <StudyJoinBody>
                     <StudyJoinNav>
                         <StudyJoinNavItem>
-                            <StudyJoinNavItemTitle>소개</StudyJoinNavItemTitle>
+                            <StudyJoinNavItemTitle mod={mod}>소개</StudyJoinNavItemTitle>
                             <StudyJoinNaveItemCircle flag={joinPath >= 1 ? "success" : "false" } />
                         </StudyJoinNavItem>
                         <StudyJoinNavLine flag={joinPath >= 2 ? "success" : "false" } />
                         <StudyJoinNavItem>
-                            <StudyJoinNavItemTitle>조건</StudyJoinNavItemTitle>
+                            <StudyJoinNavItemTitle mod={mod}>조건</StudyJoinNavItemTitle>
                             <StudyJoinNaveItemCircle flag={joinPath >= 2 ? "success" : "false" } />
                         </StudyJoinNavItem>
                         <StudyJoinNavLine flag={joinPath >= 3 ? "success" : "false" } />
                         <StudyJoinNavItem>
-                            <StudyJoinNavItemTitle>프로필</StudyJoinNavItemTitle>
+                            <StudyJoinNavItemTitle mod={mod}>프로필</StudyJoinNavItemTitle>
                             <StudyJoinNaveItemCircle flag={joinPath >= 3 ? "success" : "false" } />
                         </StudyJoinNavItem>
                     </StudyJoinNav>

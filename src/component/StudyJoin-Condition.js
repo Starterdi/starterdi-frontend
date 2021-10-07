@@ -33,6 +33,8 @@ const StudyJoinButton = styled.button`
     transition : 0.3s;
     margin-left : 1em;
     pointer-events : ${(props)=>(props.type === "next" && props.check === "notOk" ? "none" : "all")};
+    transition : 0.3s;
+    color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
     :hover{
         opacity : 0.5;
     }
@@ -49,6 +51,8 @@ const StudyConditionTitle = styled.p`
     font-size : 2em;
     font-weight :bold;
     margin-bottom : 2em;
+    transition : 0.3s;
+    color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
 `;
 
 const StudyConditionItem = styled.div`
@@ -65,10 +69,14 @@ const StudyConditionItemTitle = styled.p`
     font-size : 1.5em;
     font-weight : bold;
     margin-right : 1em;
+    transition : 0.3s;
+    color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
 `;
 
 const StudyConditionItemData = styled.p`
     font-size : 1.5em;
+    transition : 0.3s;
+    color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
 `;
 
 const StudyConditionCheckBox = styled.div`
@@ -135,28 +143,28 @@ const StudyJoinCondition = (props)=>{
         <>
             <StudyJoinContent mod={mod}>
                 <StudyConditionBox>
-                    <StudyConditionTitle>조건 프로필</StudyConditionTitle>
+                    <StudyConditionTitle mod={mod}>조건 프로필</StudyConditionTitle>
                     <StudyConditionItem>
-                        <StudyConditionItemTitle>나이</StudyConditionItemTitle>
-                        <StudyConditionItemData>{birth[0] === "" ? birth[1]+"세 이하" : birth[1] === "" ? birth[0]+"세 이상" : birth[0]+"세 ~ "+birth[1]+"세"}</StudyConditionItemData>
+                        <StudyConditionItemTitle mod={mod}>나이</StudyConditionItemTitle>
+                        <StudyConditionItemData mod={mod}>{birth[0] === "" ? birth[1]+"세 이하" : birth[1] === "" ? birth[0]+"세 이상" : birth[0]+"세 ~ "+birth[1]+"세"}</StudyConditionItemData>
                     </StudyConditionItem>
                     <StudyConditionItem>
-                        <StudyConditionItemTitle>성별</StudyConditionItemTitle>
-                        <StudyConditionItemData>{info.gender}</StudyConditionItemData>
+                        <StudyConditionItemTitle mod={mod}>성별</StudyConditionItemTitle>
+                        <StudyConditionItemData mod={mod}>{info.gender}</StudyConditionItemData>
                     </StudyConditionItem>
                 </StudyConditionBox>
                 <StudyConditionBox>
-                    <StudyConditionTitle>내 프로필</StudyConditionTitle>
+                    <StudyConditionTitle mod={mod}>내 프로필</StudyConditionTitle>
                     <StudyConditionItem>
-                        <StudyConditionItemTitle>나이</StudyConditionItemTitle>
-                        <StudyConditionItemData>{GetYear(userBirth)}세</StudyConditionItemData>
+                        <StudyConditionItemTitle mod={mod}>나이</StudyConditionItemTitle>
+                        <StudyConditionItemData mod={mod}>{GetYear(userBirth)}세</StudyConditionItemData>
                         <StudyConditionCheckBox check={CheckYear() === true ? "ok" : "notOk"}>
                             <StudyJoinCheckIcon/>
                         </StudyConditionCheckBox>
                     </StudyConditionItem>
                     <StudyConditionItem>
-                        <StudyConditionItemTitle>성별</StudyConditionItemTitle>
-                        <StudyConditionItemData>{user.gender}</StudyConditionItemData>
+                        <StudyConditionItemTitle mod={mod}>성별</StudyConditionItemTitle>
+                        <StudyConditionItemData mod={mod}>{user.gender}</StudyConditionItemData>
                         <StudyConditionCheckBox check={CheckGender() === true ? "ok" : "notOk"}>
                             <StudyJoinCheckIcon/>
                         </StudyConditionCheckBox>
@@ -164,7 +172,7 @@ const StudyJoinCondition = (props)=>{
                 </StudyConditionBox>
             </StudyJoinContent>
             <StudyJoinButtonBox>
-                <StudyJoinButton type="prev" onClick={PrevComponent}>이전</StudyJoinButton>
+                <StudyJoinButton type="prev" onClick={PrevComponent} mod={mod}>이전</StudyJoinButton>
                 <StudyJoinButton check={(CheckGender() && CheckYear()) ? "ok" : "notOk"} type="next" onClick={NextComponent}>다음</StudyJoinButton>
             </StudyJoinButtonBox>
         </>
