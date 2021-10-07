@@ -4,7 +4,7 @@ import StudyJoinBackIcon from '../svg/StudyJoinBackIcon';
 import { Link} from 'react-router-dom';
 import StudyJoinIntroComponent from './StudyJoin-Intro';
 import StudyJoinCondition from './StudyJoin-Condition';
-// import axios from 'axios';
+import StudyJoinProfile from './StudyJoin-Profile';
 
 const StudyJoinWrap = styled.div`
     width : calc(100% - 300px); 
@@ -78,9 +78,7 @@ const StudyJoinNavLine = styled.div`
 const StudyJoin = (props)=>{
     const mod = props.mod;
     const info = props.info;
-    console.log(info);
     const [joinPath,setJoinPath] = useState("1");
-    console.log(joinPath);
 
     return(
         <StudyJoinWrap>
@@ -114,7 +112,7 @@ const StudyJoin = (props)=>{
                     {
                         joinPath === "1" ? <StudyJoinIntroComponent info={info} mod={mod} setJoinPath={setJoinPath} /> :
                         joinPath === "2" ? <StudyJoinCondition info={info} mod={mod} setJoinPath={setJoinPath} /> : 
-                        ""
+                        <StudyJoinProfile  info={info} mod={mod} setJoinPath={setJoinPath} />
                     }
                 </StudyJoinBody>
             </>
