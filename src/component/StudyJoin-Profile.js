@@ -1,4 +1,5 @@
-import React, {useRef, useState} from 'react';
+import axios from 'axios';
+import React, {useEffect, useRef, useState} from 'react';
 import styled from 'styled-components';
 import CameraIcon from '../svg/CameraIcon';
 
@@ -131,29 +132,77 @@ const StudyJoinProfileInputs = styled.input`
 `;
 
 const StudyJoinProfile = (props)=>{
-    // const info = props.info;
-    const user = JSON.parse(localStorage.getItem("user"));
+    const joinInfo = props.joinInfo;
+    const getJoinInfo = (value,cate)=>{props.getJoinInfo(value,cate);}
     const mod = props.mod;
 
+    const [nextPage,setNextPage] = useState("notOk");
     const setJoinPath = (value)=>{props.setJoinPath(value);}
     const PrevComponent=()=>{setJoinPath("2");}
-    const NextComponent=()=>{setJoinPath("4");}
+    const NextComponent= async()=>{
+        if(joinInfo.profile_img_change){
+            let formData = new FormData();
+            formData.append('img',profileImg.current.files[0]);
+            await axios.post('/api/uploadImg',formData,{
+                headers:{
+                    'Content-Type' : 'multipart/form-data'
+                }
+            })
+            .then((res)=>{
+                const img = res.data.filename;
+                axios.post('/api/setStudyUserAdd',{
+                    study_idx : joinInfo.study_idx,
+                    user_idx : joinInfo.user_idx,
+                    status : "allowed",
+                    user_name : joinInfo.user_name,
+                    profile : joinInfo.profile,
+                    profile_img : "upload/"+img
+                })
+                .then((res)=>{
+                    setJoinPath("4");
+                })
+            })
+        }else{
+            await axios.post('/api/setStudyUserAdd',{
+                study_idx : joinInfo.study_idx,
+                user_idx : joinInfo.user_idx,
+                status : "allowed",
+                user_name : joinInfo.user_name,
+                profile : joinInfo.profile,
+                profile_img : JSON.parse(localStorage.getItem("user")).profile_img
+            })
+            .then((res)=>{
+                setJoinPath("4");
+            })
+        }
+    }
 
     const profileImg = useRef(null);
     const profileName = useRef(null);
     const profileIntro = useRef(null);
 
-    const [userName,setUserName] = useState(user.user_name);
-    const [userIntro,setUserIntro] = useState(user.profile);
-    const [userImg,setUserImg] = useState("../"+user.profile_img);
+    const [userName,setUserName] = useState(joinInfo.user_name);
+    const [userIntro,setUserIntro] = useState(joinInfo.profile);
+    const [userImg,setUserImg] = useState(joinInfo.profile_img);
+
+    useEffect(()=>{
+        CheckNextLevel(userName,userImg);
+    },[userName,userImg]);
+
+    const CheckNextLevel = (userName,userImg)=>{
+        if(userName === "" || userImg === "") setNextPage("notOk");
+        else setNextPage("ok");
+    }
 
     const getUserName = ()=>{
         const val = profileName.current.value;
         setUserName(val);
+        getJoinInfo(val,"user_name");
     }
 
     const getUserIntro = ()=>{
-        const val = profileName.current.value;
+        const val = profileIntro.current.value;
+        getJoinInfo(val,"profile");
         setUserIntro(val);
     }
 
@@ -168,8 +217,16 @@ const StudyJoinProfile = (props)=>{
 
         reader.onload = ()=>{
             setUserImg(reader.result);
+            getJoinInfo(reader.result,"profile_img");
+            getJoinInfo(true,"profile_img_change");
+            CheckNextLevel();
         }
     }
+
+    useEffect(()=>{
+    },[]);
+
+    // setStudyUserAdd
 
     return(
         <>
@@ -201,7 +258,7 @@ const StudyJoinProfile = (props)=>{
             </StudyJoinContent>
             <StudyJoinButtonBox>
                 <StudyJoinButton  mod={mod} type="prev" onClick={PrevComponent}>이전</StudyJoinButton>
-                <StudyJoinButton check="notOk" type="next" onClick={NextComponent}>등록</StudyJoinButton>
+                <StudyJoinButton check={nextPage} type="next" onClick={NextComponent}>등록</StudyJoinButton>
             </StudyJoinButtonBox>
         </>
     );

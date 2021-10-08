@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import StudyJoinBackIcon from '../svg/StudyJoinBackIcon';
 import { Link } from 'react-router-dom';
 import StudyJoinIntroComponent from './StudyJoin-Intro';
 import StudyJoinCondition from './StudyJoin-Condition';
 import StudyJoinProfile from './StudyJoin-Profile';
+import StudyJoinComplete from './StudyJoin-Complete';
 
 const StudyJoinWrap = styled.div`
     width : calc(100% - 300px);
@@ -45,7 +46,7 @@ const StudyJoinBody = styled.div`
 const StudyJoinNav = styled.div`
     margin-bottom : 3em;
     width : 100%;
-    display : flex;
+    display : ${(props)=>(props.path === "4" ? "none" : "flex")};
     justify-content : space-between;
     align-items : center;
     > * {margin : 0 0.5em;}
@@ -89,11 +90,25 @@ const StudyJoin = (props)=>{
     const mod = props.mod;
     const info = props.info;
     const [joinPath,setJoinPath] = useState("1");
-    const [joinInfo,setJoinInfo] = useState({
-        study_idx : info.idx,
-        user_idx : JSON.parse(localStorage.getItem("user")).idx,
+    const [joinInfo,setJoinInfo] = useState(null);
 
-    })
+    const getJoinInfo = (value,cate)=>{
+        joinInfo[cate] = value;
+        setJoinInfo(joinInfo);
+    }
+
+    useEffect(()=>{
+        if(info !== null){
+            setJoinInfo({
+                study_idx : info.idx,
+                user_idx : JSON.parse(localStorage.getItem("user")).idx,
+                user_name : JSON.parse(localStorage.getItem("user")).user_name,
+                profile : JSON.parse(localStorage.getItem("user")).profile,
+                profile_img : "../"+JSON.parse(localStorage.getItem("user")).profile_img,
+                profile_img_change : false,
+            });
+        }
+    },[info]);
 
     return(
         <StudyJoinWrap mod={mod}>
@@ -108,7 +123,7 @@ const StudyJoin = (props)=>{
                     </Link>
                 </StudyJoinHeader>
                 <StudyJoinBody>
-                    <StudyJoinNav>
+                    <StudyJoinNav path={joinPath}>
                         <StudyJoinNavItem>
                             <StudyJoinNavItemTitle mod={mod}>소개</StudyJoinNavItemTitle>
                             <StudyJoinNaveItemCircle flag={joinPath >= 1 ? "success" : "false" } />
@@ -127,7 +142,8 @@ const StudyJoin = (props)=>{
                     {
                         joinPath === "1" ? <StudyJoinIntroComponent info={info} mod={mod} setJoinPath={setJoinPath} /> :
                         joinPath === "2" ? <StudyJoinCondition info={info} mod={mod} setJoinPath={setJoinPath} /> : 
-                        <StudyJoinProfile  info={info} mod={mod} setJoinPath={setJoinPath} />
+                        joinPath === "3" ? <StudyJoinProfile  info={info} mod={mod} setJoinPath={setJoinPath} getJoinInfo={getJoinInfo} joinInfo={joinInfo} /> :
+                        <StudyJoinComplete mod={mod} info={info} />
                     }
                 </StudyJoinBody>
             </>

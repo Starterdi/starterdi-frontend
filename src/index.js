@@ -9,6 +9,7 @@ import Join from './page/Join';
 import MakeRoom from './page/MakeRoom';
 import StudyRoom from './page/StudyRoom';
 import StudyJoin from './page/StudyJoin';
+import StudyRoomList from './page/StudyRoomList';
 import reportWebVitals from './reportWebVitals';
 import './style.scss';
 import PrivateRoute from './lib/PrivateRoute';
@@ -27,6 +28,7 @@ ReactDOM.render(
       <PrivateRoute path='/5/makeRoom' component={MakeRoom} />
       <PrivateRoute path='/5/main' component={Home} />     
       <PrivateRoute path='/5/chat' component={Chat}/>
+      <PrivateRoute path='/5/studyRoom' component={StudyRoomList} />
       <LoginRoute path='/5/login' component={Login}/>
       <LoginRoute path='/5/join' component={Join}/>
     </Switch>

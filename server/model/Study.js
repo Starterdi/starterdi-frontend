@@ -93,8 +93,9 @@ module.exports = {
         return new Promise((res,rej)=>{
             pool.getConnection((err,conn)=>{
                 if(err) throw err;
-                const sql = 'INSERT INTO User_study(`study_idx`,`user_idx`,`status`) VALUES(?,?,?)';
-                conn.query(sql,params,(err,rows,fileds)=>{
+                const sql = 'INSERT INTO User_study(`study_idx`,`user_idx`,`status`) VALUES(?,?,?);';
+                const sql2 = 'INSERT INTO Study_profile(`user_idx`,`study_idx`,`user_name`,`profile`,`profile_img`) VALUES(?,?,?,?,?);'
+                conn.query(sql+sql2,params,(err,rows,fileds)=>{
                     if(err) rej(err);
                     else res(rows);
                     conn.release();
@@ -125,6 +126,20 @@ module.exports = {
                 const sql = 'DELETE FROM Good_study WHERE study_idx = ? AND user_idx = ?;';
                 const sql2 = 'UPDATE Study SET good = good - 1 WHERE idx = ?;';
                 conn.query(sql+sql2,params,(err,rows,fileds)=>{
+                    if(err) rej(err);
+                    else res(rows);
+                    conn.release();
+                })
+            })
+        })
+    },
+
+    setStudyRoomUserListLoad:(params)=>{
+        return new Promise((res,rej)=>{
+            pool.getConnection((err,conn)=>{
+                if(err) throw err;
+                const sql = 'SELECT S.* FROM Study AS S, User_study AS U WHERE U.user_idx = ? AND U.study_idx = S.idx ';
+                conn.query(sql,params,(err,rows,fileds)=>{
                     if(err) rej(err);
                     else res(rows);
                     conn.release();

@@ -20,6 +20,7 @@ app.post('/setStudyUserAdd',study_controller.setStudyUserAdd);
 app.post('/setStudyUserGoodAdd',study_controller.setStudyUserGoodAdd);
 app.post('/setStudyUserGoodDes',study_controller.setStudyUserGoodDes);
 app.post('/studyJoinLoad',study_controller.studyJoinLoad);
+app.post('/studyRoomUserListLoad',study_controller.studyRoomUserListLoad);
 
 // imgs
 app.post('/uploadImg',upload.single('img'),(req,res)=>{

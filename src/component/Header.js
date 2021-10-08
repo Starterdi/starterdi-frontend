@@ -160,7 +160,7 @@ const Header = (props) =>{
     {key : "채팅",link : "/5/chat",icon : <ChatIcon/>},
     {key : "커뮤니티",link : "/5/community",icon : <CommunityIcon />},
     {key : "친구",link : "/5/friend",icon : <FriendIcon />},
-    {key : "스터디방",link : "/5/studyroom",icon : <StudyRoomIcon />},
+    {key : "스터디방",link : "/5/studyRoom",icon : <StudyRoomIcon />},
     {key : "북마크",link : "/5/bookmark",icon : <BookMarkIcon />},
     {key : "좋아요",link : "/5/good",icon : <GoodIcon />},
     {key : "일정",link : "/5/calendar",icon : <CalendarIcon />}

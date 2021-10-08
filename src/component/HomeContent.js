@@ -173,6 +173,10 @@ const ContentCate = styled.div`
 `;
 
 const ContentTitle = styled.p`
+ width : 100%;
+ white-space : nowrap;
+ overflow : hidden;
+ text-overflow : ellipsis;
  padding : 0 0.5em;
  text-align : center;
  font-size : 1.2em;

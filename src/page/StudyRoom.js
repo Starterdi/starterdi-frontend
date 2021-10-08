@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const StudyRoom = ({computedMatch}) =>{
     const [mod,setMod] = useState(window.localStorage.getItem('theme') ? window.localStorage.getItem('theme') : 'light');
-    const [path] =  useState('/5/studyroom');
+    const [path] =  useState('/5/studyRoom');
     const [info,setInfo] = useState(null);
     const [studyUserInfo,setStudyUserInfo] = useState(null);
     const [studyGoodInfo,setStudyGoodInfo] = useState(null);

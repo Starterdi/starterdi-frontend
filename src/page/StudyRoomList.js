@@ -1,38 +1,37 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Header from '../component/Header';
-import StudyJoin from '../component/StudyJoin';
+import StudyRoomListComponent from '../component/StudyRoomList';
+import axios from 'axios';
 
-const Join = ({computedMatch})=>{
+const StudyRoomList = (props)=>{
     const [mod,setMod] = useState(window.localStorage.getItem('theme') ? window.localStorage.getItem('theme') : 'light');
     const [path] =  useState('/5/studyRoom');
-    const [info,setInfo] = useState(null);
-    const idx = computedMatch.params.id;
+    const [dataList,setDataList] = useState([]);
     const changeMod = () =>{
         setMod(mod === "light" ? "dark" : "light");
         if(mod === "dark") window.localStorage.setItem('theme', 'light');
         else window.localStorage.setItem('theme', 'dark');
     }
 
-    const RoomInfoLoad = async (idx)=>{
-        await axios.post('/api/studyJoinLoad',{
-            idx:idx
+    const load = async() =>{
+        await axios.post('/api/studyRoomUserListLoad',{
+            user_idx : JSON.parse(localStorage.getItem("user")).idx
         })
         .then((res)=>{
-            setInfo(res.data[0]);
+            setDataList(res.data);
         });
     }
 
     useEffect(()=>{
-        RoomInfoLoad(idx);
-    },[idx]);
-
-    return (
+        load();
+    },[]);
+    
+    return(
         <>
-            <Header mod={mod} changeMod={changeMod} path={path}  imgBasicUrl = "../" />
-            <StudyJoin info={info} mod={mod} />
+            <Header mod={mod} changeMod={changeMod} path={path} />
+            <StudyRoomListComponent mod={mod} dataList={dataList} />
         </>
-    );
+    )
 }
 
-export default Join;
+export default StudyRoomList;

@@ -68,7 +68,10 @@ module.exports = {
         const study_idx = req.body.study_idx;
         const user_idx = req.body.user_idx;
         const status = req.body.status;
-        const params = [study_idx,user_idx,status];
+        const user_name = req.body.user_name;
+        const profile = req.body.profile;
+        const profile_img = req.body.profile_img;
+        const params = [study_idx,user_idx,status,user_idx,study_idx,user_name,profile,profile_img];
         Study.setStudyUserAddProccess(params).then((result)=>{
             res.send(result);
         });
@@ -90,6 +93,14 @@ module.exports = {
         const idx = req.body.idx;
         const params = [study_idx,user_idx,idx];
         Study.setStudyUserGoodDesProccess(params).then((result)=>{
+            res.send(result);
+        });
+    },
+
+    studyRoomUserListLoad : (req,res)=>{
+        const user_idx = req.body.user_idx;
+        const params = [user_idx];
+        Study.setStudyRoomUserListLoad(params).then((result)=>{
             res.send(result);
         })
     }

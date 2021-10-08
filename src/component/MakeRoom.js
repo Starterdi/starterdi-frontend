@@ -189,7 +189,6 @@ const MakeRoom = (props)=>{
                 getMakeRoomSetting(res.data.filename,"room_banner_img");
                 makeRoomSetting.room_condition.room_birth = JSON.stringify(makeRoomSetting.room_condition.room_birth);
                 getMakeRoomSetting(makeRoomSetting.room_condition,"room_condition");
-                console.log(makeRoomSetting);
                 axios.post('/api/studyAdd',{
                     title : makeRoomSetting.room_name,
                     intro : makeRoomSetting.room_intro,
