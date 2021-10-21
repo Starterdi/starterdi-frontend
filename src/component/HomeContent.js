@@ -186,6 +186,7 @@ const ContentTitle = styled.p`
 `;
 
 const HomeContent = (props) =>{
+  const searchWord = props.searchWord;
   const mod = props.mod;
   const history = useHistory();
   const [contentSection,setContentSection] = useState("전체");
@@ -263,7 +264,8 @@ const HomeContent = (props) =>{
 
   useEffect(()=>{
     LoadRoomList();
-  },[]);
+    console.log(searchWord);
+  },[searchWord]);
 
   const ContentHeader = (props)=>{
     return(

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import LeftArrowIcon from '../svg/LeftArrowIcon';
 import RightArrowIcon from '../svg/RightArrowIcon';
@@ -139,6 +139,7 @@ const VisualNavBtn = (props) =>{
 
 const Visual = (props)=>{
   const mod = props.mod;
+  const getSearchWord = (val)=>{props.getSearchWord(val);}
   const cateList = [
     {
       key : "그림",
@@ -187,6 +188,11 @@ const Visual = (props)=>{
     setVisualNav(visualNav >= 0 ? visualNav <= 150 ? 0 : visualNav-150 : 0 );
   }
 
+  const searchInput = useRef(null);
+  const VisualSearchEvent = ()=>{
+    getSearchWord(searchInput.current.value);
+  }
+
   return(
     <div id="visual">
       <div id="visual_img_wrap">
@@ -194,8 +200,8 @@ const Visual = (props)=>{
         <VisualSearchWrap>
           <VisualSearchTitle >스터디 그룹방을 찾아보세요!</VisualSearchTitle>
           <VisualSearchInputWrap>
-            <VisualSearchInput  mod={mod} type="text" />
-            <VisualSearchInputBtn mod={mod} ><SearchIcon/></VisualSearchInputBtn>
+            <VisualSearchInput  mod={mod} type="text" ref={searchInput} />
+            <VisualSearchInputBtn mod={mod} onClick={VisualSearchEvent} ><SearchIcon/></VisualSearchInputBtn>
           </VisualSearchInputWrap>
         </VisualSearchWrap>
       </div>

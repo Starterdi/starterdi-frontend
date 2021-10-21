@@ -6,6 +6,11 @@ import HomeContent from '../component/HomeContent';
 const Home = () =>{
     const [mod,setMod] = useState(window.localStorage.getItem('theme') ? window.localStorage.getItem('theme') : 'light');
     const [path] =  useState('/5/main');
+    const [searchWord,setSearchWord] = useState("");
+    const getSearchWord = (val) =>{
+        setSearchWord(val);
+    }
+
     const changeMod = () =>{
         setMod(mod === "light" ? "dark" : "light");
         if(mod === "dark") window.localStorage.setItem('theme', 'light');
@@ -19,8 +24,8 @@ const Home = () =>{
     return(
         <>
             <Header mod={mod} changeMod={changeMod} path={path} />
-            <Visual mod={mod} />
-            <HomeContent mod={mod} />
+            <Visual mod={mod} getSearchWord={getSearchWord} />
+            <HomeContent mod={mod} searchWord={searchWord} />
         </>
     )
 }
