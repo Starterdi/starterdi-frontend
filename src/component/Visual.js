@@ -87,13 +87,25 @@ const VisualCateWrap = styled.div`
   align-items : center;
 `;
 
+const VisualCateList = styled.div`
+  position : ${(props)=>(props.status === "open" ? "absolute" : "relative")};
+  left : 0;
+  top  : 0;
+  width : ${(props)=>(props.status === "open" ? "100%" : "90%")};
+  background-color : ${(props)=>(props.status === "open" ? "#fff" : "rgba(0,0,0,0)")};
+  height : ${(props)=>(props.status === "open" ? "200px" : "100%")};
+  overflow : ${(props) => (props.status === "open" ? "visible" : "hidden")};
+`;
+
 const VisualCateListWrap = styled.div`
-  position : absolute;
+  position : ${(props)=>(props.status === "open" ? "relative" : "absolute")};
   top : 0;
-  left : -${(props)=>(props.size)}px;
+  left : ${(props)=>(props.status === "close" ? "-"+props.size : "0")}px;
+  padding : ${(props)=>(props.status === "open" ? "0em 5em" : "0")};
   display : flex;
   justify-content :flex-start;
   align-items : center;
+  flex-wrap : ${(props)=>(props.status === "open" ? "wrap" : "nowrap")};
   height : 100%;
   transition : 0.3s;
 `;
@@ -106,13 +118,6 @@ const VisualCateTitle = styled.p`
   font-weight : bold;
   transition : 0.3s;
 `; 
-
-const VisualCateList = styled.div`
-  position : relative;
-  width : 90%;
-  height : 100%;
-  overflow : hidden;
-`;
 
 const VisualCateItem = styled.div`
   padding : 0 2em;
@@ -128,18 +133,18 @@ const VisualCateItem = styled.div`
   color : #fff;
   background-color : ${(props)=>(props.backgroundColor)};
   transition : 0.3s;
+  opacity : ${(props)=>(props.searchCate !== "" && props.flag === false ? "0.3" : "1")};
   :hover{
     opacity : 0.5;
   }
 `;
 
-const VisualNavBtn = (props) =>{
-  return(<VisualNavBtnStyled mod={props.mod} className="visual_nav_btn">{props.icon}</VisualNavBtnStyled>);
-}
-
 const Visual = (props)=>{
   const mod = props.mod;
+  const searchCate = props.searchCate;
   const getSearchWord = (val)=>{props.getSearchWord(val);}
+  const getSearchCate = (val)=>{props.getSearchCate(val);}
+  const [visualCateStatus,setVisualCateStatus] = useState("close");
   const cateList = [
     {
       key : "그림",
@@ -181,7 +186,7 @@ const Visual = (props)=>{
 
   const [visualNav,setVisualNav] = useState(0);
   const getVisualNavRight = ()=>{
-    setVisualNav(visualNav <= 480 ? 480 - visualNav <= 150 ? 480 : visualNav+150 : 480 );
+    setVisualNav(visualNav <= 480 ? 480 - visualNav <= 150 ? 500 : visualNav+150 : 500 );
   }
 
   const getVisualNavLeft = ()=>{
@@ -189,8 +194,11 @@ const Visual = (props)=>{
   }
 
   const searchInput = useRef(null);
-  const VisualSearchEvent = ()=>{
-    getSearchWord(searchInput.current.value);
+  const VisualSearchEvent = ()=>{getSearchWord(searchInput.current.value);}
+  const TransferCateArea = ()=>{setVisualCateStatus(visualCateStatus === "open" ? "close" : "open");}
+  const setVisualCate = (val)=>{
+    if(val === searchCate) getSearchCate("");
+    else getSearchCate(val);
   }
 
   return(
@@ -206,14 +214,14 @@ const Visual = (props)=>{
         </VisualSearchWrap>
       </div>
       <VisualNavStyle id="visual_nav" mod={mod}>
-      <VisualNavBtnStyled onClick={getVisualNavLeft} mod={mod} className="visual_nav_btn"><LeftArrowIcon/></VisualNavBtnStyled>
-        <VisualNavBtn mod={mod} icon={<ListIcon/>} />
+        <VisualNavBtnStyled onClick={getVisualNavLeft} mod={mod} className="visual_nav_btn"><LeftArrowIcon/></VisualNavBtnStyled>
+        <VisualNavBtnStyled mod={mod} onClick={TransferCateArea} className="visual_nav_btn"><ListIcon/></VisualNavBtnStyled>
         <VisualNavBtnStyled onClick={getVisualNavRight} mod={mod} className="visual_nav_btn"><RightArrowIcon/></VisualNavBtnStyled>
         <VisualCateWrap>
           <VisualCateTitle mod={mod}>카테고리</VisualCateTitle>
-          <VisualCateList>
-            <VisualCateListWrap size={visualNav}>
-              {cateList.map(cate=>(<VisualCateItem key={cate.key} backgroundColor={cate.backgroundColor}>{cate.key}</VisualCateItem>))}
+          <VisualCateList status={visualCateStatus}>
+            <VisualCateListWrap status={visualCateStatus} size={visualNav}>
+              {cateList.map(cate=>(<VisualCateItem key={cate.key} backgroundColor={cate.backgroundColor} searchCate={searchCate} flag={searchCate === cate.key} onClick={()=>{setVisualCate(cate.key)}}>{cate.key}</VisualCateItem>))}
             </VisualCateListWrap>
           </VisualCateList>
         </VisualCateWrap>

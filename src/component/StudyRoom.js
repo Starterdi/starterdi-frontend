@@ -7,8 +7,14 @@ import GoodIcon from '../svg/GoodIcon';
 import SmallGoodIcon from '../svg/SmallGoodIcon';
 import EyeIcon from '../svg/EyeIcon';
 import LockIcon from '../svg/LockIcon';
+import PickIcon from '../svg/PickIcon';
+import MemberIcon from '../svg/MemberIcon';
+import ProjectIcon from '../svg/ProjectIcon';
+import ChallengesIcon from '../svg/ChallengesIcon';
+import PostingIcon from '../svg/PostingIcon';
 import axios from 'axios';
 import { Link} from 'react-router-dom';
+import StudyRoomPick from '../component/StudyRoom-Pick';
 
 const StudyRoomWrap = styled.div`
     width : calc(100% - 300px);
@@ -231,6 +237,55 @@ const StudyRoomLockBtn = styled.button`
     }
 `;
 
+const StudyRoomViewWrap = styled.div`
+    width : 100%;
+    padding : 1em;
+`;
+
+const StudyRoomViewNav = styled.div`
+    width : 100%;
+    height : 50px;
+    display : flex;
+    justify-content : space-between;
+    align-items : center;
+`;
+
+const StudyRoomViewNavItem = styled.div`
+    width : calc(95% / 5);
+    height : 100%;
+    text-align : center;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    cursor : pointer;
+    transition : 0.3s;
+    
+    > svg > g > path {
+        transition : 0.3s;
+        stroke : ${(props)=>(props.select === "true" ? "#E8A2A8" : "#cbcbcb" )}; 
+    }
+
+    :first-child > svg {
+        > g > path{
+            fill : ${(props)=>(props.select === "true" ? "#E8A2A8" : "#cbcbcb" )};
+            stroke : none;
+        }
+    }
+`;
+
+const StudyRoomViewNavName = styled.p`
+    font-size : 1.3em;
+    font-weight : bold;
+    transition : 0.3s;
+    margin-left : 0.8em;
+    color : ${(props) => (props.select === "true" ? "#E8A2A8" : "#cbcbcb")};
+`;
+
+const StudyRoomViewContent = styled.div`
+    width : 100%;
+    padding : 3em;
+`;
+
 const StudyRoom = (props) =>{
     const roomInfo = props.info;
     const [good,setGood] = useState(null);
@@ -238,6 +293,7 @@ const StudyRoom = (props) =>{
     const roomUserInfo = props.userInfo;
     const [roomGood,setRoomGood] = useState(props.goodInfo);
     const quail = roomUserInfo !== null ? (roomUserInfo.length > 0 ? roomUserInfo.find(a => a.idx === JSON.parse(localStorage.getItem("user")).idx ) : false ): false; 
+    const [roomViewNav,setRoomViewNav] = useState("pick");
 
     useEffect(()=>{;
         setRoomGood(props.goodInfo);
@@ -267,6 +323,8 @@ const StudyRoom = (props) =>{
             })
         }
     }
+
+    const ChangeRoomView = (val) =>{setRoomViewNav(val);}
 
     return(
         <>
@@ -319,8 +377,35 @@ const StudyRoom = (props) =>{
                     {
                         quail ? 
                         (
-                        <>
-                        </>
+                        <StudyRoomViewWrap>
+                            <StudyRoomViewNav>
+                                <StudyRoomViewNavItem mod={mod} select={roomViewNav === "pick" ? "true" : "false"} onClick={()=>{ChangeRoomView("pick")}}>
+                                    <PickIcon/>
+                                    <StudyRoomViewNavName mod={mod} select={roomViewNav === "pick" ? "true" : "false"}>공지사항</StudyRoomViewNavName>
+                                </StudyRoomViewNavItem>
+                                <StudyRoomViewNavItem mod={mod} select={roomViewNav === "member" ? "true" : "false"} onClick={()=>{ChangeRoomView("member")}}>
+                                    <MemberIcon />
+                                    <StudyRoomViewNavName mod={mod} select={roomViewNav === "member" ? "true" : "false"}>멤버</StudyRoomViewNavName>
+                                </StudyRoomViewNavItem>
+                                <StudyRoomViewNavItem mod={mod} select={roomViewNav === "project" ? "true" : "false"} onClick={()=>{ChangeRoomView("project")}}>
+                                    <ProjectIcon />
+                                    <StudyRoomViewNavName mod={mod} select={roomViewNav === "project" ? "true" : "false"}>프로젝트</StudyRoomViewNavName>
+                                </StudyRoomViewNavItem>
+                                <StudyRoomViewNavItem mod={mod} select={roomViewNav === "challenges" ? "true" : "false"} onClick={()=>{ChangeRoomView("challenges")}}>
+                                    <ChallengesIcon />
+                                    <StudyRoomViewNavName mod={mod} select={roomViewNav === "challenges" ? "true" : "false"}>도전과제</StudyRoomViewNavName>
+                                </StudyRoomViewNavItem>
+                                <StudyRoomViewNavItem mod={mod} select={roomViewNav === "posting" ? "true" : "false"} onClick={()=>{ChangeRoomView("posting")}}>
+                                    <PostingIcon />
+                                    <StudyRoomViewNavName mod={mod} select={roomViewNav === "posting" ? "true" : "false"}>포스팅</StudyRoomViewNavName>
+                                </StudyRoomViewNavItem>
+                            </StudyRoomViewNav>
+                            <StudyRoomViewContent>
+                                {
+                                    roomViewNav === "pick" ? <StudyRoomPick mod={mod} roomInfo={roomInfo} /> : ""
+                                }
+                            </StudyRoomViewContent>
+                        </StudyRoomViewWrap>
                         ) :
                         (
                             <StudyRoomLockWrap>

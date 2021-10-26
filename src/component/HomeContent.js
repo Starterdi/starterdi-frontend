@@ -187,6 +187,7 @@ const ContentTitle = styled.p`
 
 const HomeContent = (props) =>{
   const searchWord = props.searchWord;
+  const searchCate = props.searchCate;
   const mod = props.mod;
   const history = useHistory();
   const [contentSection,setContentSection] = useState("전체");
@@ -214,6 +215,20 @@ const HomeContent = (props) =>{
       if(a[key] <= b[key]) return 1;
       else return -1;
     });
+  }
+
+  const SearchRoomList = (list)=>{
+    let roomList = list;
+    if(searchWord === "" && searchCate === "") return false;
+    if(searchWord !== ""){
+      roomList = roomList.filter((room)=>{return room['title'].indexOf(searchWord) > -1});
+      setRoomList(roomList);
+    }
+
+    if(searchCate !== ""){
+      roomList = roomList.filter((room)=>{return room['category'] === searchCate});
+      setRoomList(roomList);
+    }
   }
 
   const CateList = [
@@ -259,13 +274,13 @@ const HomeContent = (props) =>{
     await axios.post('/api/studyListLoad')
           .then((res)=>{
             setRoomList(res.data);
+            SearchRoomList(res.data);
           });
   }
 
   useEffect(()=>{
     LoadRoomList();
-    console.log(searchWord);
-  },[searchWord]);
+  },[searchWord,searchCate]);
 
   const ContentHeader = (props)=>{
     return(
