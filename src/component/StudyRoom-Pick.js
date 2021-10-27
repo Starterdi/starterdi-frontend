@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import StudyRoomPickEnterIcon from '../svg/StudyRoomPickEnterIcon';
 import StudyRoomPickPrevIcon from '../svg/StudyRoomPickPrevIcon';
 import StudyRoomPickNextIcon from '../svg/StudyRoomPickNextIcon';
+import StudyRoomNotContent from '../image/StudyRoomNotContent.png';
 
 const SelectPick = styled.div`
     width : 100%;
@@ -87,7 +88,7 @@ const PickList = styled.div`
     height : 330px;
     margin-top : 5em;
     display : flex;
-    justify-content : space-between;
+    justify-content : flex-start;
     align-items : center;
 `;
 
@@ -97,6 +98,8 @@ const PickListItem = styled.div`
     cursor : pointer;
     box-shadow : 0 0 10px #ddd;
     transition : 0.3s;
+    margin : 0 1.5em;
+    :first-child { margin-left : 0;}
     :hover {
         opacity : 0.5;
     }
@@ -196,105 +199,149 @@ const PickListPagePrevBtn = styled.button`
     border : none;
 `;
 
+const PickNotContent = styled.div`
+    width : 100%;
+    padding : 2em;
+    display : flex;
+    flex-direction : column;
+    justify-content : center;
+    align-items : center;
+`;
+
+const PickNotContentImg = styled.img`
+    width : 50%;
+    margin-bottom : 3em;
+`;
+
+const PickNotContentTitle = styled.p`
+    text-align : center;
+    font-size : 2em;
+    font-weight : bold;
+    color : ${(props)=>(props.mod === "light" ? "#333" : "#fff")};
+    transition : 0.3s;
+`;
+
 const StudyRoomPick = (props) =>{
     const roomInfo = props.roomInfo;
     const mod = props.mod;
-    const pickList = [
-        {
-            id : 1,
-            title : "Lorem Ipsum 1",
-            write : "담당자",
-            text : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vel ipsum ut nulla congue congue. Mauris dapibus tortor ut porta hendrerit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vivamus semper urna at neque porta, vel dignissim nunc mattis. Fusce ut fringilla ipsum, quis convallis odio."
-        },
-        {
-            id : 2,
-            title : "Lorem Ipsum 2",
-            write : "담당자",
-            text : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vel ipsum ut nulla congue congue. Mauris dapibus tortor ut porta hendrerit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vivamus semper urna at neque porta, vel dignissim nunc mattis. Fusce ut fringilla ipsum, quis convallis odio."
-        },
-        {
-            id : 3,
-            title : "Lorem Ipsum 3",
-            write : "담당자",
-            text : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vel ipsum ut nulla congue congue. Mauris dapibus tortor ut porta hendrerit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vivamus semper urna at neque porta, vel dignissim nunc mattis. Fusce ut fringilla ipsum, quis convallis odio."
-        },
-        {
-            id : 4,
-            title : "Lorem Ipsum 4",
-            write : "담당자",
-            text : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vel ipsum ut nulla congue congue. Mauris dapibus tortor ut porta hendrerit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vivamus semper urna at neque porta, vel dignissim nunc mattis. Fusce ut fringilla ipsum, quis convallis odio."
-        },
-        {
-            id : 5,
-            title : "Lorem Ipsum 5",
-            write : "담당자",
-            text : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vel ipsum ut nulla congue congue. Mauris dapibus tortor ut porta hendrerit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vivamus semper urna at neque porta, vel dignissim nunc mattis. Fusce ut fringilla ipsum, quis convallis odio."
-        },{
-            id : 6,
-            title : "Lorem Ipsum 6",
-            write : "담당자",
-            text : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vel ipsum ut nulla congue congue. Mauris dapibus tortor ut porta hendrerit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vivamus semper urna at neque porta, vel dignissim nunc mattis. Fusce ut fringilla ipsum, quis convallis odio."
-        }
-    ];
+    const pickList = [];
+    const selectPick = {};
 
     const [drawPickList,setDrawPickList] = useState([]);
-    const [pageStart,setPageStart] = useState(0);
-    const [pageEnd,setPageEnd] = useState(Math.ceil(pickList.length / 5)-1);
-    const [pageNow, setPageNow] = useState(0);
+    const [pageButtonList,setPageButtonList] = useState([]);
+    const [pageStart] = useState(1);
+    const [pageEnd] = useState(Math.ceil(pickList.length / 5));
+    const [pageNow, setPageNow] = useState(1);
     const [pageBlockStart,setPageBlockStart] = useState(0);
-    const [pageBlockEnd,setPageBlockEnd] = useState(pageEnd > 4 ? 4 : pageEnd);
+    const [pageBlockEnd,setPageBlockEnd] = useState(pageEnd > 5 ? 5 : pageEnd);
 
     const MakePickList = ()=>{
         let list = [];
-        for(let i = pageNow; i < pageNow+5; i++) list.push(pickList[i]);
+        let start = (pageNow-1) * 5;
+        let end = start + 5 < pickList.length ? start + 5 : pickList.length;
+        for(let i = start; i < end; i++) list.push(pickList[i]);
         setDrawPickList(list);
+    }
+
+    const getPageButtonList = ()=>{
+        let list = [];
+        if(pageBlockStart === pageBlockEnd) list.push(pageBlockStart);
+        for(let i = pageBlockStart; i < pageBlockEnd; i++) list.push(i+1);
+        setPageButtonList(list);
+    }
+
+    const ClickSetPageButton = (val)=>{
+        setPageNow(val);
+    }
+
+    const ClickSetNextButton = ()=>{
+        let page = pageNow+1;
+        page = page > pageEnd ? pageEnd : page;
+        setPageNow(page);
+        if(page > pageBlockEnd){
+            let start = page;
+            let end = start + 5 > pageEnd ? pageEnd : start + 5;
+            setPageBlockStart(start);
+            setPageBlockEnd(end);
+        }
+    }
+
+    const ClickSetPrevButton = ()=>{
+        let page = pageNow-1;
+        page = page < pageStart ? pageStart : page;
+        setPageNow(page);
+        if(page < pageBlockStart){
+            let start = page - 5;
+            let end = page;
+            setPageBlockStart(start);
+            setPageBlockEnd(end);
+        }
     }
 
     useEffect(()=>{
         MakePickList();
-    },[]);
+        getPageButtonList();
+    },[pageNow]);
 
     return (
         <>
-            <SelectPick>
-                <SelectPickImg backgroundColor={mod === "light" ? roomInfo.light_theme : roomInfo.dark_theme}>
-                </SelectPickImg>
-                <SelectPickContent>
-                    <SelectPickHeader>
-                            <SelectPickTitle mod={mod}>공지사항 타이틀</SelectPickTitle>
-                            <SelectPickWrite mod={mod}>담당자</SelectPickWrite>
-                    </SelectPickHeader>
-                    <SelectPickText mod={mod}>
-                        토끼, 둘 무성할 이제 패, 북간도에 딴은 봅니다. 노루, 아름다운 멀듯이, 덮어 피어나듯이 멀리 봅니다.
-                        이름을 덮어 쉬이 별 사람들의 언덕 있습니다. 이국 부끄러운 봄이 않은 이름과, 별 비둘기, 듯합니다. 이름과, 어머님, 가슴속에 쉬이 위에 어머니, 시와 동경과 새워 봅니다.
-                        슬퍼하는 없이 노새, 지나고 북간도에 아침이 까닭입니다. 이네들은 청춘이 별 봅니다. 멀리 내일 가을로 계십니다. 슬퍼하는 내일 이제 라이너 계십니다. 이름과, 하나에 별 지나가는 없이 이름자를 밤이 까닭입니다. 위에 다 겨울이 청춘이 흙으로 벌써 버리었습니다. 경, 소학교 쓸쓸함과 노새, 위에도 묻힌 보고, 버리었습니다.
-                        없이 흙으로 별 자랑처럼 밤을 계십니다. 나의 된 패, 벌써 쓸쓸함과 라이너 보고, 까닭입니다. 마리아 봄이 아름다운 강아지, 많은 하나 옥 어머님, 나는 듯합니다. 이국 어머니, 멀리 동경과 위에 아무 나는 버리었습니다. 비둘기, 경, 아직 있습니다. 계절이 별 쓸쓸함과 어머니 나의 너무나 부끄러운 내 노새, 있습니다. 동경과 이름자 위에 이웃 걱정도 하나에 계절이 아직 책상을 봅니다.
-                    </SelectPickText>
-                    <SelectPickOpenButton backgroundColor={mod === "light" ? roomInfo.light_theme : roomInfo.dark_theme}><StudyRoomPickEnterIcon/></SelectPickOpenButton>
-                </SelectPickContent>
-            </SelectPick>
-            <PickList>
+            <>
                 {
-                    drawPickList.map(item => (
-                    <PickListItem>
-                        <PickListItemImg backgroundColor={mod === "light" ? roomInfo.light_theme : roomInfo.dark_theme}></PickListItemImg>
-                        <PickListItemHeader>
-                            <PickListItemHead>
-                                <PickListItemTitle mod={mod}>{item.title}</PickListItemTitle>
-                                <PickListItemWrite mod={mod}>{item.write}</PickListItemWrite>
-                            </PickListItemHead>
-                            <PickListItemText mod={mod}>{item.text}</PickListItemText>
-                        </PickListItemHeader>
-                    </PickListItem>
-                    ))
+                    Object.keys(selectPick).length > 0 ? 
+                    <SelectPick>
+                        <SelectPickImg backgroundColor={mod === "light" ? roomInfo.light_theme : roomInfo.dark_theme}>
+                        </SelectPickImg>
+                        <SelectPickContent>
+                            <SelectPickHeader>
+                                    <SelectPickTitle mod={mod}></SelectPickTitle>
+                                    <SelectPickWrite mod={mod}></SelectPickWrite>
+                            </SelectPickHeader>
+                            <SelectPickText mod={mod}>
+                            </SelectPickText>
+                            <SelectPickOpenButton backgroundColor={mod === "light" ? roomInfo.light_theme : roomInfo.dark_theme}><StudyRoomPickEnterIcon/></SelectPickOpenButton>
+                        </SelectPickContent> 
+                    </SelectPick>
+                    : <PickNotContent>
+                        <PickNotContentImg src={StudyRoomNotContent} alt="not content"/>
+                        <PickNotContentTitle mod={mod}>공지사항이 없습니다.</PickNotContentTitle>
+                    </PickNotContent>
                 }
-            </PickList>
-            <PickListPageNavtionWrap>
-                <PickListPagePrevBtn><StudyRoomPickPrevIcon/></PickListPagePrevBtn>
-                <PickListPageBtn select={pageNow === 0 ? "true" : "false"}>1</PickListPageBtn>
-                <PickListPageBtn select={pageNow === 1 ? "true" : "false"}>2</PickListPageBtn>
-                <PickListPageNextBtn><StudyRoomPickNextIcon/></PickListPageNextBtn>
-            </PickListPageNavtionWrap>
+            </>
+            {
+                drawPickList.length > 0 ? 
+                <PickList>
+                    {
+                        drawPickList.map(item => (
+                            <PickListItem key={item.key}>
+                                <PickListItemImg backgroundColor={mod === "light" ? roomInfo.light_theme : roomInfo.dark_theme}></PickListItemImg>
+                                <PickListItemHeader>
+                                    <PickListItemHead>
+                                        <PickListItemTitle mod={mod}>{item.title}</PickListItemTitle>
+                                        <PickListItemWrite mod={mod}>{item.write}</PickListItemWrite>
+                                    </PickListItemHead>
+                                    <PickListItemText mod={mod}>{item.text}</PickListItemText>
+                                </PickListItemHeader>
+                            </PickListItem>
+                            ))
+                    }
+                </PickList>
+                : ""
+            }
+            
+            {
+                drawPickList.length > 0 ? 
+                <PickListPageNavtionWrap>
+                    <PickListPagePrevBtn onClick={ClickSetPrevButton}><StudyRoomPickPrevIcon/></PickListPagePrevBtn>
+                    {
+                        pageButtonList.map(item => (
+                            <PickListPageBtn select={pageNow === item ? "true" : "false"} onClick={()=>{ClickSetPageButton(item)}}>{item}</PickListPageBtn>
+                        ))
+                    }
+                    <PickListPageNextBtn onClick={ClickSetNextButton}><StudyRoomPickNextIcon/></PickListPageNextBtn>
+                </PickListPageNavtionWrap>
+                : ""
+            }
+            
         </>
     );
 }

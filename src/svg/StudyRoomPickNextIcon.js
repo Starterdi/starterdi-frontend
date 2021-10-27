@@ -1,5 +1,4 @@
 import * as React from 'react';
-import StudyRoomPickPrevIcon from './StudyRoomPickPrevIcon';
 
 const StudyRoomPickNextIcon = (props)=>{
     return(

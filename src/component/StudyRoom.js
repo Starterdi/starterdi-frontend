@@ -12,9 +12,11 @@ import MemberIcon from '../svg/MemberIcon';
 import ProjectIcon from '../svg/ProjectIcon';
 import ChallengesIcon from '../svg/ChallengesIcon';
 import PostingIcon from '../svg/PostingIcon';
+import StudyRoomTopIcon from '../svg/StudyRoomTopIcon';
 import axios from 'axios';
 import { Link} from 'react-router-dom';
 import StudyRoomPick from '../component/StudyRoom-Pick';
+import StudyRoomPosting from '../component/StudyRoom-Posting';
 
 const StudyRoomWrap = styled.div`
     width : calc(100% - 300px);
@@ -286,6 +288,25 @@ const StudyRoomViewContent = styled.div`
     padding : 3em;
 `;
 
+const StudyRoomTopButton = styled.div`
+    width : 70px;
+    height : 70px;
+    border-radius : 100%;
+    box-shadow : 0 0 20px rgba(0,0,0,0.2);
+    background-color : #fff;
+    overflow : hidden;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    position : fixed;
+    bottom : 2em;
+    right : 2em;
+    z-index : 10;
+    cursor : pointer;
+    transition : 0.3s;
+    :hover {opacity : 0.5;}
+`;
+
 const StudyRoom = (props) =>{
     const roomInfo = props.info;
     const [good,setGood] = useState(null);
@@ -294,6 +315,10 @@ const StudyRoom = (props) =>{
     const [roomGood,setRoomGood] = useState(props.goodInfo);
     const quail = roomUserInfo !== null ? (roomUserInfo.length > 0 ? roomUserInfo.find(a => a.idx === JSON.parse(localStorage.getItem("user")).idx ) : false ): false; 
     const [roomViewNav,setRoomViewNav] = useState("pick");
+
+    const ScrollToTop = ()=>{
+        window.scrollTo(0, 0);
+    }
 
     useEffect(()=>{;
         setRoomGood(props.goodInfo);
@@ -402,7 +427,9 @@ const StudyRoom = (props) =>{
                             </StudyRoomViewNav>
                             <StudyRoomViewContent>
                                 {
-                                    roomViewNav === "pick" ? <StudyRoomPick mod={mod} roomInfo={roomInfo} /> : ""
+                                    roomViewNav === "pick" ? <StudyRoomPick mod={mod} roomInfo={roomInfo} /> : 
+                                    roomViewNav === "posting" ? <StudyRoomPosting mod={mod} roomInfo={roomInfo} /> :
+                                    ""
                                 }
                             </StudyRoomViewContent>
                         </StudyRoomViewWrap>
@@ -418,6 +445,9 @@ const StudyRoom = (props) =>{
                         ) 
                     }
                 </StudyRoomBody>
+                <StudyRoomTopButton onClick={ScrollToTop}>
+                    <StudyRoomTopIcon/>
+                </StudyRoomTopButton>
                 </>
             ) : ""
         }
